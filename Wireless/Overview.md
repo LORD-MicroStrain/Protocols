@@ -37,11 +37,12 @@ All commands, responses, and data are in **Big Endian**.<br>
 Therefore, when building a field that is more than 1 byte, the Most Significant Byte (MSB) is the first byte (smallest address), and the Least Significant Byte (LSB) is the last byte.
 
 **2-byte value example (uint16):**
-|            | Decimal | Hex   | Binary 
-|:----------:|:-------:|:-----:|:-----------------:
-|2-byte value| 476     | 01 DC | 00000001 1101100
-|MSB         | 1       | 01    | 00000001
-|LSB         | 220     | DC    | 1101100
+
+|            | Decimal   | Hex     | Binary |
+| :----------:   | :-------: | :-----: | :-----------------: |
+| 2-byte value   | 476       | 01 DC   | 00000001 1101100 |
+| MSB            | 1         | 01      | 00000001 |
+| LSB            | 220       | DC      | 1101100 |
 
 
 ```cpp
@@ -60,6 +61,7 @@ uint16_t ValueFromMSBandLSB(uint8_t msb, uint8_t lsb)
 ```
 
 **4-byte value example (uint32):**
+
 |            | Decimal       | Hex         | Binary 
 |:----------:|:-------------:|:-----------:|:-----------------:
 |2-byte value| 1,326,214,446 | 4F 0C 6D 2E | 01001111 00001100 01101101 00101110
