@@ -1,8 +1,7 @@
 # Base Station Commands
 
----
-
 ### Ping Base Station
+=====================
 
 The **Ping Base Station** command is used to ensure that the host computer and the Base Station are properly communicating.
 
@@ -20,7 +19,7 @@ Value | # Bytes | Type | Description
 
 ### Read Base Station EEPROM
 
-The **Read Base Station EEPROM** command is used to read the value of a specific memory address from the Base Station’s EEPROM.  See the Base Station EEPROM Map for specific memory address details.
+The **Read Base Station EEPROM** command is used to read the value of a specific memory address from the Base Stationâ€™s EEPROM.  See the Base Station EEPROM Map for specific memory address details.
 
 ##### Command:
 Value | # Bytes | Type | Description
