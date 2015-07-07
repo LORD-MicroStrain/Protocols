@@ -108,7 +108,7 @@ uint32_t disableBeaconValue 	= 0xFFFFFFFF;	//Value to disable the beacon
 
 ##### Success Response:
 ```cpp
-uint16_t commandId 			= 0xBEAC;		//Command ID Echo
+uint16_t commandId 			    = 0xBEAC;		//Command ID Echo
 ```
 ##### Fail Response:
 None.
