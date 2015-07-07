@@ -1,7 +1,7 @@
 # Base Station Commands
 
+
 ### Ping Base Station
-=====================
 
 The **Ping Base Station** command is used to ensure that the host computer and the Base Station are properly communicating.
 
@@ -15,7 +15,7 @@ Value | # Bytes | Type | Description
 ------|---------|------|------------
 0x01  | 1       | uint8 | Command ID
 
----
+=====
 
 ### Read Base Station EEPROM
 
@@ -34,5 +34,3 @@ Value | # Bytes | Type | Description
 0x73  | 1       | uint8 | Command ID
 0xXXXX  | 2       | uint16 | Value read from EEPROM
 0xXXXX  | 2       | uint16 | Checksum
-
----
