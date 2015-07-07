@@ -90,3 +90,30 @@ uint32_t ValueFrom4Bytes(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4)
     return (hiWord << 16) | loWord; //Shift hiWord 16 bits left, then OR the loWord in.
 }
 ```
+## RSSI
+
+The Received Signal Strength Indicator (RSSI) is a measurement of the power present in a received radio signal.  Node commands such as Long Ping and Node Discovery return a true RSSI value, measured in dBm, in their response packet.  This signed 1-byte value can range from -95 dBm (worst) to +5 dBm (best). 
+
+Some command responses return two RSSI values, **Node RSSI** and **Base Station RSSI**.<br>
+The **Node RSSI** is the signal strength that the node received the command from the base station.<br>
+The **Base Station RSSI** is the signal strength that the base station received the response back from the node.
+
+## Checksums
+
+Most commands and responses require or supply a checksum.  The checksum is used to ensure that the data was transmitted without error.  The documentation for each command or response that uses a checksum will detail how the checksum is calculated.  The checksum is calculated by summing all the bytes protected by the checksum and taking the modulo N of the sum, where N is 256 for a 1 byte checksum and 65536 for a 2 byte checksum.
+
+```cpp
+//Sample Code (C++) for calculating a checksum
+
+uint8_t byte1 = 10;
+uint8_t byte2 = 121;
+uint8_t byte3 = 37;
+uint8_t byte4 = 235;
+
+//in C++, using the correct types (uint16_t) will automatically "wrap" for you,
+//so just adding the bytes together will product the correct checksum.
+uint16_t sum = byte1 + byte2 + byte3 + byte4;
+
+//if you can't use the strict uint16_t type, you will have to perform the mod manually.
+uint32_t sum2 = (byte1 + byte2 + byte3 + byte4) % 65535;
+```
