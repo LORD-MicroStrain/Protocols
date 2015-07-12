@@ -339,7 +339,61 @@ uint8_t chEquation;							//Channel Info: Equation ID (per channel)
 uint8_t chUnit;								//Channel Info: Unit ID (per channel)
 float chSlope;								//Channel Info: Slope (per channel)
 float chOffset;								//Channel Info: Offset (per channel)
-//Repeat reading of Channel Info bytes for each Active Channel in channelMask
+//Repeat of Channel Info bytes for each Active Channel in channelMask
+uint16_t numBytesBeforeEnd 		= 0x0008;	//# of Bytes before end of header
+uint32_t timestampSec;						//UTC Timestamp (Seconds)
+uint32_t timestampNano;						//UTC Timestamp (Nanoseconds)
+```
+
+##### Header Format Version **2.0**:
+```cpp
+uint16_t startOfHeader 			= 0xAAAA;	//Start of Header
+uint8_t headerId 				= 0xFD;		//Header ID
+uint8_t triggerId;							//Trigger ID
+uint8_t headerVerMajor 			= 0x02;		//NEW: Header Version (Major)
+uint8_t headerVerMinor 			= 0x00;		//NEW: Header Version (Minor)
+uint16_t numBytesBeforeChInfo;				//# of Bytes before the Channel Info
+uint16_t samplesPerDataSet;					//Samples per Data Set
+uint16_t sessionIndex;						//Session Index
+uint8_t channelMask;						//Active Channel Mask
+uint16_t sampleRate;						//Sample Rate
+uint8_t dataType;							//NEW: Data Type
+uint8_t reserved;							//NEW: RESERVED
+uint16_t numUserBytes;						//# of User Entered Bytes
+int8_t userBytes[0-50];						//up to 50 user entered bytes (if any)
+uint16_t numBytesPerCh 			= 0x000A;	//# of Bytes per Channel
+uint8_t chEquation;							//Channel Info: Equation ID (per channel)
+uint8_t chUnit;								//Channel Info: Unit ID (per channel)
+float chSlope;								//Channel Info: Slope (per channel)
+float chOffset;								//Channel Info: Offset (per channel)
+//Repeat of Channel Info bytes for each Active Channel in channelMask
+uint16_t numBytesBeforeEnd 		= 0x0008;	//# of Bytes before end of header
+uint32_t timestampSec;						//UTC Timestamp (Seconds)
+uint32_t timestampNano;						//UTC Timestamp (Nanoseconds)
+```
+
+##### Header Format Version **2.1**:
+```cpp
+uint16_t startOfHeader 			= 0xAAAA;	//Start of Header
+uint8_t headerId 				= 0xFD;		//Header ID
+uint8_t triggerId;							//Trigger ID
+uint8_t headerVerMajor 			= 0x02;		//NEW: Header Version (Major)
+uint8_t headerVerMinor 			= 0x01;		//NEW: Header Version (Minor)
+uint16_t numBytesBeforeChInfo;				//# of Bytes before the Channel Info
+uint16_t samplesPerDataSet;					//NEW: Samples per Data Set / 100
+uint16_t sessionIndex;						//Session Index
+uint8_t channelMask;						//Active Channel Mask
+uint16_t sampleRate;						//Sample Rate
+uint8_t dataType;							//Data Type
+uint8_t reserved;							//RESERVED
+uint16_t numUserBytes;						//# of User Entered Bytes
+int8_t userBytes[0-50];						//up to 50 user entered bytes (if any)
+uint16_t numBytesPerCh 			= 0x000A;	//# of Bytes per Channel
+uint8_t chEquation;							//Channel Info: Equation ID (per channel)
+uint8_t chUnit;								//Channel Info: Unit ID (per channel)
+float chSlope;								//Channel Info: Slope (per channel)
+float chOffset;								//Channel Info: Offset (per channel)
+//Repeat of Channel Info bytes for each Active Channel in channelMask
 uint16_t numBytesBeforeEnd 		= 0x0008;	//# of Bytes before end of header
 uint32_t timestampSec;						//UTC Timestamp (Seconds)
 uint32_t timestampNano;						//UTC Timestamp (Nanoseconds)
