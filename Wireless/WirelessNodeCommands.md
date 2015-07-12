@@ -438,3 +438,28 @@ to the user data that should be discarded.
 
 **Session Data:** During the actual datalogging session, the data from each active channel on the Node is written consecutively to the memory pages. For example, a Node with 3 active channels (CH1, CH3, CH4) would write data as CH1, CH3, CH4; CH1, CH3, CH4 and so forth. This data comes off the Node in the same
 pattern during download. These byte immediately follow the header bytes.
+
+<br>
+## Erase Logged Data
+
+The **Erase Logged Data** command is used to erase all sampled data stored on the Node's memory. This cannot be undone.
+
+##### Command:
+```cpp
+uint8_t commandId 		= 0x06;			//Command ID
+uint16_t nodeAddress;					//Node Address
+uint32_t commandBytes 	= 0x08100CFF;	//Command Bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t commandId 		= 0x06;			//Command ID Echo
+```
+
+##### Failure Response:
+```cpp
+uint8_t failId 			= 0x21;			//Fail Indicator
+```
+
+##### Notes:
+**Response:** The response is returned immediately when the erasing processes begins, and no acknowledgment is sent when the process completes. The process may take up to 5 seconds, and the Node will not respond to any commands until the erasing is complete. Completion of the erase can be detected by repeatedly pinging the Node; when the erase is complete, the Node will return to idle mode and respond successfully to the ping.
