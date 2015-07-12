@@ -221,7 +221,7 @@ uint8_t appDataType 	= 0x00;						//App Data Type
 uint16_t nodeAddress;								//Node Address
 uint8_t payloadLen 		= 0x02 + # of user bytes;	//Payload Length
 uint16_t commandId 		= 0x000D;					//Command ID
-int8_t[0-50] userBytes;								//up to 50 (optional) user entered bytes
+int8_t userBytes[0-50];								//up to 50 (optional) user entered bytes
 uint16_t checksum;									//Checksum of [stopFlag - userBytes]
 ```
 
@@ -249,7 +249,7 @@ uint16_t checksum;					//Checksum of [stopFlag - reserved1]
 No Response.
 
 ##### Notes:
-**User Entered Bytes:** You may send up to 50 bytes with the Arm Command which will then be in the header information of the packet when the data is downloaded from the node using the [Download Page](#download-page) command.
+**User Entered Bytes:** You may send up to 50 bytes with the Arm Command which will then be in the header information of the packet when the data is downloaded from the node using the [Page Download](#page-download) command.
 
 **Disarming:** A Node will stay in this armed state for a default of 10 seconds (EEPROM adjustable). To disarm an Armed Node manually, use the [Set to Idle](#set-to-idle) command.
 
@@ -281,3 +281,39 @@ No Response.
 
 ##### Notes:
 **Timestamp:** The Timestamp is made up of 2 values, each of which are 4 bytes. The first value represents the seconds of the timestamp, and the second value represents the nanoseconds of the timestamp. When downloading the logged data from the node, this timestamp will be transmitted in the header information and can be used to determine the exact timestamp of each data point. These bytes represent the current UTC time in seconds from the Unix Epoch (January 1, 1970).
+
+<br>
+## Page Download
+
+The **Page Download** command is used to retrieve a logged data session from the Node. Note that it can also be used to read large chunks of EEPROM values as well.
+
+##### Command:
+```cpp
+uint8_t commandId = 0x05;		//Command ID
+uint16_t nodeAddress;			//Node Address
+uint16_t pageIndex;				//Index of Page to download
+```
+
+##### Success Response:
+```cpp
+uint8_t commandId = 0x05;		//Command ID Echo
+uint8_t data[264];				//The Page Data (132 2-byte values)
+uint16_t checksum;				//Checksum of [data]
+```
+
+##### Failure Response:
+```cpp
+uint8_t commandId = 0x05;		//Command ID Echo
+uint16_t failId = 0x21;			//Fail Indicator
+```
+
+##### Notes:
+**Page Index:** Each Node contains 2MB of memory. These 2MB are mapped to 8192 pages of data, with each page containing 264 bytes. 
+
+Pages are numbered sequentially from 0 to 8191:
+
+* **Page 0** contains data points that represent the value in the Node's EEPROM from locations 0 - 254.
+* **Page 1** contains data points that represent the value in the Node's EEPROM from locations 256 - 510.
+* **Page 2** is the first page that will contain sampled data that was logged to the node. 
+
+**Data Sessions:** A Node can contain multiple consecutive datalogging sessions. Each of these sessions has a leading multi-byte header which is used to identify the start of a new datalogging session and the end of the previous session. The header contains the datalogging information stored during that particular session.
