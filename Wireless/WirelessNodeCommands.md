@@ -289,22 +289,22 @@ The **Page Download** command is used to retrieve a logged data session from the
 
 ##### Command:
 ```cpp
-uint8_t commandId = 0x05;		//Command ID
+uint8_t commandId 	= 0x05;		//Command ID
 uint16_t nodeAddress;			//Node Address
 uint16_t pageIndex;				//Index of Page to download
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t commandId = 0x05;		//Command ID Echo
+uint8_t commandId 	= 0x05;		//Command ID Echo
 uint8_t data[264];				//The Page Data (132 2-byte values)
 uint16_t checksum;				//Checksum of [data]
 ```
 
 ##### Failure Response:
 ```cpp
-uint8_t commandId = 0x05;		//Command ID Echo
-uint16_t failId = 0x21;			//Fail Indicator
+uint8_t commandId 	= 0x05;		//Command ID Echo
+uint16_t failId 	= 0x21;		//Fail Indicator
 ```
 
 ##### Notes:
@@ -317,3 +317,30 @@ Pages are numbered sequentially from 0 to 8191:
 * **Page 2** is the first page that will contain sampled data that was logged to the node. 
 
 **Data Sessions:** A Node can contain multiple consecutive datalogging sessions. Each of these sessions has a leading multi-byte header which is used to identify the start of a new datalogging session and the end of the previous session. The header contains the datalogging information stored during that particular session.
+
+**Session Header:** The datalogging session header is a multiple-byte leading string indicating the start of the next session. The header can be found anywhere on a downloaded page and it can wrap between pages. The header can be in one of the following versioned formats:
+
+##### Header Format Version **1.0**:
+```cpp
+uint16_t startOfHeader 			= 0xAAAA;	//Start of Header
+uint8_t headerId 				= 0xFD;		//Header ID
+uint8_t triggerId;							//Trigger ID
+uint8_t headerVerMajor 			= 0x01;		//Header Version (Major)
+uint8_t headerVerMinor 			= 0x00;		//Header Version (Minor)
+uint16_t numBytesBeforeChInfo;				//# of Bytes before the Channel Info
+uint16_t samplesPerDataSet;					//Samples per Data Set
+uint16_t sessionIndex;						//Session Index
+uint8_t channelMask;						//Active Channel Mask
+uint16_t sampleRate;						//Sample Rate
+uint16_t numUserBytes;						//# of User Entered Bytes
+int8_t userBytes[0-50];						//up to 50 user entered bytes (if any)
+uint16_t numBytesPerCh 			= 0x000A;	//# of Bytes per Channel
+uint8_t chEquation;							//Channel Info: Equation ID (per channel)
+uint8_t chUnit;								//Channel Info: Unit ID (per channel)
+float chSlope;								//Channel Info: Slope (per channel)
+float chOffset;								//Channel Info: Offset (per channel)
+//Repeat reading of Channel Info bytes for each Active Channel in channelMask
+uint16_t numBytesBeforeEnd 		= 0x0008;	//# of Bytes before end of header
+uint32_t timestampSec;						//UTC Timestamp (Seconds)
+uint32_t timestampNano;						//UTC Timestamp (Nanoseconds)
+```
