@@ -398,3 +398,43 @@ uint16_t numBytesBeforeEnd 		= 0x0008;	//# of Bytes before end of header
 uint32_t timestampSec;						//UTC Timestamp (Seconds)
 uint32_t timestampNano;						//UTC Timestamp (Nanoseconds)
 ```
+
+**Fixed Header:** Each new session is always marked with a 0xFFFF (65535) at its start.
+
+**Header Version:** The header format that needs to be used can be determined by checking the header version bytes.
+
+**Trigger ID:** Each datalogging session has a Trigger ID signifying how the session was started:
+
+Trigger ID   | Description 
+-------------|--------------
+0            | Started via a datalogging command 
+1            | Ceiling Sensor Event Driven Trigger
+2            | Floor Sensor Event Driven Trigger
+3            | Ramp Up Sensor Event Driven Trigger
+4            | Ramp Down Sensor Event Driven Trigger
+
+**Samples per Data Set:** The number of expected samples per data set. If the session was logged as a continuous datalogging session, this value is not applicable. If the session ended prematurely due to power failure or because
+the memory was completely filled, the value will not correspond to the actual number of samples. When parsing session data, the Samples per Data Set value should not be used to determine the end of the session. The end of the session should be determined by the start of the next session header. Header Versions 2.1 and above have the number of Samples per Data Set byte divided by 100 to allow for longer sessions. This value should be multiplied by 100 to obtain the true number of samples.
+
+**Session Index:** Each datalogging session is stored with a session index. The first session’s index is 1 and subsequent sessions would have consecutive index numbers. When the logged sessions are erased the index will be reset, and the first data logging session after the erase will have a Session Index of 1.
+
+**Active Channel Mask:** The channel mask indicates the active channels that were logged in this session.
+
+**Sample Rate:** The Sample Rate that was used during the datalogging session.
+
+**Data Type:** The Data type of which the Node saved data to memory as. The following table shows the possible data values and their corresponding data types:
+
+Value   | Type | Description 
+--------|------|--------------
+1, 3    |uint16_t | A/D value (bits), no conversions (slope & offset) applied
+2 		|float    | floating point value with any conversions (slope & offset) applied
+
+**User Entered Bytes:** Up to 50 optional user entered bytes may have been sent to the node when triggering an Armed Datalogging session. The *numUserBytes* byte specifies how many user bytes follow in the packet. If the number of user entered bytes is an odd number, there will be 1 extra “buffer” byte appended
+to the user data that should be discarded.
+
+**Channel Information:** The Channel Information bytes show which calibration coefficients were enabled during datalogging for each of the active channels.
+
+**Timestamp:** The UTC timestamp represents the starting time of the logged session (the time applied to the very first data point). The nanoseconds should be appended to the seconds of the given timestamp. By incrementing the initial UTC timestamp by the sample rate, you can determine the exact time of each stored data point.
+
+**Session Data:** During the actual datalogging session, the data from each active channel on the Node is written consecutively to the memory pages. For example, a Node with 3 active channels (CH1, CH3, CH4) would write data as CH1, CH3, CH4; CH1, CH3, CH4 and so forth. This data comes off the Node in the same
+pattern during download. These byte immediately follow the header bytes.
