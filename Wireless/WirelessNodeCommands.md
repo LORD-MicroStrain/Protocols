@@ -141,3 +141,28 @@ uint16_t checksum;					//Checksum of [stopFlag - commandId]
 
 ##### Failure Response:
 No Response.
+
+<br>
+## Initiate Sleep Mode
+
+The **Initiate Sleep Mode** command is used to put the Node in a low power state. When the Node is in this low power Sleep Mode, it will not hear any commands except for the Set to Idle command, which will wake the node and put it back into its normal, idle state. The Node should be put into Sleep Mode when
+you no longer needs to communicate with the node, but want to keep it powered on and preserve battery life. 
+
+##### Command:
+```cpp
+uint8_t commandId 		= 0x32;		//Command ID
+uint16_t nodeAddress;				//Node Address
+```
+
+##### Success Response: 
+No Response.
+
+##### Failure Response:
+No Response.
+
+##### Notes:
+**Waking a Node:** A Node in Sleep Mode periodically awakes, listens for a Set to Idle command, and if none is received, returns to sleep. To wake a sleeping Node, send the Set to Idle command. 
+
+**Sleep Interval:** The Node’s Sleep Interval is the interval at which the Node will awake and listen for the Set to Idle command. See the Node EEPROM map for more details.
+
+**User Inactivity Timeout:** The Node's User Inactivity Timeout is the length of time, without user activity, before the Node enters its Default Mode. If the Default Mode is idle, or sleep, the Node will automatically enter Sleep Mode when this timeout expires.
