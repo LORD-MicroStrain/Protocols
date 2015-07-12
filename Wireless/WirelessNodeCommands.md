@@ -99,3 +99,45 @@ uint16_t checksum;					//Checksum of [stopFlag - eepromVal]
 
 ##### Failure Response:
 No Response.
+
+<br>
+## Write Node EEPROM
+
+The **Write Node EEPROM** command is used to write a value to a specific memory address on the Node's EEPROM.
+
+See the Node EEPROM Map for specific memory address details.
+
+##### Command:
+```cpp
+uint8_t startByte 		= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 		= 0x05;		//Delivery Stop Flag
+uint8_t appDataType 	= 0x00;		//App Data Type
+uint16_t nodeAddress;				//Node Address
+uint8_t payloadLen 		= 0x06;		//Payload Length
+uint16_t commandId 		= 0x0004;	//Command ID
+uint16_t eepromAddress;				//EEPROM Address to Write to
+uint16_t value;						//Value to Write to EEPROM
+uint16_t checksum;					//Checksum of [stopFlag - value]
+```
+
+##### Initial Response:
+An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
+```cpp
+uint8_t packetSentAck 	= 0xAA;		//Package Sent Acknowledgement
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte 		= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 		= 0x00;		//Delivery Stop Flag
+uint8_t appDataType 	= 0x00;		//App Data Type
+uint16_t nodeAddress;				//Node Address
+uint8_t payloadLen 		= 0x02;		//Payload Length
+uint16_t commandId		= 0x0004;	//Command ID Echo
+int8_t notUsed;						//RESERVED
+int8_t baseRssi;					//Base RSSI
+uint16_t checksum;					//Checksum of [stopFlag - commandId]
+```
+
+##### Failure Response:
+No Response.
