@@ -52,7 +52,7 @@ uint16_t nodeAddress;				//Node Address
 uint8_t payloadLen 		= 0x02;		//Payload Length
 uint16_t notUsed 		= 0x0000;	//Empty Payload (not used)
 int8_t nodeRssi;					//Node RSSI
-int8_t baseRssi;					//Base RSSI
+int8_t baseRssi;					//Base Station RSSI
 uint16_t checksum;					//Checksum of [stopFlag - notUsed]
 ```
 
@@ -93,7 +93,7 @@ uint16_t nodeAddress;				//Node Address
 uint8_t payloadLen 		= 0x02;		//Payload Length
 uint16_t eepromVal;					//Value Read from EEPROM
 int8_t notUsed;						//RESERVED
-int8_t baseRssi;					//Base RSSI
+int8_t baseRssi;					//Base Station RSSI
 uint16_t checksum;					//Checksum of [stopFlag - eepromVal]
 ```
 
@@ -207,3 +207,48 @@ uint8_t commandCeased 	= 0x01;		//The Set to Idle command has ceased
 **Ongoing Operation:** The Set to Idle command puts the Base Station in a mode that sends small packets as fast as possible in an attempt to communicate with the Node. The Base Station will periodically check to see if the Node has responded to a ping request. The function will continue indefinitely until either the Node responds, or the user sends any byte to the Base Station, which cancels the operation. No incoming packets will be heard while the Base Station is in this mode.
 
 **Broadcast Special Case:** When the broadcast Node address 65535 (0xFFFF) is used, the Base Station does not check for a ping response. It will continue sending the stop Node command until interrupted by the user (any single byte sent to the Base Station). This will attempt to stop all Nodes on the current frequency that the Base Station is on.
+
+<br>
+## Arm Node for Datalogging
+
+Use the **Arm Node** command to put the node in an armed state waiting for the [Trigger Armed Datalogging](#trigger-armed-datalogging) command.
+
+##### Command:
+```cpp
+uint8_t startByte 		= 0xAA;						//Start of Packet Byte
+uint8_t stopFlag 		= 0x05;						//Delivery Stop Flag
+uint8_t appDataType 	= 0x00;						//App Data Type
+uint16_t nodeAddress;								//Node Address
+uint8_t payloadLen 		= 0x02 + # of user bytes;	//Payload Length
+uint16_t commandId 		= 0x000D;					//Command ID
+int8_t[0-50] userBytes;								//up to 50 (optional) user entered bytes
+uint16_t checksum;									//Checksum of [stopFlag - userBytes]
+```
+
+##### Initial Response:
+An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
+```cpp
+uint8_t packetSentAck 	= 0xAA;		//Package Sent Acknowledgement
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte 		= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
+uint8_t appDataType 	= 0x00;		//App Data Type
+uint16_t nodeAddress;				//Node Address
+uint8_t payloadLen 		= 0x03;		//Payload Length
+uint16_t commandId		= 0x000D;	//Command ID Echo
+uint8_t reserved1;					//RESERVED
+int8_t reserved2;					//RESERVED
+int8_t baseRssi;					//Base Station RSSI
+uint16_t checksum;					//Checksum of [stopFlag - reserved1]
+```
+
+##### Failure Response:
+No Response.
+
+##### Notes:
+**User Entered Bytes:** You may send up to 50 bytes with the Arm Command which will then be in the header information of the packet when the data is downloaded from the node using the [Download Page](#download-page) command.
+
+**Disarming:** A Node will stay in this armed state for a default of 10 seconds (EEPROM adjustable). To disarm an Armed Node manually, use the [Set to Idle](#set-to-idle) command.
