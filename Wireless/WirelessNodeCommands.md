@@ -252,3 +252,32 @@ No Response.
 **User Entered Bytes:** You may send up to 50 bytes with the Arm Command which will then be in the header information of the packet when the data is downloaded from the node using the [Download Page](#download-page) command.
 
 **Disarming:** A Node will stay in this armed state for a default of 10 seconds (EEPROM adjustable). To disarm an Armed Node manually, use the [Set to Idle](#set-to-idle) command.
+
+<br>
+## Trigger Armed Datalogging
+
+The **Trigger Armed Datalogging** command is used to initiate a data capture session on-board the Node.The data will be stored in the Node's internal memory and may be downloaded at a later time. 
+
+In most cases, you will want to [Arm](#arm-node-for-datalogging) each Node individually, and then send this command to the broadcast Node Address (65535 or 0xFFFF). This will be sent to all nodes on the Base Station's operating frequency, and any Nodes that are in the "Armed" state will start datalogging. This can be useful to start datalogging on multiple nodes at the same time.
+
+##### Command:
+```cpp
+uint8_t startByte 		= 0xAA;			//Start of Packet Byte
+uint8_t stopFlag 		= 0x05;			//Delivery Stop Flag
+uint8_t appDataType 	= 0x00;			//App Data Type
+uint16_t nodeAddress;					//Node Address
+uint8_t payloadLen 		= 0x0A;			//Payload Length
+uint16_t commandId 		= 0x000E;		//Command ID
+uint32_t timestampSec;					//UTC Timestamp (Seconds)
+uint32_t timestampNano;					//UTC Timestamp (Nanoseconds)
+uint16_t checksum;						//Checksum of [stopFlag - timestampNano]
+```
+
+##### Success Response:
+No Response.
+
+##### Failure Response:
+No Response.
+
+##### Notes:
+**Timestamp:** The Timestamp is made up of 2 values, each of which are 4 bytes. The first value represents the seconds of the timestamp, and the second value represents the nanoseconds of the timestamp. When downloading the logged data from the node, this timestamp will be transmitted in the header information and can be used to determine the exact timestamp of each data point. These bytes represent the current UTC time in seconds from the Unix Epoch (January 1, 1970).
