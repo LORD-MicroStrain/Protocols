@@ -523,3 +523,44 @@ No Response.
 
 ##### Failure Response:
 No Response.
+
+<br>
+## Initiate Synchronized Sampling
+
+The **Initiate Synchronized Sampling command** is used to put the Node into Synchronized Sampling mode. Once in this mode, the node must receive a beacon from the Base Station to begin sampling and transmitting data packets.
+
+For Synchronized Sampling mode, the wireless sensor network needs to be configured so that each node is assigned an appropriate TDMA slot prior to issuing the Initiate Synchronized Sampling command. To set up the wireless sensor network, use either the Synchronized Sampling Network within the MicroStrain provided desktop software, or the MicroStrain Communication Library (MSCL). Failure to configure the network correctly will lead to wireless packets colliding, resulting in data loss.
+
+##### Command:
+```cpp
+uint8_t startByte 		= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 		= 0x05;		//Delivery Stop Flag
+uint8_t appDataType 	= 0x00;		//App Data Type
+uint16_t nodeAddress;				//Node Address
+uint8_t payloadLen 		= 0x02;		//Payload Length
+uint16_t commandId 		= 0x003B;	//Command ID
+uint16_t checksum;					//Checksum of [stopFlag - commandId]
+```
+
+##### Initial Response:
+An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
+```cpp
+uint8_t packetSentAck 	= 0xAA;		//Package Sent Acknowledgement
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte 		= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
+uint8_t appDataType 	= 0x00;		//App Data Type
+uint16_t nodeAddress;				//Node Address
+uint8_t payloadLen 		= 0x03;		//Payload Length
+uint16_t commandId		= 0x003B;	//Command ID Echo
+uint8_t notUsed			= 0x00;		//RESERVED
+int8_t nodeRssi;					//Node RSSI
+int8_t baseRssi;					//Base RSSI
+uint16_t checksum;					//Checksum of [stopFlag - notUsed]
+```
+
+##### Failure Response:
+No Response.
