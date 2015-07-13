@@ -493,3 +493,33 @@ uint8_t checksum;					//Checksum for [channelValue] bytes
 or the Set to Idle command has been issued to the Node.
 
 **End of Stream:** The normal end of a finite stream is marked by 4-6 consecutive 0xAA (170) bytes. When parsing the stream, these bytes should be used as a signal that finite streaming has ended.
+
+<br>
+## Initiate Low Duty Cycle
+
+The **Initiate Low Duty Cycle (LDC)** command is used to put the Node in LDC sampling mode.
+
+The Low Duty Cycle sampling mode is a non-synchronized, low-latency form of sampling. While multiple Nodes can be started sampling, they are not part of a synchronized network. This can cause data packets to be sent over the air at the same time, resulting in data loss. If low-latency is not a requirement, it is highly recommended that you use the [Synchronized Sampling Mode](initiate-synchronized-sampling).
+
+##### Command:
+```cpp
+uint8_t startByte 		= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 		= 0x05;		//Delivery Stop Flag
+uint8_t appDataType 	= 0x00;		//App Data Type
+uint16_t nodeAddress;				//Node Address
+uint8_t payloadLen 		= 0x02;		//Payload Length
+uint16_t commandId 		= 0x0038;	//Command ID
+uint16_t checksum;					//Checksum of [stopFlag - commandId]
+```
+
+##### Initial Response:
+An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
+```cpp
+uint8_t packetSentAck 	= 0xAA;		//Package Sent Acknowledgement
+```
+
+##### Success Response:
+No Response.
+
+##### Failure Response:
+No Response.
