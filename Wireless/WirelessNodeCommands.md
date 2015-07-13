@@ -564,3 +564,31 @@ uint16_t checksum;					//Checksum of [stopFlag - notUsed]
 
 ##### Failure Response:
 No Response.
+
+<br>
+## Read Single Sensor
+
+The **Read Single Sensor** command is used to read the current value of a single channel on the Node.
+
+##### Command:
+```cpp
+uint8_t commandId 		= 0x03;		//Command ID
+uint16_t nodeAddress;				//Node Address
+uint8_t commandByte 	= 0x01;		//Command Byte
+uint8_t channelNumber;				//Channel Number
+```
+
+##### Success Response:
+```cpp
+uint8_t commandId 		= 0x03;		//Command ID Echo
+uint16_t channelValue;				//Value of the Requested Channel
+uint16_t checksum;					//Checksum of [channelValue]
+```
+
+##### Failure Response:
+```cpp
+uint8_t failId 			= 0x21;		//Failure Indicator
+```
+
+##### Notes:
+**Erroneous Data:** Values read using the Read Single Sensor command may be off due to there being no excitation time taken into account. The other full sampling modes use a Sampling Delay, which is an amount of time between sensor excitation power up and A/D sampling. 
