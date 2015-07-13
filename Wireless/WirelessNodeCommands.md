@@ -463,3 +463,33 @@ uint8_t failId 			= 0x21;			//Fail Indicator
 
 ##### Notes:
 **Response:** The response is returned immediately when the erasing processes begins, and no acknowledgment is sent when the process completes. The process may take up to 5 seconds, and the Node will not respond to any commands until the erasing is complete. Completion of the erase can be detected by repeatedly pinging the Node; when the erase is complete, the Node will return to idle mode and respond successfully to the ping.
+
+<br>
+## Initiate Real-Time Streaming (Legacy)
+
+The **Initiate Real-Time Streaming** command is used to start a real-time streaming session on a Node. The Node will respond by immediately sending a stream of data packets as the sensors are read. 
+
+**Note:** The Real-Time Streaming sampling mode is a legacy sampling mode and is no longer a recommended method of sampling. The sample rate is not consistent, data is not timestamped, you can only sample 1 Node at a time, and the data packet provides very little information.
+
+##### Command:
+```cpp
+uint8_t commandId 		= 0x38;		//Command ID
+uint16_t nodeAddress;				//Node Address
+```
+
+##### Response:
+Parsing of the streaming packets should begin with the first 0xFF byte. The 0xFF byte is the header of the first valid data packet shown below as Byte 1. Each successive 0xFF indicates the start of a new data packet and the end of the previous packet.
+
+Response Data Packet:
+```cpp
+uint8_t commandId 		= 0xFF;		//Command ID Echo
+uint16_t channelValue;				//Channel Value for 1st active channel
+//Repeat channelValue bytes for each active channel
+uint8_t checksum;					//Checksum for [channelValue] bytes
+```
+
+##### Notes:
+**Terminating Streaming:** Streaming may be stopped at any time by issuing any byte to the Base Station. This will cause the Base Station to stop streaming. It will not however cause the Node to stop streaming. The Node will continue to stream until the set (finite) duration has elapsed, the power on the Node is cycled,
+or the Set to Idle command has been issued to the Node.
+
+**End of Stream:** The normal end of a finite stream is marked by 4-6 consecutive 0xAA (170) bytes. When parsing the stream, these bytes should be used as a signal that finite streaming has ended.
