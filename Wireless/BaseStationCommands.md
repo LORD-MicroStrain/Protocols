@@ -1,5 +1,13 @@
 # Base Station Commands
 
+**List of Commands:**
+
+* [Ping Base Station](#ping-base-station)
+* [Read EEPROM](#read-base-station-eeprom)
+* [Write EEPROM](#write-base-station-eeprom)
+* [Enable Beacon](#enable-beacon)
+* [Disable Beacon](#disable-beacon)
+
 
 ## Ping Base Station
 
