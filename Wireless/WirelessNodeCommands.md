@@ -591,4 +591,26 @@ uint8_t failId 			= 0x21;		//Failure Indicator
 ```
 
 ##### Notes:
-**Erroneous Data:** Values read using the Read Single Sensor command may be off due to there being no excitation time taken into account. The other full sampling modes use a Sampling Delay, which is an amount of time between sensor excitation power up and A/D sampling. 
+**Erroneous Data:** Values read using the Read Single Sensor command may be off due to there being no excitation time taken into account. The other full sampling modes use a Sampling Delay, which is an amount of time between sensor excitation power up and A/D sampling.
+
+<br>
+## Auto-Balance Channel
+
+The **Auto-Balance Channel** command is used to auto-balance a particular channel on the Node. This command is only applicable to the differential channels on certain Nodes.
+
+##### Command:
+```cpp
+uint8_t commandId 		= 0x62;		//Command ID
+uint16_t nodeAddress;				//Node Address
+uint8_t channelNumber;				//Channel # to Balance
+uint16_t targetValue;				//Target Balance Value
+```
+
+##### Success Response:
+No Response.
+
+##### Failure Response:
+No Response.
+
+##### Notes:
+**Target Balance Value:** The target balance value represents the desired sensor output value in bits. All differential inputs have a programmable offset feature that allows the user to trim sensor offset (see hardware user manual for more information). This programmable offset can be manually altered via Node EEPROM, or auto-tuned such that the sensor output is balanced to a user-defined target. For example, a common use is to auto-balance to mid-scale (2048 bits) to obtain maximum bipolar dynamic range.
