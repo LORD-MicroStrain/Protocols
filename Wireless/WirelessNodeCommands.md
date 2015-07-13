@@ -1,5 +1,22 @@
 # Wireless Node Commands
 
+**List of Commands:**
+
+* [Short Ping](#short-ping)
+* [Long Ping](#long-ping)
+* [Read EEPROM](#read-node-eeprom)
+* [Write EEPROM](#write-node-eeprom)
+* [Initiate Sleep Mode](#initiate-sleep-mode)
+* [Set to Idle](#set-to-idle)
+* [Arm for Datalogging](#arm-node-for-datalogging)
+* [Trigger Armed Datalogging](#trigger-armed-datalogging)
+* [Page Download](#page-download)
+* [Erase Logged Data](#erase-logged-data)
+* [Initiate Real-Time Streaming](#initiate-real-time-streaming-legacy)
+* [Initiate Low Duty Cycle](#initiate-low-duty-cycle)
+* [Initiate Synchronized Sampling](#initiate-synchronized-sampling)
+* [Read Single Sensor](#read-single-sensor)
+* [Auto-Balance Channel](#auto-balance-channel)
 
 ## Short Ping
 
