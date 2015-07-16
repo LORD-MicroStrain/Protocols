@@ -171,7 +171,7 @@ uint16_t checksum;									//Checksum of [stopFlag - analogChannelData_EvtX]
 
 **Events:** Each event contained in the packet is made up of a 2-byte timestamp offset, 2-bytes of digital channel data, and X bytes of analog channel data. The Timestamp Offset must be divided by 32,768 to get its time in seconds. Each bit in the digital channel data represents a digital line. However, the Channel Mask should be interrogated to determine which of these lines have a valid value. The analog channel data will only be present when the digital channel line is active (a value of 1). Note that the analog channel data needs to be read off in the specific data type that is denoted by the Data Type byte.
 
-*Example: *  The first event in the packet contains a digital value of 13, which is 0000 0000 0000 1101 in binary, meaning digital lines 1, 3, and 4 are active. The Data Type of the packet is 0x02, meaning the analog data points are 4-byte floating point values. So the next 12 bytes (3 channels * 4 bytes per ch) in the packet will be the analog values for channels 1, 3, and 4.
+*Example:*  The first event in the packet contains a digital value of 13, which is 0000 0000 0000 1101 in binary, meaning digital lines 1, 3, and 4 are active. The Data Type of the packet is 0x02, meaning the analog data points are 4-byte floating point values. So the next 12 bytes (3 channels * 4 bytes per ch) in the packet will be the analog values for channels 1, 3, and 4.
 
 Each packet may contain more than one event. Each event has a timestamp offset that much be added to the packet’s absolute timestamp. This can be done via the following:
 
