@@ -91,6 +91,43 @@ Channel data should be parsed in the following manner:
 - Sweep 2, Next active channel (Repeat for each active channel)
 - Repeat for each Sweep in the packet 
 
+## Asynchronous Digital-Only Packet
+The Asynchronous Digital-Only data packet contains time and digital state values collected when a Node was triggered by digital pulses.
+
+```cpp
+uint8_t startByte 					= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 					= 0x07;		//Delivery Stop Flag
+uint8_t appDataType 				= 0x0E;		//App Data Type
+uint16_t nodeAddress;							//Node Address
+uint8_t payloadLen;								//Payload Length
+uint16_t channelMask;							//Digital Channel Mask
+uint16_t tick;									//Event Tick
+uint32_t timestampSec;							//UTC Timestamp (seconds)
+uint32_t timestampNano;							//UTC Timestamp (nanoseconds)
+uint16_t timestampOffsetEvt1;					//Timestamp Offset - Event 1
+uint16_t digitalChannelData;					//Digital Channel Data - Event 1
+//Repeat Timestamp and Digital Channel bytes for all Events
+int8_t nodeRssi;								//Node RSSI
+int8_t baseRssi;								//Base Station RSSI
+uint16_t checksum;								//Checksum of [stopFlag - chData]
+```
+
+#####Notes:
+**Digital Channel Mask:** The Digital Channel Mask represents the digital channels that are actively being monitored by the Node.
+
+**Event Tick:** The Event Tick represents a counter for each event. Although multiple events may be in the same packet, only one Event Tick will be found per packet. The tick for each event can be found by incrementing the Event Tick for each event that is contained in that packet.
+
+**Timestamp:** The UTC Timestamp bytes represent the initial timestamp in which each Event’s Timestamp Offset must be added to in order to calculate the UTC Timestamp for each Event.
+
+**Events:** Each event contained in the packet is made up of a 2-byte Timestamp Offset and 2 bytes of Digital Channel Data. The Timestamp Offset must be divided by 32,768 to get its time in seconds. Each bit in the digital channel data represents a digital line. However, the Digital Channel Mask should be interrogated to determine which of these lines have a valid value. Multiple events may be contained in one packet. The number of events in the packet can be determined via the following: 
+
+    #Events = ((Payload Length - 12) / 4)
+
+Each event has a timestamp offset that much be added to the packet’s absolute timestamp. This can be done via the following:
+
+    EventTimestamp = PacketTimestamp + (EventTimestampOffset / 32,768)
+
+
 ## Diagnostic Packet
 ```cpp
 uint8_t startByte 					= 0xAA;		//Start of Packet Byte
