@@ -1,5 +1,14 @@
 # Wireless Data Packets
 
+**List of Packets:**
+
+* [Low Duty Cycle (LDC) Packet](#low-duty-cycle-ldc-packet)
+* [Buffered Low Duty Cycle Packet](#buffered-low-duty-cycle-packet)
+* [Synchronized Sampling Packet](#synchronized-sampling-packet)
+* [Asynchronous Digital-Only Packet](#asynchronous-digital-only-packet)
+* [Asynchronous Digital & Analog Packet](#asynchronous-digital--analog-packet)
+* [Diagnostic Packet](#diagnostic-packet)
+
 ## Low Duty Cycle (LDC) Packet
 
 ```cpp
