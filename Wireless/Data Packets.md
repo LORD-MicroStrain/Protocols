@@ -104,12 +104,12 @@ uint16_t channelMask;							//Digital Channel Mask
 uint16_t tick;									//Event Tick
 uint32_t timestampSec;							//UTC Timestamp (seconds)
 uint32_t timestampNano;							//UTC Timestamp (nanoseconds)
-uint16_t timestampOffsetEvt1;					//Timestamp Offset - Event 1
-uint16_t digitalChannelData;					//Digital Channel Data - Event 1
+uint16_t timestampOffset_Evt1;					//Timestamp Offset - Event 1
+uint16_t digitalChannelData_Evt1;					//Digital Channel Data - Event 1
 //Repeat Timestamp and Digital Channel bytes for all Events
 int8_t nodeRssi;								//Node RSSI
 int8_t baseRssi;								//Base Station RSSI
-uint16_t checksum;								//Checksum of [stopFlag - chData]
+uint16_t checksum;								//Checksum of [stopFlag - digitalChannelData_EvtX]
 ```
 
 #####Notes:
@@ -127,6 +127,46 @@ Each event has a timestamp offset that much be added to the packet’s absolute 
 
     EventTimestamp = PacketTimestamp + (EventTimestampOffset / 32,768)
 
+## Asynchronous Digital & Analog Packet
+The Asynchronous Digital & Analog data packet contains time, digital state, and analog sensor values collected when a Node was triggered by digital pulses.
+
+```cpp
+uint8_t startByte 					= 0xAA;			//Start of Packet Byte
+uint8_t stopFlag 					= 0x07;			//Delivery Stop Flag
+uint8_t appDataType 				= 0x0F;			//App Data Type
+uint16_t nodeAddress;								//Node Address
+uint8_t payloadLen;									//Payload Length
+uint16_t channelMask;								//Channel Mask
+uint8_t dataType;									//Data Type
+uint16_t tick;										//Event Tick
+uint32_t timestampSec;								//UTC Timestamp (seconds)
+uint32_t timestampNano;								//UTC Timestamp (nanoseconds)
+uint16_t timestampOffset_Evt1;						//Timestamp Offset - Event 1
+uint16_t digitalChannelData_Evt1;					//Digital Channel Data - Event 1
+uint16_t | uint32_t | float	analogChannelData_Evt1;	//Analog Channel Data - Event 1
+//Repeat Analog Channel Data for each digital channel that is active (high) in the Digital Channel Data bytes for the current Event.
+//Repeat Timestamp and Digital Channel Data, and Analog Channel Data bytes for all Events
+int8_t nodeRssi;									//Node RSSI
+int8_t baseRssi;									//Base Station RSSI
+uint16_t checksum;									//Checksum of [stopFlag - analogChannelData_EvtX]
+```
+
+#####Notes:
+**Digital Channel Mask:** The Digital Channel Mask represents the digital channels that are actively being monitored by the Node.
+
+**Data Type:** The Data Type determines the format of **Analog** data that is transmitted in the packet.
+
+**Event Tick:** The Event Tick represents a counter for each event. Although multiple events may be in the same packet, only one Event Tick will be found per packet. The tick for each event can be found by incrementing the Event Tick for each event that is contained in that packet.
+
+**Timestamp:** The UTC Timestamp bytes represent the initial timestamp in which each Event’s Timestamp Offset must be added to in order to calculate the UTC Timestamp for each Event.
+
+**Events:** Each event contained in the packet is made up of a 2-byte timestamp offset, 2-bytes of digital channel data, and X bytes of analog channel data. The Timestamp Offset must be divided by 32,768 to get its time in seconds. Each bit in the digital channel data represents a digital line. However, the Channel Mask should be interrogated to determine which of these lines have a valid value. The analog channel data will only be present when the digital channel line is active (a value of 1). Note that the analog channel data needs to be read off in the specific data type that is denoted by the Data Type byte.
+
+*Example: *  The first event in the packet contains a digital value of 13, which is 0000 0000 0000 1101 in binary, meaning digital lines 1, 3, and 4 are active. The Data Type of the packet is 0x02, meaning the analog data points are 4-byte floating point values. So the next 12 bytes (3 channels * 4 bytes per ch) in the packet will be the analog values for channels 1, 3, and 4.
+
+Each packet may contain more than one event. Each event has a timestamp offset that much be added to the packet’s absolute timestamp. This can be done via the following:
+
+    EventTimestamp = PacketTimestamp + (EventTimestampOffset / 32,768)
 
 ## Diagnostic Packet
 ```cpp
