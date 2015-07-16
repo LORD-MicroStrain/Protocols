@@ -8,6 +8,7 @@
 * [Asynchronous Digital-Only Packet](#asynchronous-digital-only-packet)
 * [Asynchronous Digital & Analog Packet](#asynchronous-digital--analog-packet)
 * [Diagnostic Packet](#diagnostic-packet)
+* [Node Discovery Packet](#node-discovery-packet)
 
 ## Low Duty Cycle (LDC) Packet
 
@@ -235,3 +236,19 @@ ID  | Description   | Data Values | # Bytes | Type | Unit
 
 *Full Example:*
 If the Info Item Length byte is 0x0B, the next 11 bytes make up the Info Item ID and Value. If the next byte is 0x01, then we know the Info Item Value is signifying Transmit Info which is made up of Total Transmissions, Total Retransmissions, and Total Dropped Packets. From the table we know to parse the next 4 bytes as a uint32 representing the Total Transmissions, the next 4 bytes as a uint32 representing the Total Retransmissions, and the last 2 bytes as a uint16 representing the Total Dropped Packets.
+
+## Node Discovery Packet
+On power up, the Node will transmit two identification packets. The packets are sent out on all radio frequencies, allowing any Base Station within range to receive the identification packets, regardless of the Base Station’s current frequency assignment. The Base Station immediately passes these packets to the host serial port.
+
+```cpp
+uint8_t startByte 					= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag;								//Delivery Stop Flag
+uint8_t appDataType 				= 0x00;		//App Data Type
+uint16_t nodeAddress;							//Node Address
+uint8_t payloadLen					= 0x03;		//Payload Length
+uint8_t frequency;								//Radio Frequency the Node is on
+uint16_t model;									//Model Number
+int8_t reserved;								//RESERVED
+int8_t baseRssi;								//Base Station RSSI
+uint16_t checksum;								//Checksum of [stopFlag - model]
+```
