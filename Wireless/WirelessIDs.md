@@ -143,3 +143,102 @@ ID | Value | Description
 32	| percent relative humidity
 33	| milliVolt/Volt
 34	| milli-G's
+
+####Channel Type
+ID | Value | Description
+:------:|:----:|:--------------
+0 | None | No channel type
+1 | Full Differential
+2 | Single Ended
+3 | Battery
+4 | Temperature
+5 | Relative Humidity
+6 | Acceleration
+7 | Displacement
+8 | Voltage
+9 | Differential | Temperature (thermocouple, rtd)
+
+####Settling Time
+ID | Value | Description
+:------:|:----:|:--------------
+1		| 4 ms | fastest settling
+2		| 8 ms |
+3		| 16 ms
+4		| 32 ms
+5		| 40 ms
+6		| 48 ms
+7		| 60 ms
+8		| 101 ms | 90db [60Hz Rejection]
+9		| 120 ms | 80db [50Hz Rejection]
+10	| 120 millisecond settling time | 65db [50+60Hz Rejection]
+11	| 160 millisecond settling time | 69db [50+60Hz Rejection]
+12	| 200 millisecond settling time | highest resolution
+
+####Thermocouple Type
+ID | Value | Description
+:------:|:----:|:--------------
+0		| Uncompensated | no thermocouple type
+1		| K Type
+2		| J Type
+3		| R Type
+4		| S Type
+5		| T Type
+6		| E Type
+7		| B Type
+8		| N Type
+9		| Custom Polynomial
+
+####Sample Rate
+ID | Value | Description
+:------:|:----:|:--------------
+60	| 104170 Hz 
+58	| 78125 Hz
+57	| 62500 Hz
+56	| 25000 Hz
+55	| 12500 Hz
+49	| 3200 Hz
+48	| 1600 Hz
+47	| 800 Hz
+62	| 1 kHz
+63	| 2 kHz
+64	| 3 kHz
+65	| 4 kHz
+66	| 5 kHz
+67	| 6 kHz
+68	| 7 kHz
+69	| 8 kHz
+70	| 9 kHz	
+71	| 10 kHz
+72	| 20 kHz
+73	| 30 kHz
+74	| 40 kHz
+75	| 50 kHz
+76	| 60 kHz
+77	| 70 kHz
+78	| 80 kHz
+79	| 90 kHz
+80	| 100 kHz
+101	| 4096 Hz
+102	| 2048 Hz
+103	| 1024 Hz
+104	| 512 Hz
+105	| 256 Hz
+106	| 128 Hz
+107	| 64 Hz
+108	| 32 Hz
+109	| 16 Hz
+110	| 8 Hz
+111	| 4 Hz
+112	| 2 Hz
+113	| 1 Hz
+114	| 1 sample every 2 seconds
+115	| 1 sample every 5 seconds
+116	| 1 sample every 10 seconds
+117	| 1 sample every 30 seconds
+118	| 1 sample every 1 minute
+119	| 1 sample every 2 minutes
+120	| 1 sample every 5 minutes
+121	| 1 sample every 10 minutes
+122	| 1 sample every 30 minutes
+123	| 1 sample every 60 minutes
+127	| 1 sample every 24 hours
