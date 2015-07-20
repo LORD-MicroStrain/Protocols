@@ -143,7 +143,7 @@ ID | Value | Description
 
 ####Cal Coefficients - Unit
 
-The unit type foe cal coefficients. `EEPROM 150 (ch1) - 220 (ch8)`
+The unit type for cal coefficients. `EEPROM 150 (ch1) - 220 (ch8)`
 
 ID | Value | Description
 :------:|:----:|:--------------
