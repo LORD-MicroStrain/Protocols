@@ -347,7 +347,7 @@ uint8_t headerVerMinor 			= 0x00;		//Header Version (Minor)
 uint16_t numBytesBeforeChInfo;				//# of Bytes before the Channel Info
 uint16_t samplesPerDataSet;					//Samples per Data Set
 uint16_t sessionIndex;						//Session Index
-uint8_t channelMask;						//Active Channel Mask
+uint16_t channelMask;						//Active Channel Mask
 uint16_t sampleRate;						//Sample Rate
 uint16_t numUserBytes;						//# of User Entered Bytes
 int8_t userBytes[0-50];						//up to 50 user entered bytes (if any)
@@ -372,7 +372,7 @@ uint8_t headerVerMinor 			= 0x00;		//NEW: Header Version (Minor)
 uint16_t numBytesBeforeChInfo;				//# of Bytes before the Channel Info
 uint16_t samplesPerDataSet;					//Samples per Data Set
 uint16_t sessionIndex;						//Session Index
-uint8_t channelMask;						//Active Channel Mask
+uint16_t channelMask;						//Active Channel Mask
 uint16_t sampleRate;						//Sample Rate
 uint8_t dataType;							//NEW: Data Type
 uint8_t reserved;							//NEW: RESERVED
@@ -399,7 +399,7 @@ uint8_t headerVerMinor 			= 0x01;		//NEW: Header Version (Minor)
 uint16_t numBytesBeforeChInfo;				//# of Bytes before the Channel Info
 uint16_t samplesPerDataSet;					//NEW: Samples per Data Set / 100
 uint16_t sessionIndex;						//Session Index
-uint8_t channelMask;						//Active Channel Mask
+uint16_t channelMask;						//Active Channel Mask
 uint16_t sampleRate;						//Sample Rate
 uint8_t dataType;							//Data Type
 uint8_t reserved;							//RESERVED
