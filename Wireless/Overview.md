@@ -7,9 +7,9 @@ The MicroStrain Wireless Protocol describes how to communicate at a low level wi
 
 This includes [BaseStations](http://www.microstrain.com/wireless/gateways) and [Wireless Nodes](http://www.microstrain.com/wireless/sensors).
 
-Most users who want to write their own code to interact with MicroStrain devices should check out [MSCL (MicroStrain Communication Library)](http://www.microstrain.com). MSCL abstracts all of the low-level logic and provides an easy to use, unit tested, high-level interface to communicate with our devices. It can be used in C++, C#, Python, and LabView.
+Most users who want to write their own code to interact with MicroStrain devices should check out [MSCL (MicroStrain Communication Library)](http://lord-microstrain.github.io/MSCL/). MSCL abstracts all of the low-level logic and provides an easy to use, unit tested, high-level interface to communicate with our devices. It can be used in C++, C#, Python, and LabView.
 
-For users who cannot use MSCL for some reason, this protocol should provide all the information you need to get up and running with writing your own software.
+For users who do not wish to use MSCL, this protocol should provide all the information you need to get up and running with writing your own software.
 
 ## Interface
 
