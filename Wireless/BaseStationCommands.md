@@ -9,7 +9,7 @@
 * [Disable Beacon](#disable-beacon)
 
 
-## Ping Base Station
+## Ping Base Station (v1)
 
 The **Ping Base Station** command is used to ensure that the host computer and the Base Station are properly communicating.
 
