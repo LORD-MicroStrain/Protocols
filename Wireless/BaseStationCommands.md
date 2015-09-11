@@ -9,13 +9,13 @@
 * [Enable Beacon (v1)](#enable-beacon-v1)
 * [Disable Beacon (v1)](#disable-beacon-v1)
 
-####ASPP v1.1
-(BaseStation firmware 4.0+)
+####ASPP v1.1 (BaseStation FW v4.0+)
 * [Ping Base Station (v2)](#ping-base-station-v2)
 * [Read EEPROM (v2)](#read-base-station-eeprom-v2)
 * [Write EEPROM (v2)](#write-base-station-eeprom-v2)
 * [Enable Beacon (v2)](#enable-beacon-v2)
 * [Disable Beacon (v2)](#disable-beacon-v2)
+* [Beacon Status (v1)](#beacon-status-v1)
 
 ## Ping Base Station (v1)
 
@@ -311,7 +311,7 @@ Code         | Description
 <br>
 ## Disable Beacon (v1)
 
-The Disable Beacon command is used to turn off the beacon on the Base Station.
+The **Disable Beacon** command is used to turn off the beacon on the Base Station.
 
 ##### Command:
 ```cpp
@@ -332,7 +332,7 @@ Notice that the **Disable Beacon** command packet is the same as the Enable Beac
 <br>
 ## Disable Beacon (v2)
 
-The Disable Beacon command is used to turn off the beacon on the Base Station.
+The **Disable Beacon** command is used to turn off the beacon on the Base Station.
 
 ##### Command:
 ```cpp
@@ -382,3 +382,60 @@ Code         | Description
 
 ##### Notes:
 Notice that the **Disable Beacon** command packet is the same as the Enable Beacon command packet, but with 0xFFFFFFFF for its "Timestamp" bytes.
+
+<br>
+## Beacon Status (v1)
+
+The **Beacon Status** command is used to get information about the Beacon on the Base Station.
+
+##### Command:
+```cpp
+uint8_t startByte 		= 0xAA;			//Start of Packet byte
+uint8_t stopFlag 		= 0x0E;			//Delivery Stop Flag
+uint8_t appDataType 	= 0x30;			//App Data Type
+uint16_t baseAddress	= 0x1234;		//Base Station Address
+uint8_t payloadLen		= 0x02;			//Payload Length
+uint16_t commandId		= 0xBEAD;		//Command ID
+uint16_t checksum;						//Checksum of [stopFlag - commandId]
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte 		= 0xAA;			//Start of Packet byte
+uint8_t stopFlag 		= 0x07;			//Delivery Stop Flag
+uint8_t appDataType 	= 0x31;			//App Data Type
+uint16_t baseAddress	= 0x1234;		//Base Station Address
+uint8_t payloadLen		= 0x0B;			//Payload Length
+uint16_t commandId		= 0xBEAD;		//Command ID Echo
+uint8_t beaconStatus;					//The Status of the Beacon
+uint32_t timestamp_sec;					//The Current Timestamp of the Beacon (seconds)
+uint32_t timestamp_nano;				//The Current Timestamp of the Beacon (nanoseconds)
+uint8_t RESERVED;						//Reserved Byte
+uint8_t RESERVED;						//Reserved Byte
+uint16_t checksum;						//Checksum of [stopFlag - timestamp]
+```
+
+##### Fail Response:
+```cpp
+uint8_t startByte 		= 0xAA;			//Start of Packet byte
+uint8_t stopFlag 		= 0x07;			//Delivery Stop Flag
+uint8_t appDataType 	= 0x32;			//App Data Type
+uint16_t baseAddress	= 0x1234;		//Base Station Address
+uint8_t payloadLen		= 0x03;			//Payload Length
+uint16_t commandId		= 0xBEAD;		//Command ID Echo
+uint8_t errorCode;						//Error Code
+uint8_t RESERVED;						//Reserved Byte
+uint8_t RESERVED;						//Reserved Byte
+uint16_t checksum;						//Checksum of [stopFlag - errorCode]
+```
+
+**beaconStatus**
+
+ - 0x00 - Beacon is Off
+ - 0x01 - Beacon is On
+
+**Error Codes:**
+
+Code         | Description 
+-------------|-------------- 
+4            | Hardware Error
