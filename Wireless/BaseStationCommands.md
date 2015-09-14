@@ -2,13 +2,6 @@
 
 **List of Commands:**
 
-####ASPP v1.0
-* [Ping Base Station (v1)](#ping-base-station-v1)
-* [Read EEPROM (v1)](#read-base-station-eeprom-v1)
-* [Write EEPROM (v1)](#write-base-station-eeprom-v1)
-* [Enable Beacon (v1)](#enable-beacon-v1)
-* [Disable Beacon (v1)](#disable-beacon-v1)
-
 ####ASPP v1.1 
 These changes were made in **Base Station firmware 4.0** and above:
 * [Ping Base Station (v2)](#ping-base-station-v2)
@@ -17,6 +10,13 @@ These changes were made in **Base Station firmware 4.0** and above:
 * [Enable Beacon (v2)](#enable-beacon-v2)
 * [Disable Beacon (v2)](#disable-beacon-v2)
 * [Beacon Status (v1)](#beacon-status-v1)
+
+####ASPP v1.0
+* [Ping Base Station (v1)](#ping-base-station-v1)
+* [Read EEPROM (v1)](#read-base-station-eeprom-v1)
+* [Write EEPROM (v1)](#write-base-station-eeprom-v1)
+* [Enable Beacon (v1)](#enable-beacon-v1)
+* [Disable Beacon (v1)](#disable-beacon-v1)
 
 ## Ping Base Station (v1)
 
