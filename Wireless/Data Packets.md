@@ -8,7 +8,9 @@
 * [Asynchronous Digital-Only Packet](#asynchronous-digital-only-packet)
 * [Asynchronous Digital & Analog Packet](#asynchronous-digital--analog-packet)
 * [Diagnostic Packet](#diagnostic-packet)
-* [Node Discovery Packet](#node-discovery-packet)
+* [Node Discovery Packet (v1)](#node-discovery-packet-v1)
+* [Node Discovery Packet (v2)](#node-discovery-packet-v2)
+* [Node Discovery Packet (v3)](#node-discovery-packet-v3)
 
 ## Low Duty Cycle (LDC) Packet
 
@@ -237,7 +239,7 @@ ID  | Description   | Data Values | # Bytes | Type | Unit
 *Full Example:*
 If the Info Item Length byte is 0x0B, the next 11 bytes make up the Info Item ID and Value. If the next byte is 0x01, then we know the Info Item Value is signifying Transmit Info which is made up of Total Transmissions, Total Retransmissions, and Total Dropped Packets. From the table we know to parse the next 4 bytes as a uint32 representing the Total Transmissions, the next 4 bytes as a uint32 representing the Total Retransmissions, and the last 2 bytes as a uint16 representing the Total Dropped Packets.
 
-## Node Discovery Packet
+## Node Discovery Packet (v1)
 On power up, the Node will transmit two identification packets. The packets are sent out on all radio frequencies, allowing any Base Station within range to receive the identification packets, regardless of the Base Station’s current frequency assignment. The Base Station immediately passes these packets to the host serial port.
 
 ```cpp
@@ -247,8 +249,61 @@ uint8_t appDataType 				= 0x00;		//App Data Type
 uint16_t nodeAddress;							//Node Address
 uint8_t payloadLen					= 0x03;		//Payload Length
 uint8_t frequency;								//Radio Frequency the Node is on
-uint16_t model;									//Model Number
+uint16_t model;									//The (legacy) Model Number of the Node
 int8_t reserved;								//RESERVED
 int8_t baseRssi;								//Base Station RSSI
 uint16_t checksum;								//Checksum of [stopFlag - model]
 ```
+
+## Node Discovery Packet (v2)
+On power up, the Node will transmit two identification packets. The packets are sent out on all radio frequencies, allowing any Base Station within range to receive the identification packets, regardless of the Base Station’s current frequency assignment. The Base Station immediately passes these packets to the host serial port.
+
+```cpp
+uint8_t startByte 			= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag			= 0x07;		//Delivery Stop Flag
+uint8_t appDataType 		= 0x17;		//App Data Type
+uint16_t nodeAddress;					//Node Address
+uint8_t payloadLen			= 0x0F;		//Payload Length
+uint8_t frequency;						//Radio Frequency the Node is on
+uint16_t panId;							//The PAN ID the Node is on
+uint16_t modelNumber;					//The Model Number of the Node
+uint16_t modelOption;					//The Model Option of the Node
+uint32_t serial;						//The Serial Number of the Node
+uint16_t firmwareVersion;				//The (legacy) Firmware Version of the Node
+uint16_t defaultMode;					//The Default Mode of the Node
+int8_t reserved;						//RESERVED
+int8_t baseRssi;						//Base Station RSSI
+uint16_t checksum;						//Checksum of [stopFlag - model]
+```
+**modelNumber** - The main model of the Node (ex. 6305 = G-Link).
+
+**modelOption** - The specific option of the model. Combine this with the modelNumber to accurately identify the Node (ex. 6305-2000 = G-Link 2G, 6305-3000 = G-Link 10G).
+
+**firmwareVersion** - The firmware version of the Node. Byte 1 is the Major part, and Byte 2 in the Minor part.
+
+## Node Discovery Packet (v3)
+On power up, the Node will transmit two identification packets. The packets are sent out on all radio frequencies, allowing any Base Station within range to receive the identification packets, regardless of the Base Station’s current frequency assignment. The Base Station immediately passes these packets to the host serial port.
+
+```cpp
+uint8_t startByte 			= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag			= 0x07;		//Delivery Stop Flag
+uint8_t appDataType 		= 0x18;		//App Data Type
+uint16_t nodeAddress;					//Node Address
+uint8_t payloadLen			= 0x11;		//Payload Length
+uint8_t frequency;						//Radio Frequency the Node is on
+uint16_t panId;							//The PAN ID the Node is on
+uint16_t modelNumber;					//The Model Number of the Node
+uint16_t modelOption;					//The Model Option of the Node
+uint32_t serial;						//The Serial Number of the Node
+uint16_t firmwareVersion1;				//The Firmware Version of the Node (part 1)
+uint16_t firmwareVersion2;				//The Firmware Version of the Node (part 2)
+uint16_t defaultMode;					//The Default Mode of the Node
+int8_t reserved;						//RESERVED
+int8_t baseRssi;						//Base Station RSSI
+uint16_t checksum;						//Checksum of [stopFlag - model]
+```
+**modelNumber** - The main model of the Node (ex. 6305 = G-Link).
+
+**modelOption** - The specific option of the model. Combine this with the modelNumber to accurately identify the Node (ex. 6305-2000 = G-Link 2G, 6305-3000 = G-Link 10G).
+
+**firmwareVersion** - The firmware version of the Node. Byte 1 is the Major part, while Bytes 2-4 (as a uint32_t) together represent the Minor part.
