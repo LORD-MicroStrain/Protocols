@@ -10,7 +10,7 @@
 * [Disable Beacon (v1)](#disable-beacon-v1)
 
 ####ASPP v1.1 
-These changes were made in BaseStation FW v4.0 and above:
+These changes were made in **Base Station firmware 4.0** and above:
 * [Ping Base Station (v2)](#ping-base-station-v2)
 * [Read EEPROM (v2)](#read-base-station-eeprom-v2)
 * [Write EEPROM (v2)](#write-base-station-eeprom-v2)
