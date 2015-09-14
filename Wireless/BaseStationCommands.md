@@ -9,7 +9,7 @@ These changes were made in **Base Station firmware 4.0** and above:
 * [Write EEPROM (v2)](#write-base-station-eeprom-v2)
 * [Enable Beacon (v2)](#enable-beacon-v2)
 * [Disable Beacon (v2)](#disable-beacon-v2)
-* [Beacon Status (v1)](#beacon-status-v1)
+* [Beacon Status](#beacon-status)
 
 ####ASPP v1.0
 * [Ping Base Station (v1)](#ping-base-station-v1)
@@ -385,7 +385,7 @@ Code         | Description
 Notice that the **Disable Beacon** command packet is the same as the Enable Beacon command packet, but with 0xFFFFFFFF for its "Timestamp" bytes.
 
 <br>
-## Beacon Status (v1)
+## Beacon Status
 
 The **Beacon Status** command is used to get information about the Beacon on the Base Station.
 
