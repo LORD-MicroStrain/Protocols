@@ -7,7 +7,7 @@ Standard Settings,,,,,
 48,Model Option,uint16,,The model option of the device.,3.00
 50,Base Station Address,uint16,4660,The address of the device. This is the same for all Base Stations. Do Not Change.,1.00
 90,Radio Frequency,uint16,[11 - 26],The radio frequency of the device. Nodes on this same frequency can be communicated with.,1.00
-94,Transmit Power Level,uint16,see notes,The transmit output power of the radio.,1.00
+94,Transmit Power Level,uint16,[https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/BaseStationCommands.md#ping-base-station-v2](see notes),The transmit output power of the radio.,1.00
 96,Beacon Source,uint16,see notes,The source of the beacon clock.,3.00
 108,Firmware Version (1),uint16,see notes,The firmware version of the device (Part 1).,4.00
 110,Firmware Version (2),uint16,see notes,The firmware version of the device (Part 2).,4.00
