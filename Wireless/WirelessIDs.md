@@ -288,6 +288,18 @@ ID | Value | Description
 123	| 1 sample every 60 minutes
 127	| 1 sample every 24 hours
 
+####Region Code
+
+The region that the device will be operated in. `EEPROM 280`
+
+ID | Value | Description
+:------:|:----:|:--------------
+0	| USA
+1	| Europe
+2| Japan
+3	| Other
+4	| Brazil
+
 ####Firmware Version 
 
 The firmware version of the device. `EEPROM 108 and 110`
