@@ -25,6 +25,7 @@ These changes were made in **Node firmware 8.21** and above.
 * [Initiate Synchronized Sampling](#initiate-synchronized-sampling)
 * [Read Single Sensor](#read-single-sensor)
 * [Auto-Balance Channel](#auto-balance-channel)
+* [Cycle Power & Radio](#cycle-power--radio)
 
 ## Short Ping
 
