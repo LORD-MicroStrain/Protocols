@@ -17,6 +17,7 @@ These changes were made in **Base Station firmware 4.0** and above:
 * [Write EEPROM (v1)](#write-base-station-eeprom-v1)
 * [Enable Beacon (v1)](#enable-beacon-v1)
 * [Disable Beacon (v1)](#disable-beacon-v1)
+* [Cycle Power & Radio](#cycle-power--radio)
 
 ## Ping Base Station (v1)
 
@@ -440,3 +441,11 @@ uint16_t checksum;						//Checksum of [stopFlag - errorCode]
 Code         | Description 
 -------------|-------------- 
 4            | Hardware Error
+
+
+<br>
+## Cycle Power & Radio
+
+To cycle the power on the device, use the `Write EEPROM` command and write a `1` to `EEPROM 250`.
+
+To cycle the radio on the device, use the `Write EEPROM` command and write a `2` to `EEPROM 250`.
