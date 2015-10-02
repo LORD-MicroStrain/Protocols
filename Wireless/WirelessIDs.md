@@ -287,3 +287,42 @@ ID | Value | Description
 122	| 1 sample every 30 minutes
 123	| 1 sample every 60 minutes
 127	| 1 sample every 24 hours
+
+####Firmware Version 
+
+The firmware version of the device. `EEPROM 108 and 110`
+
+**For BaseStation FW >= 4.0 and Node FW >= 10.0** :
+The firmware version of Base Stations and Wireless Nodes are repesented in the following format: `Major.Revision`
+where `Major` is the first byte (MSB) of EEPROM 108, and `Revision` is a 3 byte value created by combining the last byte (LSB) of EEPROM 108 and both bytes of EEPROM 110.
+
+For example:
+
+```cpp
+uint16_t fwValue1 = readEeprom(108);
+uint16_t fwValue2 = readEeprom(110);
+
+uint8_t msb1 = fwValue1 >> 8;
+uint8_t lsb1 = fwValue1 & 0x00FF;
+uint8_t msb2 = fwValue2 >> 8;
+uint8_t lsb2 = fwValue2 & 0x00FF;
+
+uint16_t hiWord = (0 << 8) | lsb1;
+uint16_t loWord = (msb2 << 8) | lsb2;
+
+uint8_t major = msb1;
+uint32_t revision = static_cast<uint32_t>(hiWord) << 16 | static_cast<uint32_t>(loWord)
+```
+
+**For BaseStation FW < 4.0 and Node FW < 10.0** (LEGACY):
+The firmware version of Base Stations and Wireless Nodes are repesented in the following format: `Major.Minor`
+where `Major` is the first byte (MSB) of EEPROM 108, and `Minor` is the last byte (LSB) of EEPROM 108.
+
+For example:
+
+```cpp
+uint16_t fwValue = readEeprom(108);
+
+uint8_t major = fwValue >> 8;
+uint8_t minor = fwValue & 0x00FF;
+```
