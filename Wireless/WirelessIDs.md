@@ -1,5 +1,16 @@
 # Wireless IDs
 
+####Beacon Source
+
+The source of a Base Station's beacon. `EEPROM 96`
+
+ID | Value | Description
+:------:|:----:|:--------------
+0 | None | No Beacon
+1 | Internal Timer |
+2 | Internal PPS |
+3 | External PPS |
+
 ####Microcontroller Types
 
 The type of microcontroller on the device. `EEPROM 120`
