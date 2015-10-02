@@ -1,16 +1,5 @@
 # Wireless IDs
 
-####Beacon Source
-
-The source of a Base Station's beacon. `EEPROM 96`
-
-ID | Value | Description
-:------:|:----:|:--------------
-0 | None | No Beacon
-1 | Internal Timer |
-2 | Internal PPS |
-3 | External PPS |
-
 ####Microcontroller Types
 
 The type of microcontroller on the device. `EEPROM 120`
@@ -299,6 +288,33 @@ ID | Value | Description
 2| Japan
 3	| Other
 4	| Brazil
+
+####Beacon Source
+
+The source of a Base Station's beacon. `EEPROM 96`
+
+ID | Value | Description
+:------:|:----:|:--------------
+0 | None | No Beacon
+1 | Internal Timer |
+2 | Internal PPS |
+3 | External PPS |
+
+####Button Actions
+
+The actions that can be performed by a Base Station's physical buttons. `EEPROMs 232, 236, 258, 262`
+
+ID | Value | Description
+:------:|:----:|:--------------
+0 | Node Sleep | Puts a Node into sleep mode.
+1 | Node Set to Idle | Puts a Node into idle mode.
+2 | Enable Beacon | Enable the Base Station's beacon.
+3 | Disable Beacon | Disables the Base Station's beacon.
+4 | Start Node Non-Sync Sampling | Starts a Node sampling in Non-Sync mode.
+5 | Start Node Sync Sampling | Starts a Node sampling in Sync mode.
+6 | Start Node Armed Datalogging | Starts a Node sampling in Armed Datalogging mode.
+7 | Cycle Power | Cycles the Base Station's power.
+65535 | Disabled | Disables the button functionality.
 
 ####Firmware Version 
 
