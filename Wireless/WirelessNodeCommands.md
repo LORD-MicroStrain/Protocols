@@ -726,3 +726,10 @@ No Response.
 
 ##### Notes:
 **Target Balance Value:** The target balance value represents the desired sensor output value in bits. All differential inputs have a programmable offset feature that allows the user to trim sensor offset (see hardware user manual for more information). This programmable offset can be manually altered via Node EEPROM, or auto-tuned such that the sensor output is balanced to a user-defined target. For example, a common use is to auto-balance to mid-scale (2048 bits) to obtain maximum bipolar dynamic range.
+
+<br>
+## Cycle Power & Radio
+
+To cycle the power on the device, use the `Write EEPROM` command and write a `1` to `EEPROM 250`.
+
+To cycle the radio on the device, use the `Write EEPROM` command and write a `2` to `EEPROM 250`.
