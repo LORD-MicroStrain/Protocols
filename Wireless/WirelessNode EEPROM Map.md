@@ -88,13 +88,67 @@
 | 246               | Reset Counter                   | `uint16` |              | Records the number  of times the device has been reset (both soft reset and power cycling).              | 1.00           |
 | 248               | Brown Out Reset Enable          | `uint16` |              | Enables (1) or Disables (0) the brown out reset function of the microcontroller during sleep.  If a value of 0 is used, the brown out reset is disabled during sleep.  This will result in the lowest sleep power consumption, but it may be difficult to turn off or reset a sleeping node.  (The power switch may need to be placed in the off position for up to 30 seconds).  If any non zero value is written, the brown out reset will be enabled during sleep.  This will add approximately 40 uA to the overall sleep current, but the node will turn off immediately when the switch is powered off. | 1.00           |
 | 250               | [Cycle Power](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/BaseStationCommands.md#cycle-power--radio) | `uint16` | see notes    | Used to cycle the power on the device.                                                                   | 1.00           |
-| 258               | Radio Options                   | `uint16` |              | The radio options of the Node.              | 1.00           |
+| 258               | Radio Options                   | `uint16` |              | The radio options of the Node.                             | 1.00           |
 | 260               | Lost Beacon Timeout             | `uint16` |              | Set a value in minutes between 2 and 600.  If a node is in synchronized sampling mode and loses the beacon for a length of time greater than this value, then the node drops into a sleep mode.  The node will re-enter synchronized sampling within 2 minutes of the beacon re-appearing.  This feature is disabled when the value entered in the field is greater than 600.              | 1.00           |
-| 280               | [Region Code](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/WirelessIDs.md#region-code) | `uint16` | see notes    | The region the device will be operated in.                                                               | 3.00           |
+| 262               | Sync Sampling Settings          | `uint16` | see notes    | The Sync Sampling settings (continuous, burst, etc.).      | 7.00           |
+| 264               | Transmissions Per Group         | `uint16` |              | The number of transmissions per group (for Sync Sampling). | 7.00           |
+| 266               | Group Size                      | `uint16` |              | The size of each transmission group (for Sync Sampling).   | 7.00           |
+| 268               | Time Between Sessions           | `uint16` |              | The time between each burst for Sync Sampling.           | 7.00           |
+| 270               | Armed Datalogging / Beacon Timeout | `uint16` |           | Sets the number of seconds that the node will wait in ARMED mode before being triggered for datalogging.  This timeout also determines the number of seconds the node will wait in ARMED mode before receiving a valid beacon packet when entering a synchronized sampling session.  When the value within this field is out of range it will use a default timeout of 10 seconds. | 7.00           |
+| 272               | Node Retransmission             | `uint16` | see notes    | Enables and disables retransmission (lossless) for Sync Sampling.   | 7.00           |
+| 274               | Max Retransmissions per Packet  | `uint16` | see notes    | The maximum allowed retransmissions per packet (for Sync Sampling).   | 7.00           |
+| 276               | Max Retransmissions per Burst  | `uint16` | see notes    | The maximum allowed retransmissions per burst (for Sync Sampling).   | 7.00           |
+| 278               | Lossless Buffer Size  | `uint16` | see notes    |  The value stored, multiplied by 10, equals the total number of Bytes that may be held in the lossless buffer.   | 7.00           |
+| 280               | [Region Code](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/WirelessIDs.md#region-code) | `uint16` | see notes    | The region the device will be operated in. | 8.00           |
 
 #### Node Specific Settings
 
 | EEPROM Address    | Option                            | Type   | Valid Values | Description                                                                                              | Min FW Version |
 |-------------------|-----------------------------------|--------|--------------|----------------------------------------------------------------------------------------------------------|----------------|
-| 130               | Filter (1)                        | `uint16` |            | The first filter value for nodes with filter functionality (ie. TC-Link)             | 1.00           |
-| 134               | Filter (2)                        | `uint16` |            | The second filter value for nodes with 2 filter functionality (ie. ENV-Link Pro)             | 1.00           |
+| 130               | Filter (1)                        | `uint16` |            | The first filter value for nodes with filter functionality (ie. TC-Link)            | 1.00           |
+| 134               | Filter (2)                        | `uint16` |            | The second filter value for nodes with 2 filter functionality (ie. ENV-Link Pro)    | 1.00           |
+| 306               | Thermocouple Type                 | `uint16` |            | The thermocouple type for nodes with thermocouple functionality (ie. TC-Link)       | 1.00           |
+| 440               | Channel Filter                    | `uint16` |            | The filter that affects all channels for nodes with this functionality.             | 1.00           |
+
+#### Event Settings
+
+These settings only apply to models of Nodes that support Event Driven Sampling.
+
+| EEPROM Address    | Option                            | Type   | Valid Values | Description                                                                                              | Min FW Version |
+|-------------------|-----------------------------------|--------|--------------|----------------------------------------------------------------------------------------------------------|----------------|
+| 328               | Event Sample Rate                 | `uint16` |            | The sample rate to collect data for after the event is triggered.    | 1.00           |
+| 330               | Event Channel Mask                | `uint16` |            | The channel mask to use after the event is triggered. | 1.00           |
+| 332               | Event Pre Duration                | `uint16` |            | The amount of time before the event occurred to send data. | 1.00           |
+| 334               | Event Post Duration               | `uint16` |            | The amount of time after the event occurred to send data. | 1.00           |
+| 336               | Event Source - Event 1            | `uint16` |            | The source for event 1. | 1.00           |
+| 338               | Event Operation -Event  1         | `uint16` |            | The operation for event 1 . | 1.00           |
+| 340               | Event Value 1 - Event 1           | `uint16` |            | Value 1 of event 1. | 1.00           |
+| 342               | Event Value 2 - Event 1           | `uint16` |            | Value 2 of event 1. | 1.00           |
+| 344               | Event Source - Event 2            | `uint16` |            | The source for event 2. | 1.00           |
+| 346               | Event Operation -Event  2         | `uint16` |            | The operation for event 2. | 1.00           |
+| 348               | Event Value 1 - Event 2           | `uint16` |            | Value 1 of event 2. | 1.00           |
+| 350               | Event Value 2 - Event 2           | `uint16` |            | Value 2 of event 2. | 1.00           |
+| 352               | Event Source - Event 3            | `uint16` |            | The source for event 3. | 1.00           |
+| 354               | Event Operation -Event  3         | `uint16` |            | The operation for event 3. | 1.00           |
+| 356               | Event Value 1 - Event 3           | `uint16` |            | Value 1 of event 3. | 1.00           |
+| 358               | Event Value 2 - Event 3           | `uint16` |            | Value 2 of event 3. | 1.00           |
+| 360               | Event Source - Event 4            | `uint16` |            | The source for event 4. | 1.00           |
+| 362               | Event Operation -Event  4         | `uint16` |            | The operation for event 4. | 1.00           |
+| 364               | Event Value 1 - Event 4           | `uint16` |            | Value 1 of event 4. | 1.00           |
+| 366               | Event Value 2 - Event 4           | `uint16` |            | Value 2 of event 4. | 1.00           |
+| 368               | Event Source - Event 5            | `uint16` |            | The source for event 5. | 1.00           |
+| 370               | Event Operation -Event  5         | `uint16` |            | The operation for event 5. | 1.00           |
+| 372               | Event Value 1 - Event 5           | `uint16` |            | Value 1 of event 5. | 1.00           |
+| 374               | Event Value 2 - Event 5           | `uint16` |            | Value 2 of event 5. | 1.00           |
+| 376               | Event Source - Event 6            | `uint16` |            | The source for event 6. | 1.00           |
+| 378               | Event Operation -Event  6         | `uint16` |            | The operation for event 6. | 1.00           |
+| 380               | Event Value 1 - Event 6           | `uint16` |            | Value 1 of event 6. | 1.00           |
+| 382               | Event Value 2 - Event 6           | `uint16` |            | Value 2 of event 6. | 1.00           |
+| 384               | Event Source - Event 7            | `uint16` |            | The source for event 7. | 1.00           |
+| 386               | Event Operation -Event  7         | `uint16` |            | The operation for event 7. | 1.00           |
+| 388               | Event Value 1 - Event 7           | `uint16` |            | Value 1 of event 7. | 1.00           |
+| 390               | Event Value 2 - Event 7           | `uint16` |            | Value 2 of event 7. | 1.00           |
+| 392               | Event Source - Event 8            | `uint16` |            | The source for event 8. | 1.00           |
+| 394               | Event Operation -Event  8         | `uint16` |            | The operation for event 8. | 1.00           |
+| 396               | Event Value 1 - Event 8           | `uint16` |            | Value 1 of event 8. | 1.00           |
+| 398               | Event Value 2 - Event 8           | `uint16` |            | Value 2 of event 8. | 1.00           |
