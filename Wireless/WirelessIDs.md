@@ -400,3 +400,18 @@ uint16_t ch3thru8 = 252; //0000 0000 1111 1100 (Channel 3 through 8 enabled)
 `EEPROM 34` | `Node`
 
 The sampling delay sets the duration (in milliseconds) of pulsed power sensor excitation i.e. the amount of time between sensor excitation power up and A/D sampling.  Low-impedance sensors with slow rise times can exhibit longer settling time, and thus benefit from a larger delay before sampling.  Smaller delay values reduce power consumption during LDC. Note that this value only applies to sample rates less than 32 Hz, since sensor excitation power is applied full time for sample rates of 32 Hz and above. A value of 10,000 may be entered into this location to provide full time excitation power for sample rates below 32 Hz.
+
+####Set to Idle Interval
+`EEPROM 66` | `Node`
+
+How often the Node wakes up and listens for a 'set to idle' command.
+
+The following equation can be used to determine the specific value needed for a wake interval defined in seconds:
+
+`Value = (7680 / Desired_Interval_in_seconds)`
+
+For example, if the user wants the node to check for a wake command every 10 seconds, then this location would be programmed with a value of `(7680/10) = 768`.
+
+The minimum wake interval is internally limited to 1 second (a value of `7680`), and the maximum wake interval is limited to approximately 15 seconds (a value of `512`). Any values outside of this range will be automatically truncated.  
+
+NOTE: After modifying this value, the node must be reset in order for the changes to take effect.
