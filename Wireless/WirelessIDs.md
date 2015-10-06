@@ -304,6 +304,14 @@ ID | Value | Description
 3	| Other
 4	| Brazil
 
+####LED Action
+`EEPROM 238` | `BaseStation`
+
+A bitmask control of the LED on the BaseStation.
+bit 1 - Green LED - Default, Power On
+bit 2 - Blue LED - Beacon Transmission indicator (from the device)
+bit 3 - Red LED - Alternate Beacon Reception indicator (to the device)
+
 ####Beacon Source
 `EEPROM 96` | `BaseStation`
 
