@@ -111,6 +111,18 @@ ID | Value | Description
 
 The transmit power level.
 
+For Nodes with FW >= 10.0 and BaseStations with FW >= 4.0:
+
+ID | Value | Description
+:------:|:----:|:--------------
+20 | 20 dBm | 100 mw
+16 | 16 dBm | 39 mw
+10 | 10 dBm | 10 mw
+5 | 5 dBm | 3 mw
+0 | 0 dBm | 1 mw
+
+For Nodes with FW < 10.0 and BaseStations with FW < 4.0:
+
 ID | Value | Description
 :------:|:----:|:--------------
 25619 | 16 dBm | 39 mw
