@@ -1,7 +1,7 @@
 # Wireless IDs
 
 ####Microcontroller Types 
-`EEPROM 120`
+`EEPROM 120` | `BaseStation` | `Node`
 
 The type of microcontroller on the device.
 
@@ -14,7 +14,7 @@ ID | Value | Description
 35 | EFM32WG990F256, 48MHz
 
 ####Data Collection Method
-`EEPROM 38`
+`EEPROM 38` | `Node`
 
 The data collection method when performing Sync or Async Sampling.
 
@@ -38,7 +38,7 @@ ID | Value | Description
 7 | `uint16` (16-bit resolution) |
 
 ####Data Format
-`EEPROM 76`
+`EEPROM 76` | `Node`
 
 The type of data formats that can be applied to a Wireless Node.
 
@@ -48,7 +48,7 @@ ID | Value | Description
 2 | `float` | cal coefficients will be applied
 
 ####Sampling Mode
-`EEPROM 24`
+`EEPROM 24` | `Node`
 
 The sampling mode that the device's configuration is applied for.
 
@@ -60,7 +60,7 @@ ID | Value | Description
 4 | Armed Datalogging | The Armed Datalogging Sampling mode
 
 ####Sync Sampling Mode
-`EEPROM 262`
+`EEPROM 262` | `Node`
 
 The Sync Sampling mode that will be used when configured for Sync Sampling.
 
@@ -70,7 +70,7 @@ ID | Value | Description
 62976 | Burst | Data will be transmitted in a burst synchronized sampling mode.
 
 ####Default Mode
-`EEPROM 18`
+`EEPROM 18` | `Node`
 
 The mode a Wireless Node starts in, and goes into after a user inactivity timeout.
 
@@ -83,7 +83,7 @@ ID | Value | Description
 6 | Sync Sampling | Starts Sync Sampling (must hear a beacon to start sampling).
 
 ####Frequency
-`EEPROM 90`
+`EEPROM 90` | `BaseStation` | `Node`
 
 The Wireless Frequency of a device.
 
@@ -107,7 +107,7 @@ ID | Value | Description
 26 | Frequency 26 | 2.480 Ghz
 
 ####Transmit Power
-`EEPROM 94`
+`EEPROM 94` | `BaseStation` | `Node`
 
 The transmit power level.
 
@@ -119,7 +119,7 @@ ID | Value | Description
 25607 | 0 dBm | 1 mw
 
 ####Retransmission
-`EEPROM 272`
+`EEPROM 272` | `Node`
 
 Whether retransmission (used for lossless Sync Sampling) is on or off.
 
@@ -142,7 +142,7 @@ ID | Value | Description
 4 | Ramp Down | The trigger was caused by a ramp-down event.
 
 ####Cal Coefficients - Equation Type
-`EEPROM 150 (ch1) - 220 (ch8)`
+`EEPROM 150 (ch1) - 220 (ch8)` | `Node`
 
 The equation type for cal coefficients.
 
@@ -152,7 +152,7 @@ ID | Value | Description
 4 | `y = mx + b`| value = (slope * bits) + offset
 
 ####Cal Coefficients - Unit
-`EEPROM 150 (ch1) - 220 (ch8)`
+`EEPROM 150 (ch1) - 220 (ch8)` | `Node`
 
 The unit type for cal coefficients.
 
@@ -195,7 +195,7 @@ ID | Value | Description
 34	| milli-G's
 
 ####Settling Time
-`EEPROM 130 & 134`
+`EEPROM 130 & 134` | `Node`
 
 The settling time used for thermocouple and voltage inputs.
 
@@ -215,7 +215,7 @@ ID | Value | Description
 12	| 200 millisecond settling time | highest resolution
 
 ####Thermocouple Type
-`EEPROM 306`
+`EEPROM 306` | `Node`
 
 The Thermocouple Type of a Wireless thermocouple channel.
 
@@ -233,7 +233,7 @@ ID | Value | Description
 9		| Custom Polynomial
 
 ####Sample Rate
-`EEPROM 72`
+`EEPROM 72` | `Node`
 
 The Sample Rate (device and sampling mode dependent).
 
@@ -292,7 +292,7 @@ ID | Value | Description
 127	| 1 sample every 24 hours
 
 ####Region Code
-`EEPROM 280`
+`EEPROM 280` | `BaseStation` | `Node`
 
 The region that the device will be operated in.
 
@@ -305,7 +305,7 @@ ID | Value | Description
 4	| Brazil
 
 ####Beacon Source
-`EEPROM 96`
+`EEPROM 96` | `BaseStation`
 
 The source of a Base Station's beacon.
 
@@ -317,7 +317,7 @@ ID | Value | Description
 3 | External PPS |
 
 ####Button Actions
-`EEPROMs 232, 236, 258, 262`
+`EEPROMs 232, 236, 258, 262` | `BaseStation`
 
 The actions that can be performed by a Base Station's physical buttons. 
 
@@ -334,7 +334,7 @@ ID | Value | Description
 65535 | Disabled | Disables the button functionality.
 
 ####Firmware Version
-`EEPROM 108 and 110`
+`EEPROM 108 and 110` | `BaseStation` | `Node`
 
 The firmware version of the device.
 
@@ -374,7 +374,7 @@ uint8_t minor = fwValue & 0x00FF;
 ```
 
 ####Channel Mask
-`EEPROM 12`
+`EEPROM 12` | `Node`
 
 The Wireless Nodes use a channel mask to determine which channels are active and inactive on the device. 
 
@@ -387,3 +387,8 @@ uint16_t ch1_ch6 = 33;   //0000 0000 0010 0001 (Channel 1 and Channel 6 enabled)
 
 uint16_t ch3thru8 = 252; //0000 0000 1111 1100 (Channel 3 through 8 enabled)
 ```
+
+####Sampling Delay
+`EEPROM 34` | `Node`
+
+The sampling delay sets the duration (in milliseconds) of pulsed power sensor excitation i.e. the amount of time between sensor excitation power up and A/D sampling.  Low-impedance sensors with slow rise times can exhibit longer settling time, and thus benefit from a larger delay before sampling.  Smaller delay values reduce power consumption during LDC. Note that this value only applies to sample rates less than 32 Hz, since sensor excitation power is applied full time for sample rates of 32 Hz and above. A value of 10,000 may be entered into this location to provide full time excitation power for sample rates below 32 Hz.
