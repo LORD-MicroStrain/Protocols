@@ -1,8 +1,9 @@
 # Wireless IDs
 
-####Microcontroller Types
+####Microcontroller Types 
+`EEPROM 120`
 
-The type of microcontroller on the device. `EEPROM 120`
+The type of microcontroller on the device.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -13,8 +14,9 @@ ID | Value | Description
 35 | EFM32WG990F256, 48MHz
 
 ####Data Collection Method
+`EEPROM 38`
 
-The data collection method when performing Sync or Async Sampling. `EEPROM 38`
+The data collection method when performing Sync or Async Sampling.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -36,8 +38,9 @@ ID | Value | Description
 7 | `uint16` (16-bit resolution) |
 
 ####Data Format
+`EEPROM 76`
 
-The type of data formats that can be applied to a Wireless Node. `EEPROM 76`
+The type of data formats that can be applied to a Wireless Node.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -45,8 +48,9 @@ ID | Value | Description
 2 | `float` | cal coefficients will be applied
 
 ####Sampling Mode
+`EEPROM 24`
 
-The sampling mode that the device's configuration is applied for. `EEPROM 24`
+The sampling mode that the device's configuration is applied for.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -56,8 +60,9 @@ ID | Value | Description
 4 | Armed Datalogging | The Armed Datalogging Sampling mode
 
 ####Sync Sampling Mode
+`EEPROM 262`
 
-The Sync Sampling mode that will be used when configured for Sync Sampling. `EEPROM 262`
+The Sync Sampling mode that will be used when configured for Sync Sampling.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -65,8 +70,9 @@ ID | Value | Description
 62976 | Burst | Data will be transmitted in a burst synchronized sampling mode.
 
 ####Default Mode
+`EEPROM 18`
 
-The mode a Wireless Node starts in, and goes into after a user inactivity timeout. `EEPROM 18`
+The mode a Wireless Node starts in, and goes into after a user inactivity timeout.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -77,8 +83,9 @@ ID | Value | Description
 6 | Sync Sampling | Starts Sync Sampling (must hear a beacon to start sampling).
 
 ####Frequency
+`EEPROM 90`
 
-The Wireless Frequency of a device. `EEPROM 90`
+The Wireless Frequency of a device.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -100,8 +107,9 @@ ID | Value | Description
 26 | Frequency 26 | 2.480 Ghz
 
 ####Transmit Power
+`EEPROM 94`
 
-The transmit power level. `EEPROM 94`
+The transmit power level.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -111,8 +119,9 @@ ID | Value | Description
 25607 | 0 dBm | 1 mw
 
 ####Retransmission
+`EEPROM 272`
 
-Whether retransmission (used for lossless Sync Sampling) is on or off. `EEPROM 272`
+Whether retransmission (used for lossless Sync Sampling) is on or off.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -133,8 +142,9 @@ ID | Value | Description
 4 | Ramp Down | The trigger was caused by a ramp-down event.
 
 ####Cal Coefficients - Equation Type
+`EEPROM 150 (ch1) - 220 (ch8)`
 
-The equation type for cal coefficients. `EEPROM 150 (ch1) - 220 (ch8)`
+The equation type for cal coefficients.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -142,8 +152,9 @@ ID | Value | Description
 4 | `y = mx + b`| value = (slope * bits) + offset
 
 ####Cal Coefficients - Unit
+`EEPROM 150 (ch1) - 220 (ch8)`
 
-The unit type for cal coefficients. `EEPROM 150 (ch1) - 220 (ch8)`
+The unit type for cal coefficients.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -184,8 +195,9 @@ ID | Value | Description
 34	| milli-G's
 
 ####Settling Time
+`EEPROM 130 & 134`
 
-The settling time used for thermocouple and voltage inputs. `EEPROM 130 & 134`
+The settling time used for thermocouple and voltage inputs.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -203,8 +215,9 @@ ID | Value | Description
 12	| 200 millisecond settling time | highest resolution
 
 ####Thermocouple Type
+`EEPROM 306`
 
-The Thermocouple Type of a Wireless thermocouple channel. `EEPROM 306`
+The Thermocouple Type of a Wireless thermocouple channel.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -220,8 +233,9 @@ ID | Value | Description
 9		| Custom Polynomial
 
 ####Sample Rate
+`EEPROM 72`
 
-The Sample Rate (device and sampling mode dependent). `EEPROM 72`
+The Sample Rate (device and sampling mode dependent).
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -278,8 +292,9 @@ ID | Value | Description
 127	| 1 sample every 24 hours
 
 ####Region Code
+`EEPROM 280`
 
-The region that the device will be operated in. `EEPROM 280`
+The region that the device will be operated in.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -290,8 +305,9 @@ ID | Value | Description
 4	| Brazil
 
 ####Beacon Source
+`EEPROM 96`
 
-The source of a Base Station's beacon. `EEPROM 96`
+The source of a Base Station's beacon.
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -301,8 +317,9 @@ ID | Value | Description
 3 | External PPS |
 
 ####Button Actions
+`EEPROMs 232, 236, 258, 262`
 
-The actions that can be performed by a Base Station's physical buttons. `EEPROMs 232, 236, 258, 262`
+The actions that can be performed by a Base Station's physical buttons. 
 
 ID | Value | Description
 :------:|:----:|:--------------
@@ -316,9 +333,10 @@ ID | Value | Description
 7 | Cycle Power | Cycles the Base Station's power.
 65535 | Disabled | Disables the button functionality.
 
-####Firmware Version 
+####Firmware Version
+`EEPROM 108 and 110`
 
-The firmware version of the device. `EEPROM 108 and 110`
+The firmware version of the device.
 
 **For BaseStation FW >= 4.0 and Node FW >= 10.0** :
 The firmware version of Base Stations and Wireless Nodes are repesented in the following format: `Major.Revision`
@@ -353,4 +371,19 @@ uint16_t fwValue = readEeprom(108);
 
 uint8_t major = fwValue >> 8;
 uint8_t minor = fwValue & 0x00FF;
+```
+
+####Channel Mask
+`EEPROM 12`
+
+The Wireless Nodes use a channel mask to determine which channels are active and inactive on the device. 
+
+Channels that are active will be sampled during any type of sampling mode. The mask is a 16-bit value. Each of the 16 bits of the mask correspone to one of the Node's channels (if that Node supports that channel). Bit 1 correpsonds to channel 1, bit 2 to channel 2, bit 8 to channel 8, etc. When the bit is set to 1, the channel is active. When the bit is set to 0, the channel is inactive.
+
+For example:
+
+```cpp
+uint16_t ch1_ch6 = 33;   //0000 0000 0010 0001 (Channel 1 and Channel 6 enabled)
+
+uint16_t ch3thru8 = 252; //0000 0000 1111 1100 (Channel 3 through 8 enabled)
 ```
