@@ -153,59 +153,6 @@ ID | Value | Description
 3 | Ramp Up | The trigger was caused by a ramp-up event.
 4 | Ramp Down | The trigger was caused by a ramp-down event.
 
-####Cal Coefficients - Equation Type
-`EEPROM 150 (ch1) - 220 (ch8)` | `Node`
-
-The equation type for cal coefficients.
-
-ID | Value | Description
-:------:|:----:|:--------------
-0 | `y = x` | value = bits
-4 | `y = mx + b`| value = (slope * bits) + offset
-
-####Cal Coefficients - Unit
-`EEPROM 150 (ch1) - 220 (ch8)` | `Node`
-
-The unit type for cal coefficients.
-
-ID | Value | Description
-:------:|:----:|:--------------
-0	| unknown | no unit or unknown unit
-1	| bits | raw bits
-2	| Strain
-3	| microStrain
-4	| acceleration due to gravity
-5	| meters per second squared
-6	| volts
-7	| milliVolts
-8	| microVolts
-9	| degrees Celsius
-10	| Kelvin
-11	| degrees Fahrenheit
-12	| meters
-13	| millimeters
-14	| micrometers
-15	| pound force
-16	| Newtons
-17	| kiloNewtons
-18	| kilograms
-19	| bar
-20	| pounds per square inch
-21	| atmospheric pressure
-22	| millimeters of mercury
-23	| Pascal
-24	| megaPascal
-25	| kiloPascal
-26	| degrees
-27	| degrees per second
-28	| radians per second
-29	| percent
-30	| revolutions per minute
-31	| hertz
-32	| percent relative humidity
-33	| milliVolt/Volt
-34	| milli-G's
-
 ####Settling Time
 `EEPROM 130 & 134` | `Node`
 
@@ -427,3 +374,74 @@ For example, if the user wants the node to check for a wake command every 10 sec
 The minimum wake interval is internally limited to 1 second (a value of `7680`), and the maximum wake interval is limited to approximately 15 seconds (a value of `512`). Any values outside of this range will be automatically truncated.  
 
 NOTE: After modifying this value, the node must be reset in order for the changes to take effect.
+
+####Calibration Coefficients
+`EEPROM 150 - EEPROM 226` | `Node`
+
+Calibration Coefficients are linear scaling filters applied to convert a channel's raw bit value to physical or engineering units. Please see the individual Node's hardware manual for more information on general calibration procedures. 
+
+**Note**: The calibration coefficients slope and offset is different from a Node's hardware gain and offset settings.
+
+**Note**: When a Node is transmitting 2-byte integer, uncalibrated values, Calibration Coefficients represent a post-processing step. The conversion from bits to physical units needs to take place after the data is received, and not on the Node. However, when the Node is transmitting 4-byte float, calibrated value, the conversion will occur on the Node and the received data values will already have been converted.
+
+Each Channel requies 10 bytes to hold the equation, unit, slope, and offset values:
+
+Description | type 
+:------:|:----:
+Equation ID | `uint8`
+Unit ID | `uint8`
+Slope | `float`
+Offset | `float`
+
+####Cal Coefficients - Equation Type
+`EEPROM 150 (ch1) - EEPROM 220 (ch8)` | `Node`
+
+The equation type for cal coefficients.
+
+ID | Value | Description
+:------:|:----:|:--------------
+0 | `y = x` | value = bits
+4 | `y = mx + b`| value = (slope * bits) + offset
+
+####Cal Coefficients - Unit
+`EEPROM 150 (ch1) - EEPROM 220 (ch8)` | `Node`
+
+The unit type for cal coefficients.
+
+ID | Value | Description
+:------:|:----:|:--------------
+0	| unknown | no unit or unknown unit
+1	| bits | raw bits
+2	| Strain
+3	| microStrain
+4	| acceleration due to gravity
+5	| meters per second squared
+6	| volts
+7	| milliVolts
+8	| microVolts
+9	| degrees Celsius
+10	| Kelvin
+11	| degrees Fahrenheit
+12	| meters
+13	| millimeters
+14	| micrometers
+15	| pound force
+16	| Newtons
+17	| kiloNewtons
+18	| kilograms
+19	| bar
+20	| pounds per square inch
+21	| atmospheric pressure
+22	| millimeters of mercury
+23	| Pascal
+24	| megaPascal
+25	| kiloPascal
+26	| degrees
+27	| degrees per second
+28	| radians per second
+29	| percent
+30	| revolutions per minute
+31	| hertz
+32	| percent relative humidity
+33	| milliVolt/Volt
+34	| milli-G's
