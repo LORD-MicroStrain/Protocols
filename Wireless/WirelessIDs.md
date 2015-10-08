@@ -266,10 +266,13 @@ ID | Value | Description
 ####LED Action
 `EEPROM 238` | `BaseStation`
 
-A bitmask control of the LED on the BaseStation.
-bit 1 - Green LED - Default, Power On
-bit 2 - Blue LED - Beacon Transmission indicator (from the device)
-bit 3 - Red LED - Alternate Beacon Reception indicator (to the device)
+A bitmask control of the LED on the BaseStation:
+
+Bit # | Description
+:------:|:----
+1	| Green LED - Default, Power On 
+2	| Blue LED - Beacon Transmission indicator (from the device)
+3 | Red LED - Alternate Beacon Reception indicator (to the device)
 
 ####Beacon Source
 `EEPROM 96` | `BaseStation`
@@ -279,9 +282,32 @@ The source of a Base Station's beacon.
 ID | Value | Description
 :------:|:----:|:--------------
 0 | None | No Beacon
-1 | Internal Timer |
-2 | Internal PPS |
-3 | External PPS |
+1 | Internal Timer 
+2 | Internal PPS
+3 | External PPS
+
+####PPS Edge Detection
+`EEPROM 100` | `BaseStation`
+
+**Internal Use**
+
+Tells the microcontroller which edge to interrupt off of when using a PPS for timing.
+
+**For BaseStation FW >= 4.0** :
+
+ID | Value | Description
+:------:|:----:|:--------------
+0 | Off
+1 | Rising Edge 
+2 | Falling Edge
+3 | Rising and Falling Edge
+
+**For BaseStation FW < 4.0** :
+
+ID | Value | Description
+:------:|:----:|:--------------
+0 | Falling Edge
+1 | Rising Edge 
 
 ####Button Actions
 `EEPROMs 232, 236, 258, 262` | `BaseStation`
