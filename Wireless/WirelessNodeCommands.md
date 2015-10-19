@@ -612,7 +612,7 @@ or the Set to Idle command has been issued to the Node.
 
 The **Initiate Low Duty Cycle (LDC)** command is used to put the Node in LDC sampling mode.
 
-The Low Duty Cycle sampling mode is a non-synchronized, low-latency form of sampling. While multiple Nodes can be started sampling, they are not part of a synchronized network. This can cause data packets to be sent over the air at the same time, resulting in data loss. If low-latency is not a requirement, it is highly recommended that you use the [Synchronized Sampling Mode](initiate-synchronized-sampling).
+The Low Duty Cycle sampling mode is a non-synchronized, low-latency form of sampling. While multiple Nodes can be started sampling, they are not part of a synchronized network. This can cause data packets to be sent over the air at the same time, resulting in data loss. If low-latency is not a requirement, it is highly recommended that you use the [Synchronized Sampling Mode](#initiate-synchronized-sampling).
 
 ##### Command:
 ```cpp

@@ -6,7 +6,6 @@ The following documents describe how MicroStrain devices can be communicated wit
 [Overview](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Overview.md)
 
 [Base Station Commands](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/BaseStationCommands.md)
- - [Base Station Eeprom Map](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/BaseStation%20EEPROM%20Map.md)
 
 [Wireless Node Commands](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/WirelessNodeCommands.md)
 
