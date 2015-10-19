@@ -11,7 +11,7 @@ The following documents describe how MicroStrain devices can be communicated wit
 
 [Data Packets](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md)
 
-[Wireless IDs](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/WirelessIDs.md)
+[LORD MicroStrain Wireless Configuration](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/LORD%20MicroStrain%20Wireless%20Configuration.xlsx?raw=true) - Contains EEPROM Maps and Config Values
 
 ## Inertial
 
