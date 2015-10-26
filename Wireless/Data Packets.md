@@ -2,7 +2,8 @@
 
 **List of Packets:**
 
-* [Low Duty Cycle (LDC) Packet](#low-duty-cycle-ldc-packet)
+* [Low Duty Cycle Packet (v1)](#low-duty-cycle-ldc-packet-v1)
+* [Low Duty Cycle Packet (v2)](#low-duty-cycle-ldc-packet-v2)
 * [Buffered Low Duty Cycle Packet](#buffered-low-duty-cycle-packet)
 * [Synchronized Sampling Packet (v1)](#synchronized-sampling-packet-v1)
 * [Synchronized Sampling Packet (v2)](#synchronized-sampling-packet-v2)
@@ -13,25 +14,56 @@
 * [Node Discovery Packet (v2)](#node-discovery-packet-v2)
 * [Node Discovery Packet (v3)](#node-discovery-packet-v3)
 
-## Low Duty Cycle (LDC) Packet
+## Low Duty Cycle (LDC) Packet (v1)
 
 ```cpp
-uint8_t startByte 					= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 					= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 				= 0x04;		//App Data Type
-uint16_t nodeAddress;							//Node Address
-uint8_t payloadLen;								//Payload Length
-uint8_t appId 						= 0x02;		//App ID
-uint8_t channelMask;							//Active Channel Mask
-uint8_t sampleRate;								//Sample Rate
-uint8_t dataType;								//Data Type
-uint16_t tick;									//Timer Tick
-uint16_t | uint32_t | float chData;				//Channel Data (per channel)
+uint8_t startByte                 = 0xAA; //Start of Packet Byte
+uint8_t stopFlag                  = 0x07; //Delivery Stop Flag
+uint8_t appDataType               = 0x04; //App Data Type
+uint16_t nodeAddress;                     //Node Address
+uint8_t payloadLen;                       //Payload Length
+uint8_t appId                     = 0x02; //App ID
+uint8_t channelMask;                      //Active Channel Mask
+uint8_t sampleRate;                       //Sample Rate
+uint8_t dataType;                         //Data Type
+uint16_t tick;                            //Timer Tick
+uint16_t | uint32_t | float chData;       //Channel Data (per channel)
 //Repeat Channel Data bytes for each active channel
-int8_t reserved;								//RESERVED
-int8_t baseRssi;								//Base Station RSSI
-uint16_t checksum;								//Checksum of [stopFlag - chData]
+int8_t reserved;                          //RESERVED
+int8_t baseRssi;                          //Base Station RSSI
+uint16_t checksum;                        //Checksum of [stopFlag - chData]
 ```
+
+## Low Duty Cycle (LDC) Packet (v2)
+
+Version 2 of the Low Duty Cycle Packet supports up to 16 channels (versus 8 in v1).
+
+```cpp
+uint8_t startByte                 = 0xAA; //Start of Packet Byte
+uint8_t stopFlag                  = 0x07; //Delivery Stop Flag
+uint8_t appDataType               = 0x14; //App Data Type
+uint16_t nodeAddress;                     //Node Address
+uint8_t payloadLen;                       //Payload Length
+uint8_t channelMask;                      //Active Channel Mask
+uint8_t sampleRate;                       //Sample Rate
+uint8_t appIdAndDataType          = 0x02; //App ID / Data Type
+uint16_t tick;                            //Timer Tick
+uint16_t | uint32_t | float chData;       //Channel Data (per channel)
+//Repeat Channel Data bytes for each active channel
+int8_t reserved;                          //RESERVED
+int8_t baseRssi;                          //Base Station RSSI
+uint16_t checksum;                        //Checksum of [stopFlag - chData]
+```
+
+#####Notes:
+ 
+**Data Type:**
+
+The `appIdAndDataType` byte uses the last 4 (Least Significant) bits as the Data Type:
+ * 0x01 = 2 byte unsigned integer (uint16) (bit-shifted)
+ * 0x02 = 4 byte float (float)
+ * 0x03 = 2 byte unsigned integer (uint16)
+ * 0x04 = 4 byte unsigned integer (uint32)
 
 ## Buffered Low Duty Cycle Packet
 ```cpp
