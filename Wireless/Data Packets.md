@@ -4,7 +4,8 @@
 
 * [Low Duty Cycle Packet (v1)](#low-duty-cycle-ldc-packet-v1)
 * [Low Duty Cycle Packet (v2)](#low-duty-cycle-ldc-packet-v2)
-* [Buffered Low Duty Cycle Packet](#buffered-low-duty-cycle-packet)
+* [Buffered Low Duty Cycle Packet (v1)](#buffered-low-duty-cycle-packet-v1)
+* [Buffered Low Duty Cycle Packet (v2)](#buffered-low-duty-cycle-packet-v2)
 * [Synchronized Sampling Packet (v1)](#synchronized-sampling-packet-v1)
 * [Synchronized Sampling Packet (v2)](#synchronized-sampling-packet-v2)
 * [Asynchronous Digital-Only Packet](#asynchronous-digital-only-packet)
@@ -65,24 +66,52 @@ The `appIdAndDataType` byte uses the last 4 (Least Significant) bits as the Data
  * 0x03 = 2 byte unsigned integer (uint16)
  * 0x04 = 4 byte unsigned integer (uint32)
 
-## Buffered Low Duty Cycle Packet
+## Buffered Low Duty Cycle Packet (v1)
 ```cpp
-uint8_t startByte 					= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 					= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 				= 0x0D;		//App Data Type
-uint16_t nodeAddress;							//Node Address
-uint8_t payloadLen;								//Payload Length
-uint8_t appId 						= 0x02;		//App ID
-uint8_t channelMask;							//Active Channel Mask
-uint8_t sampleRate;								//Sample Rate
-uint8_t dataType;								//Data Type
-uint16_t tick;									//Sweep Tick
-uint16_t | uint32_t | float chData;				//Channel Data (per channel, per sweep)
+uint8_t startByte                   = 0xAA; //Start of Packet Byte
+uint8_t stopFlag                    = 0x07; //Delivery Stop Flag
+uint8_t appDataType                 = 0x0D; //App Data Type
+uint16_t nodeAddress;                       //Node Address
+uint8_t payloadLen;                         //Payload Length
+uint8_t appId                       = 0x02; //App ID
+uint8_t channelMask;                        //Active Channel Mask
+uint8_t sampleRate;                         //Sample Rate
+uint8_t dataType;                           //Data Type
+uint16_t tick;                              //Sweep Tick
+uint16_t | uint32_t | float chData;         //Channel Data (per channel, per sweep)
 //Repeat Channel Data bytes for each active channel, and for each sweep
-int8_t nodeRssi;								//Node RSSI
-int8_t baseRssi;								//Base Station RSSI
-uint16_t checksum;								//Checksum of [stopFlag - chData]
+int8_t nodeRssi;                            //Node RSSI
+int8_t baseRssi;                            //Base Station RSSI
+uint16_t checksum;                          //Checksum of [stopFlag - chData]
 ```
+
+## Buffered Low Duty Cycle Packet (v2)
+```cpp
+uint8_t startByte                   = 0xAA; //Start of Packet Byte
+uint8_t stopFlag                    = 0x07; //Delivery Stop Flag
+uint8_t appDataType                 = 0x1D; //App Data Type
+uint16_t nodeAddress;                       //Node Address
+uint8_t payloadLen;                         //Payload Length
+uint16_t channelMask;                       //Active Channel Mask
+uint8_t sampleRate;                         //Sample Rate
+uint8_t appIdAndDataType;                   //App ID / Data Type
+uint16_t tick;                              //Sweep Tick
+uint16_t | uint32_t | float chData;         //Channel Data (per channel, per sweep)
+//Repeat Channel Data bytes for each active channel, and for each sweep
+int8_t nodeRssi;                            //Node RSSI
+int8_t baseRssi;                            //Base Station RSSI
+uint16_t checksum;                          //Checksum of [stopFlag - chData]
+```
+
+#####Notes:
+ 
+**Data Type:**
+
+The `appIdAndDataType` byte uses the last 4 (Least Significant) bits as the Data Type:
+ * 0x01 = 2 byte unsigned integer (uint16) (bit-shifted)
+ * 0x02 = 4 byte float (float)
+ * 0x03 = 2 byte unsigned integer (uint16)
+ * 0x04 = 4 byte unsigned integer (uint32)
 
 ## Synchronized Sampling Packet (v1)
 ```cpp
