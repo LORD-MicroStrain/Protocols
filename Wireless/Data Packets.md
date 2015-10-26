@@ -52,25 +52,27 @@ int8_t baseRssi;								//Base Station RSSI
 uint16_t checksum;								//Checksum of [stopFlag - chData]
 ```
 
-## Synchronized Sampling Packet
+## Synchronized Sampling Packet (v2)
+
+Version 2 of the Synchronized Sampling Packet supports up to 16 channels (versus 8 in v1).
+
 ```cpp
-uint8_t startByte 					= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 					= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 				= 0x0A;		//App Data Type
-uint16_t nodeAddress;							//Node Address
-uint8_t payloadLen;								//Payload Length
-uint8_t sampleMode;								//Sample Mode
-uint8_t channelMask;							//Active Channel Mask
-uint8_t sampleRate;								//Sample Rate
-uint8_t dataType;								//Data Type
-uint16_t tick;									//Sweep Tick
-uint32_t timestampSec;							//UTC Timestamp (seconds)
-uint32_t timestampNano;							//UTC Timestamp (nanoseconds)
-uint16_t | uint32_t | float chData;				//Channel Data (per channel, per sweep)
+uint8_t startByte               = 0xAA;   //Start of Packet Byte
+uint8_t stopFlag                = 0x07;   //Delivery Stop Flag
+uint8_t appDataType             = 0x1A;   //App Data Type
+uint16_t nodeAddress;                     //Node Address
+uint8_t payloadLen;                       //Payload Length
+uint16_t channelMask;                     //Active Channel Mask
+uint8_t sampleRate;                       //Sample Rate
+uint8_t sampleModeAndDataType;            //Sample Mode / Data Type
+uint16_t tick;                            //Sweep Tick
+uint32_t timestampSec;                    //UTC Timestamp (seconds)
+uint32_t timestampNano;                   //UTC Timestamp (nanoseconds)
+uint16_t | uint32_t | float chData;       //Channel Data (per channel, per sweep)
 //Repeat Channel Data bytes for each active channel, and for each sweep
-int8_t nodeRssi;								//Node RSSI
-int8_t baseRssi;								//Base Station RSSI
-uint16_t checksum;								//Checksum of [stopFlag - chData]
+int8_t nodeRssi;                          //Node RSSI
+int8_t baseRssi;                          //Base Station RSSI
+uint16_t checksum;                        //Checksum of [stopFlag - chData]
 ```
 
 #####Notes:
