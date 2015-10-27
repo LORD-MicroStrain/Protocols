@@ -14,7 +14,7 @@ For users who do not wish to use MSCL, this protocol should provide all the info
 ## Interface
 
 ### USB:
-When communicating with a WSDA-Base Station via USB, a virtual serial port is created using the [Silicon Labs CP210x USB to UART Bridge VCP driver](https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx).
+When communicating with a WSDA-Base Station via USB, a virtual serial port is created using the [Silicon Labs CP210x USB to UART Bridge VCP driver](https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx) for some devices, or an equivalent driver for other devices.
 
 The following settings should be used:
 <br>**Baud Rate**: 921600
