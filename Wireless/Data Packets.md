@@ -45,7 +45,7 @@ uint8_t stopFlag                  = 0x07; //Delivery Stop Flag
 uint8_t appDataType               = 0x14; //App Data Type
 uint16_t nodeAddress;                     //Node Address
 uint8_t payloadLen;                       //Payload Length
-uint8_t channelMask;                      //Active Channel Mask
+uint16_t channelMask;                     //Active Channel Mask
 uint8_t sampleRate;                       //Sample Rate
 uint8_t appIdAndDataType          = 0x02; //App ID / Data Type
 uint16_t tick;                            //Timer Tick
