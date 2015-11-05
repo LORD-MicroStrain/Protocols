@@ -86,6 +86,9 @@ uint16_t checksum;                          //Checksum of [stopFlag - chData]
 ```
 
 ## Buffered Low Duty Cycle Packet (v2)
+
+Version 2 of the Buffered Low Duty Cycle Packet supports up to 16 channels (versus 8 in v1).
+
 ```cpp
 uint8_t startByte                   = 0xAA; //Start of Packet Byte
 uint8_t stopFlag                    = 0x07; //Delivery Stop Flag
