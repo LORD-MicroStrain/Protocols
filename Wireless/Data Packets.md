@@ -14,6 +14,7 @@
 * [Node Discovery Packet (v1)](#node-discovery-packet-v1)
 * [Node Discovery Packet (v2)](#node-discovery-packet-v2)
 * [Node Discovery Packet (v3)](#node-discovery-packet-v3)
+* [Beacon Echo Packet](#beacon-echo-packet)
 
 ## Low Duty Cycle (LDC) Packet (v1)
 
@@ -57,7 +58,7 @@ uint16_t checksum;                        //Checksum of [stopFlag - chData]
 ```
 
 #####Notes:
- 
+
 **Data Type:**
 
 The `appIdAndDataType` byte uses the last 4 (Least Significant) bits as the Data Type:
@@ -107,7 +108,7 @@ uint16_t checksum;                          //Checksum of [stopFlag - chData]
 ```
 
 #####Notes:
- 
+
 **Data Type:**
 
 The `appIdAndDataType` byte uses the last 4 (Least Significant) bits as the Data Type:
@@ -199,7 +200,7 @@ The `sampleModeAndDataType` byte uses the first 4 (Most Significant) bits as the
 
  * 0x01 - Burst Mode
  * 0x02 - Continuous Mode
- 
+
 **Sample Mode:**
 
 The `sampleModeAndDataType` byte uses the last 4 (Least Significant) bits as the Data Type:
@@ -262,7 +263,7 @@ uint16_t checksum;								//Checksum of [stopFlag - digitalChannelData_EvtX]
 
 **Timestamp:** The UTC Timestamp bytes represent the initial timestamp in which each Event’s Timestamp Offset must be added to in order to calculate the UTC Timestamp for each Event.
 
-**Events:** Each event contained in the packet is made up of a 2-byte Timestamp Offset and 2 bytes of Digital Channel Data. The Timestamp Offset must be divided by 32,768 to get its time in seconds. Each bit in the digital channel data represents a digital line. However, the Digital Channel Mask should be interrogated to determine which of these lines have a valid value. Multiple events may be contained in one packet. The number of events in the packet can be determined via the following: 
+**Events:** Each event contained in the packet is made up of a 2-byte Timestamp Offset and 2 bytes of Digital Channel Data. The Timestamp Offset must be divided by 32,768 to get its time in seconds. Each bit in the digital channel data represents a digital line. However, the Digital Channel Mask should be interrogated to determine which of these lines have a valid value. Multiple events may be contained in one packet. The number of events in the packet can be determined via the following:
 
     #Events = ((Payload Length - 12) / 4)
 
@@ -348,12 +349,12 @@ An Info Item consists of Length, ID, and Value bytes. Each Info Item can be pars
 
 **Info Item Length:**
 The length (# of bytes) of the Info Item, including the Info Item ID and Info Item Value bytes. This length
-value does not include the Info Item Length byte itself. 
+value does not include the Info Item Length byte itself.
 
 **Info Item ID / Value:**
 The Info Item ID represents the type of information that is given in the next Info Item Value bytes. The following are the supported IDs:
 
-ID  | Description   | Data Values | # Bytes | Type | Unit 
+ID  | Description   | Data Values | # Bytes | Type | Unit
 ----|---------------|----------------|----------|-------|------
 0x01| Transmit Info | Total Transmissions <br> Total Retransmissions <br> Total Dropped Packets | 4 <br> 4 <br> 2 | uint32 <br> uint32 <br> uint16  | counts <br> counts <br> counts
 0x02 | Active Running Time | - | 4 | uint32 | seconds
@@ -438,3 +439,21 @@ uint16_t checksum;						//Checksum of [stopFlag - model]
 **modelOption** - The specific option of the model. Combine this with the modelNumber to accurately identify the Node (ex. 6305-2000 = G-Link 2G, 6305-3000 = G-Link 10G).
 
 **firmwareVersion** - The firmware version of the Node. Byte 1 is the Major part, while Bytes 2-4 (as a uint32_t) together represent the Minor part.
+
+
+## Beacon Echo Packet
+For BaseStation's with Firmware v3.32+, writing a `2` to EEPROM 40 will enable any beacon packets that are sent from the BaseStation to be echoed over the port.
+
+```cpp
+uint8_t startByte 			= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag			= 0x07;		//Delivery Stop Flag
+uint8_t appDataType 		= 0x10;		//App Data Type
+uint16_t address            = 0x0000;	//Address
+uint8_t payloadLen			= 0x06;		//Payload Length
+uint16_t cmd                = 0xBEAC;	//Command
+uint32_t timestampSec;                  //Beacon's UTC Timestamp (seconds)
+int8_t reserved;						//RESERVED
+int8_t reserved;						//RESERVED
+uint16_t checksum;						//Checksum of [stopFlag - reserved]
+```
+**timestampSec** - The timestamp (seconds since Unix Epoch) of the beacon.
