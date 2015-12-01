@@ -6,6 +6,7 @@
 These changes were made in **Node firmware 10.0** and above.
 
 * [Short Ping (v2)](#short-ping-v2)
+* [Auto-Balance Channel (v2)](#auto-balance-channel-v2)
 
 
 ####ASPP v1.1
@@ -30,7 +31,7 @@ These changes were made in **Node firmware 8.21** and above.
 * [Initiate Low Duty Cycle](#initiate-low-duty-cycle)
 * [Initiate Synchronized Sampling](#initiate-synchronized-sampling)
 * [Read Single Sensor](#read-single-sensor)
-* [Auto-Balance Channel](#auto-balance-channel)
+* [Auto-Balance Channel (v1)](#auto-balance-channel-v1)
 * [Cycle Power & Radio](#cycle-power--radio)
 
 ## Short Ping (v1)
@@ -761,7 +762,7 @@ uint8_t failId 			= 0x21;		//Failure Indicator
 **Erroneous Data:** Values read using the Read Single Sensor command may be off due to there being no excitation time taken into account. The other full sampling modes use a Sampling Delay, which is an amount of time between sensor excitation power up and A/D sampling.
 
 <br>
-## Auto-Balance Channel
+## Auto-Balance Channel (v1)
 
 The **Auto-Balance Channel** command is used to auto-balance a particular channel on the Node. This command is only applicable to the differential channels on certain Nodes.
 
@@ -781,6 +782,64 @@ No Response.
 
 ##### Notes:
 **Target Balance Value:** The target balance value represents the desired sensor output value in bits. All differential inputs have a programmable offset feature that allows the user to trim sensor offset (see hardware user manual for more information). This programmable offset can be manually altered via Node EEPROM, or auto-tuned such that the sensor output is balanced to a user-defined target. For example, a common use is to auto-balance to mid-scale (2048 bits) to obtain maximum bipolar dynamic range.
+
+<br>
+## Auto-Balance Channel (v2)
+
+`FW 10.0+`
+
+The **Auto-Balance Channel** command is used to auto-balance a particular channel on the Node. This command is only applicable to the differential channels on certain Nodes.
+
+##### Command:
+```cpp
+uint8_t startByte 		= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 		= 0x05;		//Delivery Stop Flag
+uint8_t appDataType 	= 0x00;		//App Data Type
+uint16_t nodeAddress;				//Node Address
+uint8_t payloadLen 		= 0x07;		//Payload Length
+uint16_t commandId 		= 0x0065;	//Command ID
+uint8_t channelNumber;          //Channel Number to balance
+float targetPercentage;         //Target Balance Percentage
+uint16_t checksum;					//Checksum of [stopFlag - targetPercentage]
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte 		= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
+uint8_t appDataType 	= 0x22;		//App Data Type
+uint16_t nodeAddress;				//Node Address
+uint8_t payloadLen 		= 0x10;		//Payload Length
+uint16_t commandId 		= 0x0065;	//Command ID Echo
+uint8_t channelNumber;          //Channel Number Echo
+float targetPercentage;         //Target Balance Percentage Echo
+uint8_t errorCode;              //Error Code
+float percentAchieved;          //Balance Percentage actually acheived
+uint32_t newHardwareOffset;     //Updated Hardware Offset
+int8_t nodeRssi;					//Node RSSI
+int8_t baseRssi;					//Base Station RSSI
+uint16_t checksum;					//Checksum of [stopFlag - newHardwareOffset]
+```
+
+##### Failure Response:
+No Response.
+
+##### Notes:
+**Target Balance Percentage:** The percentage desired to balance to. For example, a common use it to auto-balance to mid-scale (50%) to obtain maximum bipolar dynamic range.
+
+**Error Code:** Describes whether the autobalance succeeded or failed.
+
+Code   | Description 
+-------|--------------
+0      | Success
+1      | Potentially Bad AutoBalance (values still applied)
+2      | Not Supported by the Node
+3      | Not Support on the given channel
+4      | Target Balance value out of range
+
+**Percent Achieved:** It is not always possible to balance exactly to the requested percentage. The Percentage Achieved gives the result that a successful autobalance actually balanced the channel to.
+
+**Updated Hardware Offset:** The hardware offset value that the channel has been updated to after a successful autobalance.
 
 <br>
 ## Cycle Power & Radio
