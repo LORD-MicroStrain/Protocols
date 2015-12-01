@@ -2,6 +2,12 @@
 
 **List of Commands:**
 
+####ASPP v1.2
+These changes were made in **Node firmware 10.0** and above.
+
+* [Short Ping (v2)](#short-ping-v2)
+
+
 ####ASPP v1.1
 These changes were made in **Node firmware 8.21** and above.
 
@@ -10,7 +16,7 @@ These changes were made in **Node firmware 8.21** and above.
 
 ####ASPP v1.0
 
-* [Short Ping](#short-ping)
+* [Short Ping (v1)](#short-ping-v1)
 * [Long Ping](#long-ping)
 * [Read EEPROM (v1)](#read-node-eeprom-v1)
 * [Write EEPROM (v1)](#write-node-eeprom-v1)
@@ -27,7 +33,7 @@ These changes were made in **Node firmware 8.21** and above.
 * [Auto-Balance Channel](#auto-balance-channel)
 * [Cycle Power & Radio](#cycle-power--radio)
 
-## Short Ping
+## Short Ping (v1)
 
 The **Short Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
 
@@ -45,6 +51,48 @@ uint8_t commandId = 0x02;	//Command ID Echo
 ##### Failure Response:
 ```cpp
 uint8_t failId = 0x21;		//Failure ID
+```
+
+<br>
+## Short Ping (v2)
+
+The **Short Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
+
+##### Command:
+```cpp
+uint8_t startByte 		= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 		= 0x0E;		//Delivery Stop Flag
+uint8_t appDataType 	= 0x00;		//App Data Type
+uint16_t nodeAddress;				//Node Address
+uint8_t payloadLen 		= 0x02;		//Payload Length
+uint16_t commandId 		= 0x0012;	//Command ID
+uint16_t checksum;					//Checksum of [stopFlag - commandId]
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte 		= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
+uint8_t appDataType 	= 0x22;		//App Data Type
+uint16_t nodeAddress;				//Node Address
+uint8_t payloadLen 		= 0x02;		//Payload Length
+uint16_t commandId 		= 0x0012;	//Command ID Echo
+int8_t reserved;					//Reserved Byte
+int8_t baseRssi;					//Base Station RSSI
+uint16_t checksum;					//Checksum of [stopFlag - commandId]
+```
+
+##### Failure Response:
+```cpp
+uint8_t startByte 		= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
+uint8_t appDataType 	= 0x02;		//App Data Type
+uint16_t nodeAddress;				//Node Address
+uint8_t payloadLen 		= 0x02;		//Payload Length
+uint16_t commandId 		= 0x0012;	//Command ID Echo
+int8_t reserved1;					//Reserved Byte
+int8_t reserved2;					//Reserved Byte
+uint16_t checksum;					//Checksum of [stopFlag - commandId]
 ```
 
 <br>
