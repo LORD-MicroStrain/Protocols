@@ -56,6 +56,8 @@ uint8_t failId = 0x21;		//Failure ID
 <br>
 ## Short Ping (v2)
 
+`FW 10.0+`
+
 The **Short Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
 
 ##### Command:
@@ -177,6 +179,8 @@ No Response.
 <br>
 ## Read Node EEPROM (v2)
 
+`FW 8.21+`
+
 The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM. 
 
 See the Node EEPROM Map for specific memory address details.
@@ -261,6 +265,8 @@ No Response.
 
 <br>
 ## Write Node EEPROM (v2)
+
+`FW 8.21+`
 
 The **Write Node EEPROM** command is used to write a value to a specific memory address on the Node's EEPROM.
 
