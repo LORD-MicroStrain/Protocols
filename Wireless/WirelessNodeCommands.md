@@ -348,6 +348,8 @@ uint16_t checksum;					//Checksum of [stopFlag - errorCode]
 Code         | Description 
 -------------|-------------- 
 1            | Unknown EEPROM Address
+2            | Value out of Bounds
+3            | EEPROM Address is read-only
 4            | Hardware Error
 
 <br>
