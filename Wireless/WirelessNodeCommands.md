@@ -221,7 +221,26 @@ uint16_t checksum;					//Checksum of [stopFlag - eepromVal]
 ```
 
 ##### Failure Response:
-No Response.
+```cpp
+uint8_t startByte 		= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
+uint8_t appDataType 	= 0x02;		//App Data Type
+uint16_t nodeAddress;				//Node Address
+uint8_t payloadLen 		= 0x05;		//Payload Length
+uint16_t commandId 		= 0x0007;	//Command ID Echo
+uint16_t eepromAddress;				//EEPROM Address Echo
+uint8_t errorCode;					//Error Code
+int8_t notUsed;						//RESERVED
+int8_t baseRssi;					//Base Station RSSI
+uint16_t checksum;					//Checksum of [stopFlag - errorCode]
+```
+
+**Error Codes:**
+
+Code         | Description 
+-------------|-------------- 
+1            | Unknown EEPROM Address
+4            | Hardware Error
 
 <br>
 ## Write Node EEPROM (v1)
@@ -309,7 +328,27 @@ uint16_t checksum;					//Checksum of [stopFlag - commandId]
 ```
 
 ##### Failure Response:
-No Response.
+```cpp
+uint8_t startByte 		= 0xAA;		//Start of Packet Byte
+uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
+uint8_t appDataType 	= 0x02;		//App Data Type
+uint16_t nodeAddress;				//Node Address
+uint8_t payloadLen 		= 0x07;		//Payload Length
+uint16_t commandId		= 0x0008;	//Command ID Echo
+uint16_t eepromAddress;				//EEPROM Address Echo
+uint16_t valueWritten;				//Value Written Echo
+uint8_t errorCode;        //Error Code
+int8_t notUsed;						//RESERVED
+int8_t baseRssi;					//Base RSSI
+uint16_t checksum;					//Checksum of [stopFlag - errorCode]
+```
+
+**Error Codes:**
+
+Code         | Description 
+-------------|-------------- 
+1            | Unknown EEPROM Address
+4            | Hardware Error
 
 <br>
 ## Initiate Sleep Mode
