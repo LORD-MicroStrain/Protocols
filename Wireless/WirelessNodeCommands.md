@@ -960,6 +960,7 @@ Code   | Description
 0      | No Error
 1      | Sensor not plugged in
 2      | Sensor shorted
+3      | Invalid Sensor input
 
 ##### Notes:
 **Status Code (command):**
