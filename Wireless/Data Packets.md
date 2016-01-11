@@ -31,7 +31,7 @@ uint8_t channelMask;                      //Active Channel Mask
 uint8_t sampleRate;                       //Sample Rate
 uint8_t dataType;                         //Data Type
 uint16_t tick;                            //Timer Tick
-uint16_t | uint32_t | float chData;       //Channel Data (per channel)
+uint16_t | uint32_t | float chData[N];     //Channel Data (per active channel)
 //Repeat Channel Data bytes for each active channel
 int8_t reserved;                          //RESERVED
 int8_t baseRssi;                          //Base Station RSSI
@@ -52,7 +52,7 @@ uint16_t channelMask;                     //Active Channel Mask
 uint8_t sampleRate;                       //Sample Rate
 uint8_t appIdAndDataType          = 0x02; //App ID / Data Type
 uint16_t tick;                            //Timer Tick
-uint16_t | uint32_t | float chData;       //Channel Data (per channel)
+uint16_t | uint32_t | float chData[];     //Channel Data (per active channel)
 //Repeat Channel Data bytes for each active channel
 int8_t reserved;                          //RESERVED
 int8_t baseRssi;                          //Base Station RSSI
@@ -81,7 +81,7 @@ uint8_t channelMask;                        //Active Channel Mask
 uint8_t sampleRate;                         //Sample Rate
 uint8_t dataType;                           //Data Type
 uint16_t tick;                              //Sweep Tick
-uint16_t | uint32_t | float chData;         //Channel Data (per channel, per sweep)
+uint16_t | uint32_t | float chData[];       //Channel Data (per active channel, per sweep)
 //Repeat Channel Data bytes for each active channel, and for each sweep
 int8_t nodeRssi;                            //Node RSSI
 int8_t baseRssi;                            //Base Station RSSI
@@ -102,7 +102,7 @@ uint16_t channelMask;                       //Active Channel Mask
 uint8_t sampleRate;                         //Sample Rate
 uint8_t appIdAndDataType;                   //App ID / Data Type
 uint16_t tick;                              //Sweep Tick
-uint16_t | uint32_t | float chData;         //Channel Data (per channel, per sweep)
+uint16_t | uint32_t | float chData[];       //Channel Data (per channel, per sweep)
 //Repeat Channel Data bytes for each active channel, and for each sweep
 int8_t nodeRssi;                            //Node RSSI
 int8_t baseRssi;                            //Base Station RSSI
@@ -133,7 +133,7 @@ uint8_t dataType;                           //Data Type
 uint16_t tick;                              //Sweep Tick
 uint32_t timestampSec;                      //UTC Timestamp (seconds)
 uint32_t timestampNano;                     //UTC Timestamp (nanoseconds)
-uint16_t | uint32_t | float chData;         //Channel Data (per channel, per sweep)
+uint16_t | uint32_t | float chData[];       //Channel Data (per active channel, per sweep)
 //Repeat Channel Data bytes for each active channel, and for each sweep
 int8_t nodeRssi;                            //Node RSSI
 int8_t baseRssi;                            //Base Station RSSI
@@ -188,7 +188,7 @@ uint8_t sampleModeAndDataType;            //Sample Mode / Data Type
 uint16_t tick;                            //Sweep Tick
 uint32_t timestampSec;                    //UTC Timestamp (seconds)
 uint32_t timestampNano;                   //UTC Timestamp (nanoseconds)
-uint16_t | uint32_t | float chData;       //Channel Data (per channel, per sweep)
+uint16_t | uint32_t | float chData[];     //Channel Data (per active channel, per sweep)
 //Repeat Channel Data bytes for each active channel, and for each sweep
 int8_t nodeRssi;                          //Node RSSI
 int8_t baseRssi;                          //Base Station RSSI
@@ -331,7 +331,7 @@ uint16_t binSize;                                    //Size of each Bin
 uint16_t binStart;                                   //The start of bin 1 (in microstrain)
 uint16_t dataSetId;                                  //Data Set ID # (each ID is used for 3 sets of binned data)
 uint32_t uptime;                                     //Uptime counter
-float angle;                                         //Angle in Radians
+float angle;                                         //Angle (in Radians)
 float damage;                                        //Damage percentage (0 = new, 100 = dead)
 uint32_t binData[21];                                //Binned data
 int8_t reserved;                                     //RESERVED
@@ -363,7 +363,7 @@ uint8_t appId               = 0x00;                  //App ID
 uint8_t transmitRate;                                //Transmit Rate of the packet
 uint8_t sampleRate;                                  //Sample/Processing Rate of the data
 uint32_t persistentTick;                             //Count of Histogram Sweeps
-float angle;                                         //Angle in Degrees
+float angle;                                         //Angle (in Degrees)
 float damage;                                        //Damage percentage (0 = new, 100 = dead)
 uint16_t binStart;                                   //The start of bin 1 (in microstrain)
 uint16_t binSize;                                    //Size of each Bin
@@ -382,6 +382,51 @@ This packet always contains 21 bins of Histogram data.
 **Persistent Tick**
 
 The persistent tick is a count of the number of "Histogram Sweeps" that have occurred (groups of Histogram packets). This value is persistent in that it doesn't get reset when the Node cycles power. It will, however, get reset when the Clear Histogram command is performed.
+
+
+
+## Raw Angle Strain Packet (Specific Angle Mode)
+The Raw Angle Strain Packet (Specific Angle Mode) contains strain data at specific angles.
+
+```cpp
+uint8_t startByte           = 0xAA;                  //Start of Packet Byte
+uint8_t stopFlag            = 0x07;                  //Delivery Stop Flag
+uint8_t appDataType         = 0xA3;                  //App Data Type
+uint16_t nodeAddress;                                //Node Address
+uint8_t payloadLen;                                  //Payload Length
+uint8_t appId               = 0x00;                  //App ID
+uint8_t sampleRate;                                  //Sample Rate
+uint16_t tick;                                       //Timer Tick
+uint8_t numAngles;                                   //Number of Angles
+float angle;                                         //Angle (in Degrees)
+float angleStrainData;                               //Angle Strain Data
+//Repeat angle and angleStrainData for the total number of angles
+int8_t reserved;                                     //RESERVED
+int8_t baseRssi;                                     //Base Station RSSI
+uint16_t checksum;                                   //Checksum of [stopFlag - angleStrainData]
+```
+
+## Raw Angle Strain Packet (Distributed Angle Mode)
+The Raw Angle Strain Packet (Distributed Angle Mode) contains strain data for a range of angles.
+
+```cpp
+uint8_t startByte           = 0xAA;                  //Start of Packet Byte
+uint8_t stopFlag            = 0x07;                  //Delivery Stop Flag
+uint8_t appDataType         = 0xA3;                  //App Data Type
+uint16_t nodeAddress;                                //Node Address
+uint8_t payloadLen;                                  //Payload Length
+uint8_t appId               = 0x01;                  //App ID
+uint8_t sampleRate;                                  //Sample Rate
+uint16_t tick;                                       //Timer Tick
+float angleLowerBound;                               //The lower bound angle (in Degrees)
+float angleUpperBound;                               //The upper bound angle (in Degrees)
+uint8_t numAngles;                                   //The number of angles
+float angleStrainData[numAngles];                    //Angle Strain Data
+//Repeat angleStrainData for the total number of angles
+int8_t reserved;                                     //RESERVED
+int8_t baseRssi;                                     //Base Station RSSI
+uint16_t checksum;                                   //Checksum of [stopFlag - angleStrainData]
+```
 
 
 ## Diagnostic Packet
