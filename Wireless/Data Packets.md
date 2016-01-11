@@ -12,6 +12,8 @@
 * [Asynchronous Digital & Analog Packet](#asynchronous-digital--analog-packet)
 * [Structural Health Packet (v1)](#structural-health-packet-v1)
 * [Structural Health Packet (v2)](#structural-health-packet-v2)
+* [Raw Angle Strain Packet (Specific Angle Mode)](#raw-angle-strain-packet-specific-angle-mode)
+* [Raw Angle Strain Packet (Distributed Angle Mode)](#raw-angle-strain-packet-distributed-angle-mode)
 * [Diagnostic Packet](#diagnostic-packet)
 * [Node Discovery Packet (v1)](#node-discovery-packet-v1)
 * [Node Discovery Packet (v2)](#node-discovery-packet-v2)
