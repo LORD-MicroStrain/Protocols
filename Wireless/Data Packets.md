@@ -10,6 +10,8 @@
 * [Synchronized Sampling Packet (v2)](#synchronized-sampling-packet-v2)
 * [Asynchronous Digital-Only Packet](#asynchronous-digital-only-packet)
 * [Asynchronous Digital & Analog Packet](#asynchronous-digital--analog-packet)
+* [Structural Health Packet (v1)](#structural-health-packet-v1)
+* [Structural Health Packet (v2)](#structural-health-packet-v2)
 * [Diagnostic Packet](#diagnostic-packet)
 * [Node Discovery Packet (v1)](#node-discovery-packet-v1)
 * [Node Discovery Packet (v2)](#node-discovery-packet-v2)
@@ -239,21 +241,21 @@ Channel data should be parsed in the following manner:
 The Asynchronous Digital-Only data packet contains time and digital state values collected when a Node was triggered by digital pulses.
 
 ```cpp
-uint8_t startByte 					= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 					= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 				= 0x0E;		//App Data Type
-uint16_t nodeAddress;							//Node Address
-uint8_t payloadLen;								//Payload Length
-uint16_t channelMask;							//Digital Channel Mask
-uint16_t tick;									//Event Tick
-uint32_t timestampSec;							//UTC Timestamp (seconds)
-uint32_t timestampNano;							//UTC Timestamp (nanoseconds)
-uint16_t timestampOffset_Evt1;					//Timestamp Offset - Event 1
-uint16_t digitalChannelData_Evt1;					//Digital Channel Data - Event 1
+uint8_t startByte           = 0xAA;        //Start of Packet Byte
+uint8_t stopFlag            = 0x07;        //Delivery Stop Flag
+uint8_t appDataType         = 0x0E;        //App Data Type
+uint16_t nodeAddress;                      //Node Address
+uint8_t payloadLen;                        //Payload Length
+uint16_t channelMask;                      //Digital Channel Mask
+uint16_t tick;                             //Event Tick
+uint32_t timestampSec;                     //UTC Timestamp (seconds)
+uint32_t timestampNano;                    //UTC Timestamp (nanoseconds)
+uint16_t timestampOffset_Evt1;             //Timestamp Offset - Event 1
+uint16_t digitalChannelData_Evt1;          //Digital Channel Data - Event 1
 //Repeat Timestamp and Digital Channel bytes for all Events
-int8_t nodeRssi;								//Node RSSI
-int8_t baseRssi;								//Base Station RSSI
-uint16_t checksum;								//Checksum of [stopFlag - digitalChannelData_EvtX]
+int8_t nodeRssi;                           //Node RSSI
+int8_t baseRssi;                           //Base Station RSSI
+uint16_t checksum;                         //Checksum of [stopFlag - digitalChannelData_EvtX]
 ```
 
 #####Notes:
@@ -275,24 +277,24 @@ Each event has a timestamp offset that much be added to the packet’s absolute 
 The Asynchronous Digital & Analog data packet contains time, digital state, and analog sensor values collected when a Node was triggered by digital pulses.
 
 ```cpp
-uint8_t startByte 					= 0xAA;			//Start of Packet Byte
-uint8_t stopFlag 					= 0x07;			//Delivery Stop Flag
-uint8_t appDataType 				= 0x0F;			//App Data Type
-uint16_t nodeAddress;								//Node Address
-uint8_t payloadLen;									//Payload Length
-uint16_t channelMask;								//Channel Mask
-uint8_t dataType;									//Data Type
-uint16_t tick;										//Event Tick
-uint32_t timestampSec;								//UTC Timestamp (seconds)
-uint32_t timestampNano;								//UTC Timestamp (nanoseconds)
-uint16_t timestampOffset_Evt1;						//Timestamp Offset - Event 1
-uint16_t digitalChannelData_Evt1;					//Digital Channel Data - Event 1
-uint16_t | uint32_t | float	analogChannelData_Evt1;	//Analog Channel Data - Event 1
+uint8_t startByte           = 0xAA;                  //Start of Packet Byte
+uint8_t stopFlag            = 0x07;                  //Delivery Stop Flag
+uint8_t appDataType         = 0x0F;                  //App Data Type
+uint16_t nodeAddress;                                //Node Address
+uint8_t payloadLen;                                  //Payload Length
+uint16_t channelMask;                                //Channel Mask
+uint8_t dataType;                                    //Data Type
+uint16_t tick;                                       //Event Tick
+uint32_t timestampSec;                               //UTC Timestamp (seconds)
+uint32_t timestampNano;                              //UTC Timestamp (nanoseconds)
+uint16_t timestampOffset_Evt1;                       //Timestamp Offset - Event 1
+uint16_t digitalChannelData_Evt1;                    //Digital Channel Data - Event 1
+uint16_t | uint32_t | float  analogChannelData_Evt1; //Analog Channel Data - Event 1
 //Repeat Analog Channel Data for each digital channel that is active (high) in the Digital Channel Data bytes for the current Event.
 //Repeat Timestamp and Digital Channel Data, and Analog Channel Data bytes for all Events
-int8_t nodeRssi;									//Node RSSI
-int8_t baseRssi;									//Base Station RSSI
-uint16_t checksum;									//Checksum of [stopFlag - analogChannelData_EvtX]
+int8_t nodeRssi;                                     //Node RSSI
+int8_t baseRssi;                                     //Base Station RSSI
+uint16_t checksum;                                   //Checksum of [stopFlag - analogChannelData_EvtX]
 ```
 
 #####Notes:
@@ -312,22 +314,92 @@ Each packet may contain more than one event. Each event has a timestamp offset t
 
     EventTimestamp = PacketTimestamp + (EventTimestampOffset / 32,768)
 
+
+## Structural Health Packet (v1)
+The Structural Health Packet contains structural health data.
+
+```cpp
+uint8_t startByte           = 0xAA;                  //Start of Packet Byte
+uint8_t stopFlag            = 0x07;                  //Delivery Stop Flag
+uint8_t appDataType         = 0xA0;                  //App Data Type
+uint16_t nodeAddress;                                //Node Address
+uint8_t payloadLen;                                  //Payload Length
+uint8_t appId               = 0xA0;                  //App ID
+uint8_t angleId;                                     //Angle ID
+uint8_t mode;                                        //Mode (0 = normal, 1 = idle)
+uint16_t binSize;                                    //Size of each Bin
+uint16_t binStart;                                   //The start of bin 1 (in microstrain)
+uint16_t dataSetId;                                  //Data Set ID # (each ID is used for 3 sets of binned data)
+uint32_t uptime;                                     //Uptime counter
+float angle;                                         //Angle in Radians
+float damage;                                        //Damage percentage (0 = new, 100 = dead)
+uint32_t binData[21];                                //Binned data
+int8_t reserved;                                     //RESERVED
+int8_t baseRssi;                                     //Base Station RSSI
+uint16_t checksum;                                   //Checksum of [stopFlag - binData]
+```
+
+#####Notes:
+
+**Bins**
+
+This packet always contains 21 bins of Histogram data.
+
+**Sample Rate**
+
+The Histogram data in this packet is calculated from the strain sensors using a 32Hz sample rate. The packet itself is transmitted every 30 seconds.
+
+
+## Structural Health Packet (v2)
+The Structural Health Packet contains structural health data.
+
+```cpp
+uint8_t startByte           = 0xAA;                  //Start of Packet Byte
+uint8_t stopFlag            = 0x07;                  //Delivery Stop Flag
+uint8_t appDataType         = 0xA0;                  //App Data Type
+uint16_t nodeAddress;                                //Node Address
+uint8_t payloadLen;                                  //Payload Length
+uint8_t appId               = 0x00;                  //App ID
+uint8_t transmitRate;                                //Transmit Rate of the packet
+uint8_t sampleRate;                                  //Sample/Processing Rate of the data
+uint32_t persistentTick;                             //Count of Histogram Sweeps
+float angle;                                         //Angle in Degrees
+float damage;                                        //Damage percentage (0 = new, 100 = dead)
+uint16_t binStart;                                   //The start of bin 1 (in microstrain)
+uint16_t binSize;                                    //Size of each Bin
+uint32_t binData[21];                                //Binned data
+int8_t nodeRssi;                                     //Node RSSI
+int8_t baseRssi;                                     //Base Station RSSI
+uint16_t checksum;                                   //Checksum of [stopFlag - binData]
+```
+
+#####Notes:
+
+**Bins**
+
+This packet always contains 21 bins of Histogram data.
+
+**Persistent Tick**
+
+The persistent tick is a count of the number of "Histogram Sweeps" that have occurred (groups of Histogram packets). This value is persistent in that it doesn't get reset when the Node cycles power. It will, however, get reset when the Clear Histogram command is performed.
+
+
 ## Diagnostic Packet
 ```cpp
-uint8_t startByte 					= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 					= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 				= 0x11;		//App Data Type
-uint16_t nodeAddress;							//Node Address
-uint8_t payloadLen;								//Payload Length
-uint8_t packetInterval;							//Packet Interval
-uint16_t tick;									//Tick
-uint8_t info1Len;								//Info Item 1 Length
-uint8_t info1Id;								//Info Item 1 ID
-uint8_t | uint16_t | uint32_t info1Val;			//Info Item 1 Value
+uint8_t startByte           = 0xAA;          //Start of Packet Byte
+uint8_t stopFlag            = 0x07;          //Delivery Stop Flag
+uint8_t appDataType         = 0x11;          //App Data Type
+uint16_t nodeAddress;                        //Node Address
+uint8_t payloadLen;                          //Payload Length
+uint8_t packetInterval;                      //Packet Interval
+uint16_t tick;                               //Tick
+uint8_t info1Len;                            //Info Item 1 Length
+uint8_t info1Id;                             //Info Item 1 ID
+uint8_t | uint16_t | uint32_t info1Val;      //Info Item 1 Value
 //Repeat Info Item Length, ID, and Value for all the Info Items in the packet
-int8_t nodeRssi;								//Node RSSI
-int8_t baseRssi;								//Base Station RSSI
-uint16_t checksum;								//Checksum of [stopFlag - infoXVal]
+int8_t nodeRssi;                             //Node RSSI
+int8_t baseRssi;                             //Base Station RSSI
+uint16_t checksum;                           //Checksum of [stopFlag - infoXVal]
 ```
 
 #####Notes:
@@ -362,9 +434,9 @@ ID  | Description   | Data Values | # Bytes | Type | Unit
 
 
 * **(0x01) Transmit Info**
-	* **Total Transmissions** - # of unique packets transmitted (not including retransmissions)
-	* **Total Retransmissions** - # of retransmitted packets (packets are retransmitted when a node doesn't receive an acknowledgment from the base station)
-	* **Total Dropped Packets** - # of packets node has discarded due to buffer overflow or exceeding the max # of retransmissions per packet
+  * **Total Transmissions** - # of unique packets transmitted (not including retransmissions)
+  * **Total Retransmissions** - # of retransmitted packets (packets are retransmitted when a node doesn't receive an acknowledgment from the base station)
+  * **Total Dropped Packets** - # of packets node has discarded due to buffer overflow or exceeding the max # of retransmissions per packet
 * **(0x02) Active Running Time** - # of seconds the node has been in a sampling mode
 * **(0x03) Battery Life Remaining** - % estimated battery level
 
@@ -375,37 +447,37 @@ If the Info Item Length byte is 0x0B, the next 11 bytes make up the Info Item ID
 On power up, the Node will transmit two identification packets. The packets are sent out on all radio frequencies, allowing any Base Station within range to receive the identification packets, regardless of the Base Station’s current frequency assignment. The Base Station immediately passes these packets to the host serial port.
 
 ```cpp
-uint8_t startByte 					= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag;								//Delivery Stop Flag
-uint8_t appDataType 				= 0x00;		//App Data Type
-uint16_t nodeAddress;							//Node Address
-uint8_t payloadLen					= 0x03;		//Payload Length
-uint8_t frequency;								//Radio Frequency the Node is on
-uint16_t model;									//The (legacy) Model Number of the Node
-int8_t reserved;								//RESERVED
-int8_t baseRssi;								//Base Station RSSI
-uint16_t checksum;								//Checksum of [stopFlag - model]
+uint8_t startByte           = 0xAA;    //Start of Packet Byte
+uint8_t stopFlag;                      //Delivery Stop Flag
+uint8_t appDataType         = 0x00;    //App Data Type
+uint16_t nodeAddress;                  //Node Address
+uint8_t payloadLen          = 0x03;    //Payload Length
+uint8_t frequency;                     //Radio Frequency the Node is on
+uint16_t model;                        //The (legacy) Model Number of the Node
+int8_t reserved;                       //RESERVED
+int8_t baseRssi;                       //Base Station RSSI
+uint16_t checksum;                     //Checksum of [stopFlag - model]
 ```
 
 ## Node Discovery Packet (v2)
 On power up, the Node will transmit two identification packets. The packets are sent out on all radio frequencies, allowing any Base Station within range to receive the identification packets, regardless of the Base Station’s current frequency assignment. The Base Station immediately passes these packets to the host serial port.
 
 ```cpp
-uint8_t startByte 			= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag			= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 		= 0x17;		//App Data Type
-uint16_t nodeAddress;					//Node Address
-uint8_t payloadLen			= 0x0F;		//Payload Length
-uint8_t frequency;						//Radio Frequency the Node is on
-uint16_t panId;							//The PAN ID the Node is on
-uint16_t modelNumber;					//The Model Number of the Node
-uint16_t modelOption;					//The Model Option of the Node
-uint32_t serial;						//The Serial Number of the Node
-uint16_t firmwareVersion;				//The (legacy) Firmware Version of the Node
-uint16_t defaultMode;					//The Default Mode of the Node
-int8_t reserved;						//RESERVED
-int8_t baseRssi;						//Base Station RSSI
-uint16_t checksum;						//Checksum of [stopFlag - model]
+uint8_t startByte       = 0xAA;    //Start of Packet Byte
+uint8_t stopFlag        = 0x07;    //Delivery Stop Flag
+uint8_t appDataType     = 0x17;    //App Data Type
+uint16_t nodeAddress;              //Node Address
+uint8_t payloadLen      = 0x0F;    //Payload Length
+uint8_t frequency;                 //Radio Frequency the Node is on
+uint16_t panId;                    //The PAN ID the Node is on
+uint16_t modelNumber;              //The Model Number of the Node
+uint16_t modelOption;              //The Model Option of the Node
+uint32_t serial;                   //The Serial Number of the Node
+uint16_t firmwareVersion;          //The (legacy) Firmware Version of the Node
+uint16_t defaultMode;              //The Default Mode of the Node
+int8_t reserved;                   //RESERVED
+int8_t baseRssi;                   //Base Station RSSI
+uint16_t checksum;                 //Checksum of [stopFlag - model]
 ```
 **modelNumber** - The main model of the Node (ex. 6305 = G-Link).
 
@@ -417,22 +489,22 @@ uint16_t checksum;						//Checksum of [stopFlag - model]
 On power up, the Node will transmit two identification packets. The packets are sent out on all radio frequencies, allowing any Base Station within range to receive the identification packets, regardless of the Base Station’s current frequency assignment. The Base Station immediately passes these packets to the host serial port.
 
 ```cpp
-uint8_t startByte 			= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag			= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 		= 0x18;		//App Data Type
-uint16_t nodeAddress;					//Node Address
-uint8_t payloadLen			= 0x11;		//Payload Length
-uint8_t frequency;						//Radio Frequency the Node is on
-uint16_t panId;							//The PAN ID the Node is on
-uint16_t modelNumber;					//The Model Number of the Node
-uint16_t modelOption;					//The Model Option of the Node
-uint32_t serial;						//The Serial Number of the Node
-uint16_t firmwareVersion1;				//The Firmware Version of the Node (part 1)
-uint16_t firmwareVersion2;				//The Firmware Version of the Node (part 2)
-uint16_t defaultMode;					//The Default Mode of the Node
-int8_t reserved;						//RESERVED
-int8_t baseRssi;						//Base Station RSSI
-uint16_t checksum;						//Checksum of [stopFlag - model]
+uint8_t startByte       = 0xAA;    //Start of Packet Byte
+uint8_t stopFlag        = 0x07;    //Delivery Stop Flag
+uint8_t appDataType     = 0x18;    //App Data Type
+uint16_t nodeAddress;              //Node Address
+uint8_t payloadLen      = 0x11;    //Payload Length
+uint8_t frequency;                 //Radio Frequency the Node is on
+uint16_t panId;                    //The PAN ID the Node is on
+uint16_t modelNumber;              //The Model Number of the Node
+uint16_t modelOption;              //The Model Option of the Node
+uint32_t serial;                   //The Serial Number of the Node
+uint16_t firmwareVersion1;         //The Firmware Version of the Node (part 1)
+uint16_t firmwareVersion2;         //The Firmware Version of the Node (part 2)
+uint16_t defaultMode;              //The Default Mode of the Node
+int8_t reserved;                   //RESERVED
+int8_t baseRssi;                   //Base Station RSSI
+uint16_t checksum;                 //Checksum of [stopFlag - model]
 ```
 **modelNumber** - The main model of the Node (ex. 6305 = G-Link).
 
@@ -445,15 +517,15 @@ uint16_t checksum;						//Checksum of [stopFlag - model]
 For BaseStation's with Firmware v3.32+, writing a `2` to EEPROM 40 will enable any beacon packets that are sent from the BaseStation to be echoed over the port.
 
 ```cpp
-uint8_t startByte 			= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag			= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 		= 0x10;		//App Data Type
-uint16_t address            = 0x0000;	//Address
-uint8_t payloadLen			= 0x06;		//Payload Length
-uint16_t cmd                = 0xBEAC;	//Command
+uint8_t startByte           = 0xAA;     //Start of Packet Byte
+uint8_t stopFlag            = 0x07;     //Delivery Stop Flag
+uint8_t appDataType         = 0x10;     //App Data Type
+uint16_t address            = 0x0000;   //Address
+uint8_t payloadLen          = 0x06;     //Payload Length
+uint16_t cmd                = 0xBEAC;   //Command
 uint32_t timestampSec;                  //Beacon's UTC Timestamp (seconds)
-int8_t reserved;						//RESERVED
-int8_t reserved;						//RESERVED
-uint16_t checksum;						//Checksum of [stopFlag - reserved]
+int8_t reserved;                        //RESERVED
+int8_t reserved;                        //RESERVED
+uint16_t checksum;                      //Checksum of [stopFlag - reserved]
 ```
 **timestampSec** - The timestamp (seconds since Unix Epoch) of the beacon.

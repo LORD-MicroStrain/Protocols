@@ -2,8 +2,15 @@
 
 **List of Commands:**
 
-####ASPP v1.1 
-These changes were made in **Base Station firmware 4.0** and above:
+####ASPP v1.3
+These changes were made in Base Station firmware **4.30448**:
+* [Start RF Sweep Mode](#start-rf-sweep-mode)
+
+####ASPP v1.2
+No Base Station changes.
+
+####ASPP v1.1
+These changes were made in Base Station firmware **4.0**:
 * [Ping Base Station (v2)](#ping-base-station-v2)
 * [Read EEPROM (v2)](#read-base-station-eeprom-v2)
 * [Write EEPROM (v2)](#write-base-station-eeprom-v2)
@@ -25,12 +32,12 @@ The **Ping Base Station** command is used to ensure that the host computer and t
 
 ##### Command:
 ```cpp
-uint8_t commandId = 0x01;	//Command ID
+uint8_t commandId         = 0x01;        //Command ID
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t commandId = 0x01;	//Command ID Echo
+uint8_t commandId         = 0x01;        //Command ID Echo
 ```
 
 ##### Failure Response:
@@ -43,26 +50,26 @@ The **Ping Base Station** command is used to ensure that the host computer and t
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet byte
-uint8_t stopFlag 		= 0x0E;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x30;		//App Data Type
-uint16_t baseAddress	= 0x1234;	//Base Station Address
-uint8_t payloadLen		= 0x02;		//Payload Length
-uint16_t commandId		= 0x0001;	//Command ID
-uint16_t checksum;					//Checksum of [stopFlag - commandId]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x0E;        //Delivery Stop Flag
+uint8_t appDataType       = 0x30;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x02;        //Payload Length
+uint16_t commandId        = 0x0001;      //Command ID
+uint16_t checksum;                       //Checksum of [stopFlag - commandId]
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x31;		//App Data Type
-uint16_t baseAddress	= 0x1234;	//Base Station Address
-uint8_t payloadLen		= 0x02;		//Payload Length
-uint16_t commandId		= 0x0001;	//Command ID Echo
-uint8_t RESERVED;					//Reserved Byte
-uint8_t RESERVED;					//Reserved Byte
-uint16_t checksum;					//Checksum of [stopFlag - commandId]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x31;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x02;        //Payload Length
+uint16_t commandId        = 0x0001;      //Command ID Echo
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - commandId]
 ```
 
 ##### Failure Response:
@@ -77,21 +84,21 @@ See the Base Station EEPROM Map for specific memory address details.
 
 ##### Command:
 ```cpp
-uint8_t commandId 		= 0x73;		//Command ID
-uint16_t eepromAddress;				//EEPROM address to read
-uint16_t checksum;					//Checksum of [eepromAddress]
+uint8_t commandId         = 0x73;        //Command ID
+uint16_t eepromAddress;                  //EEPROM address to read
+uint16_t checksum;                       //Checksum of [eepromAddress]
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t commandId 		= 0x73;		//Command ID Echo
-uint16_t value;						//Value read from EEPROM
-uint16_t checksum;					//Checksum of [value]
+uint8_t commandId         = 0x73;        //Command ID Echo
+uint16_t value;                          //Value read from EEPROM
+uint16_t checksum;                       //Checksum of [value]
 ```
 
 ##### Fail Response:
 ```cpp
-uint8_t failId 			= 0x21;		//Fail ID
+uint8_t failId            = 0x21;        //Fail ID
 ```
 
 <br>
@@ -103,49 +110,49 @@ See the Base Station EEPROM Map for specific memory address details.
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet byte
-uint8_t stopFlag 		= 0x0E;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x30;		//App Data Type
-uint16_t baseAddress	= 0x1234;	//Base Station Address
-uint8_t payloadLen		= 0x04;		//Payload Length
-uint16_t commandId		= 0x0073;	//Command ID
-uint16_t eepromAddress;				//EEPROM Address to Read
-uint16_t checksum;					//Checksum of [stopFlag - eepromAddress]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x0E;        //Delivery Stop Flag
+uint8_t appDataType       = 0x30;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x04;        //Payload Length
+uint16_t commandId        = 0x0073;      //Command ID
+uint16_t eepromAddress;                  //EEPROM Address to Read
+uint16_t checksum;                       //Checksum of [stopFlag - eepromAddress]
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x31;		//App Data Type
-uint16_t baseAddress	= 0x1234;	//Base Station Address
-uint8_t payloadLen		= 0x06;		//Payload Length
-uint16_t commandId		= 0x0073;	//Command ID Echo
-uint16_t eepromAddress;				//EEPROM Address Read
-uint16_t value;						//Value Read from EEPROM
-uint8_t RESERVED;					//Reserved Byte
-uint8_t RESERVED;					//Reserved Byte
-uint16_t checksum;					//Checksum of [stopFlag - value]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x31;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x06;        //Payload Length
+uint16_t commandId        = 0x0073;      //Command ID Echo
+uint16_t eepromAddress;                  //EEPROM Address Read
+uint16_t value;                          //Value Read from EEPROM
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - value]
 ```
 
 ##### Fail Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x32;		//App Data Type
-uint16_t baseAddress	= 0x1234;	//Base Station Address
-uint8_t payloadLen		= 0x05;		//Payload Length
-uint16_t commandId		= 0x0073;	//Command ID Echo
-uint16_t eepromAddress;				//EEPROM Address Attempted to Read
-uint8_t errorCode;					//Error Code
-uint8_t RESERVED;					//Reserved Byte
-uint8_t RESERVED;					//Reserved Byte
-uint16_t checksum;					//Checksum of [stopFlag - errorCode]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x32;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x05;        //Payload Length
+uint16_t commandId        = 0x0073;      //Command ID Echo
+uint16_t eepromAddress;                  //EEPROM Address Attempted to Read
+uint8_t errorCode;                       //Error Code
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - errorCode]
 ```
 **Error Codes:**
 
-Code         | Description 
--------------|-------------- 
+Code         | Description
+-------------|--------------
 1            | Unknown EEPROM Address
 4            | Hardware Error
 
@@ -158,22 +165,22 @@ See the Base Station EEPROM Map for specific memory address details.
 
 ##### Command:
 ```cpp
-uint8_t commandId 		= 0x78;		//Command ID
-uint16_t eepromAddress;				//EEPROM address to write to
-uint16_t value;						//Value to write to EEPROM
-uint16_t checksum;					//Checksum of [eepromAddress - value]
+uint8_t commandId         = 0x78;        //Command ID
+uint16_t eepromAddress;                  //EEPROM address to write to
+uint16_t value;                          //Value to write to EEPROM
+uint16_t checksum;                       //Checksum of [eepromAddress - value]
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t commandId 		= 0x78;		//Command ID Echo
-uint16_t value;						//Value written to EEPROM
-uint16_t checksum;					//Checksum of [value]
+uint8_t commandId         = 0x78;        //Command ID Echo
+uint16_t value;                          //Value written to EEPROM
+uint16_t checksum;                       //Checksum of [value]
 ```
 
 ##### Fail Response:
 ```cpp
-uint8_t failId 			= 0x21;		//Fail ID
+uint8_t failId            = 0x21;        //Fail ID
 ```
 
 <br>
@@ -185,51 +192,51 @@ See the Base Station EEPROM Map for specific memory address details.
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet byte
-uint8_t stopFlag 		= 0x0E;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x30;		//App Data Type
-uint16_t baseAddress	= 0x1234;	//Base Station Address
-uint8_t payloadLen		= 0x06;		//Payload Length
-uint16_t commandId		= 0x0078;	//Command ID
-uint16_t eepromAddress;				//EEPROM Address to Write to
-uint16_t value;						//Value to Write to EEPROM
-uint16_t checksum;					//Checksum of [stopFlag - value]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x0E;        //Delivery Stop Flag
+uint8_t appDataType       = 0x30;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x06;        //Payload Length
+uint16_t commandId        = 0x0078;      //Command ID
+uint16_t eepromAddress;                  //EEPROM Address to Write to
+uint16_t value;                          //Value to Write to EEPROM
+uint16_t checksum;                       //Checksum of [stopFlag - value]
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x31;		//App Data Type
-uint16_t baseAddress	= 0x1234;	//Base Station Address
-uint8_t payloadLen		= 0x06;		//Payload Length
-uint16_t commandId		= 0x0078;	//Command ID Echo
-uint16_t eepromAddress;				//EEPROM Address Written to
-uint16_t value;						//Value Written
-uint8_t RESERVED;					//Reserved Byte
-uint8_t RESERVED;					//Reserved Byte
-uint16_t checksum;					//Checksum of [stopFlag - value]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x31;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x06;        //Payload Length
+uint16_t commandId        = 0x0078;      //Command ID Echo
+uint16_t eepromAddress;                  //EEPROM Address Written to
+uint16_t value;                          //Value Written
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - value]
 ```
 
 ##### Fail Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x32;		//App Data Type
-uint16_t baseAddress	= 0x1234;	//Base Station Address
-uint8_t payloadLen		= 0x07;		//Payload Length
-uint16_t commandId		= 0x0078;	//Command ID Echo
-uint16_t eepromAddress;				//EEPROM Address Attempted to Write
-uint16_t value;						//Value Attempted to Write
-uint8_t errorCode;					//Error Code
-uint8_t RESERVED;					//Reserved Byte
-uint8_t RESERVED;					//Reserved Byte
-uint16_t checksum;					//Checksum of [stopFlag - errorCode]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x32;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x07;        //Payload Length
+uint16_t commandId        = 0x0078;      //Command ID Echo
+uint16_t eepromAddress;                  //EEPROM Address Attempted to Write
+uint16_t value;                          //Value Attempted to Write
+uint8_t errorCode;                       //Error Code
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - errorCode]
 ```
 **Error Codes:**
 
-Code         | Description 
--------------|-------------- 
+Code         | Description
+-------------|--------------
 1            | Unknown EEPROM Address
 2            | Value out of Bounds
 3            | EEPROM Address is read-only
@@ -243,20 +250,20 @@ The beacon is used to synchronize and start a group of nodes when performing Syn
 
 ##### Command:
 ```cpp
-uint16_t commandId 			= 0xBEAC;		//Command ID
-uint32_t timestamp;							//Timestamp to give to the Beacon
+uint16_t commandId         = 0xBEAC;      //Command ID
+uint32_t timestamp;                       //Timestamp to give to the Beacon
 ```
 
 ##### Success Response:
 ```cpp
-uint16_t commandId 			= 0xBEAC;		//Command ID Echo
+uint16_t commandId         = 0xBEAC;      //Command ID Echo
 ```
 
 ##### Fail Response:
 None.
 
 ##### Notes:
-**Command Timestamp**: The last 4 bytes in the Command Packet are Timestamp bytes. The beacon that is started from this command will send a Timestamp beginning from this value. These bytes represent the current UTC time in seconds from the Unix Epoch (January 1, 1970). 
+**Command Timestamp**: The last 4 bytes in the Command Packet are Timestamp bytes. The beacon that is started from this command will send a Timestamp beginning from this value. These bytes represent the current UTC time in seconds from the Unix Epoch (January 1, 1970).
 
 <br>
 ## Enable Beacon (v2)
@@ -266,48 +273,48 @@ The beacon is used to synchronize and start a group of nodes when performing Syn
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet byte
-uint8_t stopFlag 		= 0x0E;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x30;		//App Data Type
-uint16_t baseAddress	= 0x1234;	//Base Station Address
-uint8_t payloadLen		= 0x06;		//Payload Length
-uint16_t commandId		= 0xBEAC;	//Command ID
-uint32_t timestamp;					//Timestamp to give to the Beacon
-uint16_t checksum;					//Checksum of [stopFlag - timestamp]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x0E;        //Delivery Stop Flag
+uint8_t appDataType       = 0x30;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x06;        //Payload Length
+uint16_t commandId        = 0xBEAC;      //Command ID
+uint32_t timestamp;                      //Timestamp to give to the Beacon
+uint16_t checksum;                       //Checksum of [stopFlag - timestamp]
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x31;		//App Data Type
-uint16_t baseAddress	= 0x1234;	//Base Station Address
-uint8_t payloadLen		= 0x06;		//Payload Length
-uint16_t commandId		= 0xBEAC;	//Command ID Echo
-uint32_t timestamp;					//Timestamp given to the Beacon
-uint8_t RESERVED;					//Reserved Byte
-uint8_t RESERVED;					//Reserved Byte
-uint16_t checksum;					//Checksum of [stopFlag - timestamp]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x31;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x06;        //Payload Length
+uint16_t commandId        = 0xBEAC;      //Command ID Echo
+uint32_t timestamp;                      //Timestamp given to the Beacon
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - timestamp]
 ```
 
 ##### Fail Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x32;		//App Data Type
-uint16_t baseAddress	= 0x1234;	//Base Station Address
-uint8_t payloadLen		= 0x07;		//Payload Length
-uint16_t commandId		= 0xBEAC;	//Command ID Echo
-uint32_t timestamp;					//Timestamp Attempted to Set
-uint8_t errorCode;					//Error Code
-uint8_t RESERVED;					//Reserved Byte
-uint8_t RESERVED;					//Reserved Byte
-uint16_t checksum;					//Checksum of [stopFlag - errorCode]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x32;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x07;        //Payload Length
+uint16_t commandId        = 0xBEAC;      //Command ID Echo
+uint32_t timestamp;                      //Timestamp Attempted to Set
+uint8_t errorCode;                       //Error Code
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - errorCode]
 ```
 **Error Codes:**
 
-Code         | Description 
--------------|-------------- 
+Code         | Description
+-------------|--------------
 4            | Hardware Error
 
 <br>
@@ -317,13 +324,13 @@ The **Disable Beacon** command is used to turn off the beacon on the Base Statio
 
 ##### Command:
 ```cpp
-uint16_t commandId 			= 0xBEAC;		//Command ID
-uint32_t disableBeacon 		= 0xFFFFFFFF;	//Value to disable the beacon
+uint16_t commandId         = 0xBEAC;      //Command ID
+uint32_t disableBeacon     = 0xFFFFFFFF;  //Value to disable the beacon
 ```
 
 ##### Success Response:
 ```cpp
-uint16_t commandId 			= 0xBEAC;		//Command ID Echo
+uint16_t commandId         = 0xBEAC;      //Command ID Echo
 ```
 ##### Fail Response:
 None.
@@ -338,48 +345,48 @@ The **Disable Beacon** command is used to turn off the beacon on the Base Statio
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;			//Start of Packet byte
-uint8_t stopFlag 		= 0x0E;			//Delivery Stop Flag
-uint8_t appDataType 	= 0x30;			//App Data Type
-uint16_t baseAddress	= 0x1234;		//Base Station Address
-uint8_t payloadLen		= 0x06;			//Payload Length
-uint16_t commandId		= 0xBEAC;		//Command ID
-uint32_t disableBeacon	= 0xFFFFFFFF;	//Value to Disable the Beacon
-uint16_t checksum;						//Checksum of [stopFlag - timestamp]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x0E;        //Delivery Stop Flag
+uint8_t appDataType       = 0x30;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x06;        //Payload Length
+uint16_t commandId        = 0xBEAC;      //Command ID
+uint32_t disableBeacon    = 0xFFFFFFFF;  //Value to Disable the Beacon
+uint16_t checksum;                       //Checksum of [stopFlag - timestamp]
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;			//Start of Packet byte
-uint8_t stopFlag 		= 0x07;			//Delivery Stop Flag
-uint8_t appDataType 	= 0x31;			//App Data Type
-uint16_t baseAddress	= 0x1234;		//Base Station Address
-uint8_t payloadLen		= 0x06;			//Payload Length
-uint16_t commandId		= 0xBEAC;		//Command ID Echo
-uint32_t disableBeacon	= 0xFFFFFFFF;	//Value to Disable the Beacon
-uint8_t RESERVED;						//Reserved Byte
-uint8_t RESERVED;						//Reserved Byte
-uint16_t checksum;						//Checksum of [stopFlag - timestamp]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x31;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x06;        //Payload Length
+uint16_t commandId        = 0xBEAC;      //Command ID Echo
+uint32_t disableBeacon    = 0xFFFFFFFF;  //Value to Disable the Beacon
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - timestamp]
 ```
 
 ##### Fail Response:
 ```cpp
-uint8_t startByte 		= 0xAA;			//Start of Packet byte
-uint8_t stopFlag 		= 0x07;			//Delivery Stop Flag
-uint8_t appDataType 	= 0x32;			//App Data Type
-uint16_t baseAddress	= 0x1234;		//Base Station Address
-uint8_t payloadLen		= 0x07;			//Payload Length
-uint16_t commandId		= 0xBEAC;		//Command ID Echo
-uint32_t disableBeacon	= 0xFFFFFFFF;	//Value to Disable the Beacon
-uint8_t errorCode;						//Error Code
-uint8_t RESERVED;						//Reserved Byte
-uint8_t RESERVED;						//Reserved Byte
-uint16_t checksum;						//Checksum of [stopFlag - errorCode]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x32;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x07;        //Payload Length
+uint16_t commandId        = 0xBEAC;      //Command ID Echo
+uint32_t disableBeacon    = 0xFFFFFFFF;  //Value to Disable the Beacon
+uint8_t errorCode;                       //Error Code
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - errorCode]
 ```
 **Error Codes:**
 
-Code         | Description 
--------------|-------------- 
+Code         | Description
+-------------|--------------
 4            | Hardware Error
 
 ##### Notes:
@@ -392,43 +399,43 @@ The **Beacon Status** command is used to get information about the Beacon on the
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;			//Start of Packet byte
-uint8_t stopFlag 		= 0x0E;			//Delivery Stop Flag
-uint8_t appDataType 	= 0x30;			//App Data Type
-uint16_t baseAddress	= 0x1234;		//Base Station Address
-uint8_t payloadLen		= 0x02;			//Payload Length
-uint16_t commandId		= 0xBEAD;		//Command ID
-uint16_t checksum;						//Checksum of [stopFlag - commandId]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x0E;        //Delivery Stop Flag
+uint8_t appDataType       = 0x30;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x02;        //Payload Length
+uint16_t commandId        = 0xBEAD;      //Command ID
+uint16_t checksum;                       //Checksum of [stopFlag - commandId]
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;			//Start of Packet byte
-uint8_t stopFlag 		= 0x07;			//Delivery Stop Flag
-uint8_t appDataType 	= 0x31;			//App Data Type
-uint16_t baseAddress	= 0x1234;		//Base Station Address
-uint8_t payloadLen		= 0x0B;			//Payload Length
-uint16_t commandId		= 0xBEAD;		//Command ID Echo
-uint8_t beaconStatus;					//The Status of the Beacon
-uint32_t timestamp_sec;					//The Current Timestamp of the Beacon (seconds)
-uint32_t timestamp_nano;				//The Current Timestamp of the Beacon (nanoseconds)
-uint8_t RESERVED;						//Reserved Byte
-uint8_t RESERVED;						//Reserved Byte
-uint16_t checksum;						//Checksum of [stopFlag - timestamp]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x31;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x0B;        //Payload Length
+uint16_t commandId        = 0xBEAD;      //Command ID Echo
+uint8_t beaconStatus;                    //The Status of the Beacon
+uint32_t timestamp_sec;                  //The Current Timestamp of the Beacon (seconds)
+uint32_t timestamp_nano;                 //The Current Timestamp of the Beacon (nanoseconds)
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - timestamp]
 ```
 
 ##### Fail Response:
 ```cpp
-uint8_t startByte 		= 0xAA;			//Start of Packet byte
-uint8_t stopFlag 		= 0x07;			//Delivery Stop Flag
-uint8_t appDataType 	= 0x32;			//App Data Type
-uint16_t baseAddress	= 0x1234;		//Base Station Address
-uint8_t payloadLen		= 0x03;			//Payload Length
-uint16_t commandId		= 0xBEAD;		//Command ID Echo
-uint8_t errorCode;						//Error Code
-uint8_t RESERVED;						//Reserved Byte
-uint8_t RESERVED;						//Reserved Byte
-uint16_t checksum;						//Checksum of [stopFlag - errorCode]
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x32;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x03;        //Payload Length
+uint16_t commandId        = 0xBEAD;      //Command ID Echo
+uint8_t errorCode;                       //Error Code
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - errorCode]
 ```
 
 **beaconStatus**
@@ -438,9 +445,51 @@ uint16_t checksum;						//Checksum of [stopFlag - errorCode]
 
 **Error Codes:**
 
-Code         | Description 
--------------|-------------- 
+Code         | Description
+-------------|--------------
 4            | Hardware Error
+
+<br>
+## Start RF Sweep Mode
+
+The **Start RF Sweep Mode** command puts the Base Station into a mode where radio frequencies can be scanned for traffic.
+All other over-the-air data will be ignored when this mode is active.
+To cancel this mode, send any byte or command to the Base Station.
+
+##### Command:
+```cpp
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x0E;        //Delivery Stop Flag
+uint8_t appDataType       = 0x30;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x0E;        //Payload Length
+uint16_t commandId        = 0x00ED;      //Command ID
+uint32_t minFreq;                        //Minimum Sweep Frequency in kHz (2400000 = 2.4GHz)
+uint32_t maxFreq;                        //Maximum Sweep Frequency in kHz (2400000 = 2.4GHz)
+uint32_t interval;                       //The Sweep interval in kHz.
+uint16_t checksum;                       //Checksum of [stopFlag - timestamp]
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x31;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x0E;        //Payload Length
+uint16_t commandId        = 0x00ED;      //Command ID Echo
+uint32_t minFreqEcho;                    //Minimum Sweep Frequency Echo
+uint32_t maxFreqEcho;                    //Maximum Sweep Frequency Echo
+uint32_t intervalEcho;                   //The Sweep interval Echo
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - timestamp]
+```
+
+##### Notes:
+
+If the device cannot support the requested parameters, they will be clamped to the closest valid value.
+The data packets will relect such changes.
 
 
 <br>

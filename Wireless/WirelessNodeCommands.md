@@ -3,7 +3,7 @@
 **List of Commands:**
 
 ####ASPP v1.2
-These changes were made in **Node firmware 10.0** and above.
+These changes were made in Node firmware **10.0**.
 
 * [Short Ping (v2)](#short-ping-v2)
 * [Auto-Balance Channel (v2)](#auto-balance-channel-v2)
@@ -11,7 +11,7 @@ These changes were made in **Node firmware 10.0** and above.
 
 
 ####ASPP v1.1
-These changes were made in **Node firmware 8.21** and above.
+These changes were made in Node firmware **8.21**.
 
 * [Read EEPROM (v2)](#read-node-eeprom-v2)
 * [Write EEPROM (v2)](#write-node-eeprom-v2)
@@ -41,18 +41,18 @@ The **Short Ping** command is used to check the communication between the Base S
 
 ##### Command:
 ```cpp
-uint8_t commandId = 0x02;	//Command ID
-uint16_t nodeAddress;		//Node Address
+uint8_t commandId              = 0x02;                    //Command ID
+uint16_t nodeAddress;                                     //Node Address
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t commandId = 0x02;	//Command ID Echo
+uint8_t commandId              = 0x02;                    //Command ID Echo
 ```
 
 ##### Failure Response:
 ```cpp
-uint8_t failId = 0x21;		//Failure ID
+uint8_t failId                 = 0x21;                    //Failure ID
 ```
 
 <br>
@@ -64,39 +64,39 @@ The **Short Ping** command is used to check the communication between the Base S
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x0E;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x02;		//Payload Length
-uint16_t commandId 		= 0x0012;	//Command ID
-uint16_t checksum;					//Checksum of [stopFlag - commandId]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x0E;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0012;                  //Command ID
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x22;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x02;		//Payload Length
-uint16_t commandId 		= 0x0012;	//Command ID Echo
-int8_t reserved;					//Reserved Byte
-int8_t baseRssi;					//Base Station RSSI
-uint16_t checksum;					//Checksum of [stopFlag - commandId]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0012;                  //Command ID Echo
+int8_t reserved;                                          //Reserved Byte
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
 ##### Failure Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x02;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x02;		//Payload Length
-uint16_t commandId 		= 0x0012;	//Command ID Echo
-int8_t reserved1;					//Reserved Byte
-int8_t reserved2;					//Reserved Byte
-uint16_t checksum;					//Checksum of [stopFlag - commandId]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x02;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0012;                  //Command ID Echo
+int8_t reserved1;                                         //Reserved Byte
+int8_t reserved2;                                         //Reserved Byte
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
 <br>
@@ -106,32 +106,32 @@ The **Long Ping** command is used to check the communication between the Base St
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x05;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x02;		//Payload Length
-uint16_t commandId 		= 0x0002;	//Command ID
-uint16_t checksum;					//Checksum of [stopFlag - commandId]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
 ##### Initial Response:
 An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
 ```cpp
-uint8_t packetSentAck 	= 0xAA;		//Package Sent Acknowledgement
+uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x02;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x02;		//Payload Length
-uint16_t notUsed 		= 0x0000;	//Empty Payload (not used)
-int8_t nodeRssi;					//Node RSSI
-int8_t baseRssi;					//Base Station RSSI
-uint16_t checksum;					//Checksum of [stopFlag - notUsed]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x02;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t notUsed               = 0x0000;                  //Empty Payload (not used)
+int8_t nodeRssi;                                          //Node RSSI
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - notUsed]
 ```
 
 ##### Failure Response:
@@ -140,39 +140,39 @@ No Response.
 <br>
 ## Read Node EEPROM (v1)
 
-The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM. 
+The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM.
 
 See the Node EEPROM Map for specific memory address details.
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x05;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x04;		//Payload Length
-uint16_t commandId 		= 0x0003;	//Command ID
-uint16_t eepromAddress;				//EEPROM Address to Read
-uint16_t checksum;					//Checksum of [stopFlag - eepromAddress]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x04;                    //Payload Length
+uint16_t commandId             = 0x0003;                  //Command ID
+uint16_t eepromAddress;                                   //EEPROM Address to Read
+uint16_t checksum;                                        //Checksum of [stopFlag - eepromAddress]
 ```
 
 ##### Initial Response:
 An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
 ```cpp
-uint8_t packetSentAck 	= 0xAA;		//Package Sent Acknowledgement
+uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x00;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x02;		//Payload Length
-uint16_t eepromVal;					//Value Read from EEPROM
-int8_t notUsed;						//RESERVED
-int8_t baseRssi;					//Base Station RSSI
-uint16_t checksum;					//Checksum of [stopFlag - eepromVal]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x00;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t eepromVal;                                       //Value Read from EEPROM
+int8_t notUsed;                                           //RESERVED
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - eepromVal]
 ```
 
 ##### Failure Response:
@@ -183,62 +183,62 @@ No Response.
 
 `FW 8.21+`
 
-The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM. 
+The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM.
 
 See the Node EEPROM Map for specific memory address details.
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x05;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x04;		//Payload Length
-uint16_t commandId 		= 0x0007;	//Command ID
-uint16_t eepromAddress;				//EEPROM Address to Read
-uint16_t checksum;					//Checksum of [stopFlag - eepromAddress]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x04;                    //Payload Length
+uint16_t commandId             = 0x0007;                  //Command ID
+uint16_t eepromAddress;                                   //EEPROM Address to Read
+uint16_t checksum;                                        //Checksum of [stopFlag - eepromAddress]
 ```
 
 ##### Initial Response:
 An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
 ```cpp
-uint8_t packetSentAck 	= 0xAA;		//Package Sent Acknowledgement
+uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x06;		//Payload Length
-uint16_t commandId 		= 0x0007;	//Command ID Echo
-uint16_t eepromAddress;				//EEPROM Address Read
-uint16_t eepromVal;					//Value Read from EEPROM
-int8_t notUsed;						//RESERVED
-int8_t baseRssi;					//Base Station RSSI
-uint16_t checksum;					//Checksum of [stopFlag - eepromVal]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x06;                    //Payload Length
+uint16_t commandId             = 0x0007;                  //Command ID Echo
+uint16_t eepromAddress;                                   //EEPROM Address Read
+uint16_t eepromVal;                                       //Value Read from EEPROM
+int8_t notUsed;                                           //RESERVED
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - eepromVal]
 ```
 
 ##### Failure Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x02;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x05;		//Payload Length
-uint16_t commandId 		= 0x0007;	//Command ID Echo
-uint16_t eepromAddress;				//EEPROM Address Echo
-uint8_t errorCode;					//Error Code
-int8_t notUsed;						//RESERVED
-int8_t baseRssi;					//Base Station RSSI
-uint16_t checksum;					//Checksum of [stopFlag - errorCode]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x02;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x05;                    //Payload Length
+uint16_t commandId             = 0x0007;                  //Command ID Echo
+uint16_t eepromAddress;                                   //EEPROM Address Echo
+uint8_t errorCode;                                        //Error Code
+int8_t notUsed;                                           //RESERVED
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - errorCode]
 ```
 
 **Error Codes:**
 
-Code         | Description 
--------------|-------------- 
+Code         | Description
+-------------|--------------
 1            | Unknown EEPROM Address
 4            | Hardware Error
 
@@ -251,34 +251,34 @@ See the Node EEPROM Map for specific memory address details.
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x05;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x06;		//Payload Length
-uint16_t commandId 		= 0x0004;	//Command ID
-uint16_t eepromAddress;				//EEPROM Address to Write to
-uint16_t value;						//Value to Write to EEPROM
-uint16_t checksum;					//Checksum of [stopFlag - value]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x06;                    //Payload Length
+uint16_t commandId             = 0x0004;                  //Command ID
+uint16_t eepromAddress;                                   //EEPROM Address to Write to
+uint16_t value;                                           //Value to Write to EEPROM
+uint16_t checksum;                                        //Checksum of [stopFlag - value]
 ```
 
 ##### Initial Response:
 An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
 ```cpp
-uint8_t packetSentAck 	= 0xAA;		//Package Sent Acknowledgement
+uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x00;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x02;		//Payload Length
-uint16_t commandId		= 0x0004;	//Command ID Echo
-int8_t notUsed;						//RESERVED
-int8_t baseRssi;					//Base RSSI
-uint16_t checksum;					//Checksum of [stopFlag - commandId]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x00;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0004;                  //Command ID Echo
+int8_t notUsed;                                           //RESERVED
+int8_t baseRssi;                                          //Base RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
 ##### Failure Response:
@@ -295,58 +295,58 @@ See the Node EEPROM Map for specific memory address details.
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x05;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x06;		//Payload Length
-uint16_t commandId 		= 0x0008;	//Command ID
-uint16_t eepromAddress;				//EEPROM Address to Write to
-uint16_t value;						//Value to Write to EEPROM
-uint16_t checksum;					//Checksum of [stopFlag - value]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x06;                    //Payload Length
+uint16_t commandId             = 0x0008;                  //Command ID
+uint16_t eepromAddress;                                   //EEPROM Address to Write to
+uint16_t value;                                           //Value to Write to EEPROM
+uint16_t checksum;                                        //Checksum of [stopFlag - value]
 ```
 
 ##### Initial Response:
 An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
 ```cpp
-uint8_t packetSentAck 	= 0xAA;		//Package Sent Acknowledgement
+uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x06;		//Payload Length
-uint16_t commandId		= 0x0008;	//Command ID Echo
-uint16_t eepromAddress;				//EEPROM Address Written to
-uint16_t valueWritten;				//Value Written to EEPROM
-int8_t notUsed;						//RESERVED
-int8_t baseRssi;					//Base RSSI
-uint16_t checksum;					//Checksum of [stopFlag - commandId]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x06;                    //Payload Length
+uint16_t commandId             = 0x0008;                  //Command ID Echo
+uint16_t eepromAddress;                                   //EEPROM Address Written to
+uint16_t valueWritten;                                    //Value Written to EEPROM
+int8_t notUsed;                                           //RESERVED
+int8_t baseRssi;                                          //Base RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
 ##### Failure Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x02;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x07;		//Payload Length
-uint16_t commandId		= 0x0008;	//Command ID Echo
-uint16_t eepromAddress;				//EEPROM Address Echo
-uint16_t valueWritten;				//Value Written Echo
-uint8_t errorCode;        //Error Code
-int8_t notUsed;						//RESERVED
-int8_t baseRssi;					//Base RSSI
-uint16_t checksum;					//Checksum of [stopFlag - errorCode]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x02;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x07;                    //Payload Length
+uint16_t commandId             = 0x0008;                  //Command ID Echo
+uint16_t eepromAddress;                                   //EEPROM Address Echo
+uint16_t valueWritten;                                    //Value Written Echo
+uint8_t errorCode;                                        //Error Code
+int8_t notUsed;                                           //RESERVED
+int8_t baseRssi;                                          //Base RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - errorCode]
 ```
 
 **Error Codes:**
 
-Code         | Description 
--------------|-------------- 
+Code         | Description
+-------------|--------------
 1            | Unknown EEPROM Address
 2            | Value out of Bounds
 3            | EEPROM Address is read-only
@@ -356,22 +356,22 @@ Code         | Description
 ## Initiate Sleep Mode
 
 The **Initiate Sleep Mode** command is used to put the Node in a low power state. When the Node is in this low power Sleep Mode, it will not hear any commands except for the Set to Idle command, which will wake the node and put it back into its normal, idle state. The Node should be put into Sleep Mode when
-you no longer needs to communicate with the node, but want to keep it powered on and preserve battery life. 
+you no longer needs to communicate with the node, but want to keep it powered on and preserve battery life.
 
 ##### Command:
 ```cpp
-uint8_t commandId 		= 0x32;		//Command ID
-uint16_t nodeAddress;				//Node Address
+uint8_t commandId              = 0x32;                    //Command ID
+uint16_t nodeAddress;                                     //Node Address
 ```
 
-##### Success Response: 
+##### Success Response:
 No Response.
 
 ##### Failure Response:
 No Response.
 
 ##### Notes:
-**Waking a Node:** A Node in Sleep Mode periodically awakes, listens for a Set to Idle command, and if none is received, returns to sleep. To wake a sleeping Node, send the Set to Idle command. 
+**Waking a Node:** A Node in Sleep Mode periodically awakes, listens for a Set to Idle command, and if none is received, returns to sleep. To wake a sleeping Node, send the Set to Idle command.
 
 **Sleep Interval:** The Node’s Sleep Interval is the interval at which the Node will awake and listen for the Set to Idle command. See the Node EEPROM map for more details.
 
@@ -384,33 +384,33 @@ The **Set to Idle** command is used to put a Node that is sampling, or sleeping,
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0xFE;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x02;		//Payload Length
-uint16_t commandId 		= 0x0090;	//Command ID
-uint16_t checksum;					//Checksum of [stopFlag - commandId]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0xFE;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0090;                  //Command ID
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
 ##### Initial Response:
 An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
 ```cpp
-uint8_t packetSentAck 	= 0xAA;		//Package Sent Acknowledgement
+uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
 ```
 
 ##### Success Response:
 The Node was set to idle and can now be communicated with.
 ```cpp
-uint8_t commandId 		= 0x90;		//Command ID Echo
-uint8_t commandCeased 	= 0x01;		//The Set to Idle command has ceased
+uint8_t commandId              = 0x90;                    //Command ID Echo
+uint8_t commandCeased          = 0x01;                    //The Set to Idle command has ceased
 ```
 
 ##### Failure Response:
 The Set to Idle process was aborted.
 ```cpp
-uint8_t failId 			= 0x21;		//Failed/Aborted ID
-uint8_t commandCeased 	= 0x01;		//The Set to Idle command has ceased
+uint8_t failId                 = 0x21;                    //Failed/Aborted ID
+uint8_t commandCeased          = 0x01;                    //The Set to Idle command has ceased
 ```
 
 ##### Notes:
@@ -425,34 +425,34 @@ Use the **Arm Node** command to put the node in an armed state waiting for the [
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;						//Start of Packet Byte
-uint8_t stopFlag 		= 0x05;						//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;						//App Data Type
-uint16_t nodeAddress;								//Node Address
-uint8_t payloadLen 		= 0x02 + # of user bytes;	//Payload Length
-uint16_t commandId 		= 0x000D;					//Command ID
-int8_t userBytes[0-50];								//up to 50 (optional) user entered bytes
-uint16_t checksum;									//Checksum of [stopFlag - userBytes]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02 + # of user bytes;  //Payload Length
+uint16_t commandId             = 0x000D;                  //Command ID
+int8_t userBytes[0-50];                                   //up to 50 (optional) user entered bytes
+uint16_t checksum;                                        //Checksum of [stopFlag - userBytes]
 ```
 
 ##### Initial Response:
 An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
 ```cpp
-uint8_t packetSentAck 	= 0xAA;		//Package Sent Acknowledgement
+uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x03;		//Payload Length
-uint16_t commandId		= 0x000D;	//Command ID Echo
-uint8_t reserved1;					//RESERVED
-int8_t reserved2;					//RESERVED
-int8_t baseRssi;					//Base Station RSSI
-uint16_t checksum;					//Checksum of [stopFlag - reserved1]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x03;                    //Payload Length
+uint16_t commandId             = 0x000D;                  //Command ID Echo
+uint8_t reserved1;                                        //RESERVED
+int8_t reserved2;                                         //RESERVED
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - reserved1]
 ```
 
 ##### Failure Response:
@@ -466,21 +466,21 @@ No Response.
 <br>
 ## Trigger Armed Datalogging
 
-The **Trigger Armed Datalogging** command is used to initiate a data capture session on-board the Node.The data will be stored in the Node's internal memory and may be downloaded at a later time. 
+The **Trigger Armed Datalogging** command is used to initiate a data capture session on-board the Node.The data will be stored in the Node's internal memory and may be downloaded at a later time.
 
 In most cases, you will want to [Arm](#arm-node-for-datalogging) each Node individually, and then send this command to the broadcast Node Address (65535 or 0xFFFF). This will be sent to all nodes on the Base Station's operating frequency, and any Nodes that are in the "Armed" state will start datalogging. This can be useful to start datalogging on multiple nodes at the same time.
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;			//Start of Packet Byte
-uint8_t stopFlag 		= 0x05;			//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;			//App Data Type
-uint16_t nodeAddress;					//Node Address
-uint8_t payloadLen 		= 0x0A;			//Payload Length
-uint16_t commandId 		= 0x000E;		//Command ID
-uint32_t timestampSec;					//UTC Timestamp (Seconds)
-uint32_t timestampNano;					//UTC Timestamp (Nanoseconds)
-uint16_t checksum;						//Checksum of [stopFlag - timestampNano]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x0A;                    //Payload Length
+uint16_t commandId             = 0x000E;                  //Command ID
+uint32_t timestampSec;                                    //UTC Timestamp (Seconds)
+uint32_t timestampNano;                                   //UTC Timestamp (Nanoseconds)
+uint16_t checksum;                                        //Checksum of [stopFlag - timestampNano]
 ```
 
 ##### Success Response:
@@ -499,32 +499,32 @@ The **Page Download** command is used to retrieve a logged data session from the
 
 ##### Command:
 ```cpp
-uint8_t commandId 	= 0x05;		//Command ID
-uint16_t nodeAddress;			//Node Address
-uint16_t pageIndex;				//Index of Page to download
+uint8_t commandId              = 0x05;                    //Command ID
+uint16_t nodeAddress;                                     //Node Address
+uint16_t pageIndex;                                       //Index of Page to download
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t commandId 	= 0x05;		//Command ID Echo
-uint8_t data[264];				//The Page Data (132 2-byte values)
-uint16_t checksum;				//Checksum of [data]
+uint8_t commandId              = 0x05;                    //Command ID Echo
+uint8_t data[264];                                        //The Page Data (132 2-byte values)
+uint16_t checksum;                                        //Checksum of [data]
 ```
 
 ##### Failure Response:
 ```cpp
-uint8_t commandId 	= 0x05;		//Command ID Echo
-uint16_t failId 	= 0x21;		//Fail Indicator
+uint8_t commandId              = 0x05;                    //Command ID Echo
+uint16_t failId                = 0x21;                    //Fail Indicator
 ```
 
 ##### Notes:
-**Page Index:** Each Node contains 2MB of memory. These 2MB are mapped to 8192 pages of data, with each page containing 264 bytes. 
+**Page Index:** Each Node contains 2MB of memory. These 2MB are mapped to 8192 pages of data, with each page containing 264 bytes.
 
 Pages are numbered sequentially from 0 to 8191:
 
 * **Page 0** contains data points that represent the value in the Node's EEPROM from locations 0 - 254.
 * **Page 1** contains data points that represent the value in the Node's EEPROM from locations 256 - 510.
-* **Page 2** is the first page that will contain sampled data that was logged to the node. 
+* **Page 2** is the first page that will contain sampled data that was logged to the node.
 
 **Data Sessions:** A Node can contain multiple consecutive datalogging sessions. Each of these sessions has a leading multi-byte header which is used to identify the start of a new datalogging session and the end of the previous session. The header contains the datalogging information stored during that particular session.
 
@@ -532,81 +532,81 @@ Pages are numbered sequentially from 0 to 8191:
 
 ##### Header Format Version **1.0**:
 ```cpp
-uint16_t startOfHeader 			= 0xAAAA;	//Start of Header
-uint8_t headerId 				= 0xFD;		//Header ID
-uint8_t triggerId;							//Trigger ID
-uint8_t headerVerMajor 			= 0x01;		//Header Version (Major)
-uint8_t headerVerMinor 			= 0x00;		//Header Version (Minor)
-uint16_t numBytesBeforeChInfo;				//# of Bytes before the Channel Info
-uint16_t samplesPerDataSet;					//Samples per Data Set
-uint16_t sessionIndex;						//Session Index
-uint16_t channelMask;						//Active Channel Mask
-uint16_t sampleRate;						//Sample Rate
-uint16_t numUserBytes;						//# of User Entered Bytes
-int8_t userBytes[0-50];						//up to 50 user entered bytes (if any)
-uint16_t numBytesPerCh 			= 0x000A;	//# of Bytes per Channel
-uint8_t chEquation;							//Channel Info: Equation ID (per channel)
-uint8_t chUnit;								//Channel Info: Unit ID (per channel)
-float chSlope;								//Channel Info: Slope (per channel)
-float chOffset;								//Channel Info: Offset (per channel)
+uint16_t startOfHeader         = 0xAAAA;                  //Start of Header
+uint8_t headerId               = 0xFD;                    //Header ID
+uint8_t triggerId;                                        //Trigger ID
+uint8_t headerVerMajor         = 0x01;                    //Header Version (Major)
+uint8_t headerVerMinor         = 0x00;                    //Header Version (Minor)
+uint16_t numBytesBeforeChInfo;                            //# of Bytes before the Channel Info
+uint16_t samplesPerDataSet;                               //Samples per Data Set
+uint16_t sessionIndex;                                    //Session Index
+uint16_t channelMask;                                     //Active Channel Mask
+uint16_t sampleRate;                                      //Sample Rate
+uint16_t numUserBytes;                                    //# of User Entered Bytes
+int8_t userBytes[0-50];                                   //up to 50 user entered bytes (if any)
+uint16_t numBytesPerCh         = 0x000A;                  //# of Bytes per Channel
+uint8_t chEquation;                                       //Channel Info: Equation ID (per channel)
+uint8_t chUnit;                                           //Channel Info: Unit ID (per channel)
+float chSlope;                                            //Channel Info: Slope (per channel)
+float chOffset;                                           //Channel Info: Offset (per channel)
 //Repeat of Channel Info bytes for each Active Channel in channelMask
-uint16_t numBytesBeforeEnd 		= 0x0008;	//# of Bytes before end of header
-uint32_t timestampSec;						//UTC Timestamp (Seconds)
-uint32_t timestampNano;						//UTC Timestamp (Nanoseconds)
+uint16_t numBytesBeforeEnd     = 0x0008;                  //# of Bytes before end of header
+uint32_t timestampSec;                                    //UTC Timestamp (Seconds)
+uint32_t timestampNano;                                   //UTC Timestamp (Nanoseconds)
 ```
 
 ##### Header Format Version **2.0**:
 ```cpp
-uint16_t startOfHeader 			= 0xAAAA;	//Start of Header
-uint8_t headerId 				= 0xFD;		//Header ID
-uint8_t triggerId;							//Trigger ID
-uint8_t headerVerMajor 			= 0x02;		//NEW: Header Version (Major)
-uint8_t headerVerMinor 			= 0x00;		//NEW: Header Version (Minor)
-uint16_t numBytesBeforeChInfo;				//# of Bytes before the Channel Info
-uint16_t samplesPerDataSet;					//Samples per Data Set
-uint16_t sessionIndex;						//Session Index
-uint16_t channelMask;						//Active Channel Mask
-uint16_t sampleRate;						//Sample Rate
-uint8_t dataType;							//NEW: Data Type
-uint8_t reserved;							//NEW: RESERVED
-uint16_t numUserBytes;						//# of User Entered Bytes
-int8_t userBytes[0-50];						//up to 50 user entered bytes (if any)
-uint16_t numBytesPerCh 			= 0x000A;	//# of Bytes per Channel
-uint8_t chEquation;							//Channel Info: Equation ID (per channel)
-uint8_t chUnit;								//Channel Info: Unit ID (per channel)
-float chSlope;								//Channel Info: Slope (per channel)
-float chOffset;								//Channel Info: Offset (per channel)
+uint16_t startOfHeader         = 0xAAAA;                  //Start of Header
+uint8_t headerId               = 0xFD;                    //Header ID
+uint8_t triggerId;                                        //Trigger ID
+uint8_t headerVerMajor         = 0x02;                    //NEW: Header Version (Major)
+uint8_t headerVerMinor         = 0x00;                    //NEW: Header Version (Minor)
+uint16_t numBytesBeforeChInfo;                            //# of Bytes before the Channel Info
+uint16_t samplesPerDataSet;                               //Samples per Data Set
+uint16_t sessionIndex;                                    //Session Index
+uint16_t channelMask;                                     //Active Channel Mask
+uint16_t sampleRate;                                      //Sample Rate
+uint8_t dataType;                                         //NEW: Data Type
+uint8_t reserved;                                         //NEW: RESERVED
+uint16_t numUserBytes;                                    //# of User Entered Bytes
+int8_t userBytes[0-50];                                   //up to 50 user entered bytes (if any)
+uint16_t numBytesPerCh         = 0x000A;                  //# of Bytes per Channel
+uint8_t chEquation;                                       //Channel Info: Equation ID (per channel)
+uint8_t chUnit;                                           //Channel Info: Unit ID (per channel)
+float chSlope;                                            //Channel Info: Slope (per channel)
+float chOffset;                                           //Channel Info: Offset (per channel)
 //Repeat of Channel Info bytes for each Active Channel in channelMask
-uint16_t numBytesBeforeEnd 		= 0x0008;	//# of Bytes before end of header
-uint32_t timestampSec;						//UTC Timestamp (Seconds)
-uint32_t timestampNano;						//UTC Timestamp (Nanoseconds)
+uint16_t numBytesBeforeEnd     = 0x0008;                  //# of Bytes before end of header
+uint32_t timestampSec;                                    //UTC Timestamp (Seconds)
+uint32_t timestampNano;                                   //UTC Timestamp (Nanoseconds)
 ```
 
 ##### Header Format Version **2.1**:
 ```cpp
-uint16_t startOfHeader 			= 0xAAAA;	//Start of Header
-uint8_t headerId 				= 0xFD;		//Header ID
-uint8_t triggerId;							//Trigger ID
-uint8_t headerVerMajor 			= 0x02;		//NEW: Header Version (Major)
-uint8_t headerVerMinor 			= 0x01;		//NEW: Header Version (Minor)
-uint16_t numBytesBeforeChInfo;				//# of Bytes before the Channel Info
-uint16_t samplesPerDataSet;					//NEW: Samples per Data Set / 100
-uint16_t sessionIndex;						//Session Index
-uint16_t channelMask;						//Active Channel Mask
-uint16_t sampleRate;						//Sample Rate
-uint8_t dataType;							//Data Type
-uint8_t reserved;							//RESERVED
-uint16_t numUserBytes;						//# of User Entered Bytes
-int8_t userBytes[0-50];						//up to 50 user entered bytes (if any)
-uint16_t numBytesPerCh 			= 0x000A;	//# of Bytes per Channel
-uint8_t chEquation;							//Channel Info: Equation ID (per channel)
-uint8_t chUnit;								//Channel Info: Unit ID (per channel)
-float chSlope;								//Channel Info: Slope (per channel)
-float chOffset;								//Channel Info: Offset (per channel)
+uint16_t startOfHeader         = 0xAAAA;                  //Start of Header
+uint8_t headerId               = 0xFD;                    //Header ID
+uint8_t triggerId;                                        //Trigger ID
+uint8_t headerVerMajor         = 0x02;                    //NEW: Header Version (Major)
+uint8_t headerVerMinor         = 0x01;                    //NEW: Header Version (Minor)
+uint16_t numBytesBeforeChInfo;                            //# of Bytes before the Channel Info
+uint16_t samplesPerDataSet;                               //NEW: Samples per Data Set / 100
+uint16_t sessionIndex;                                    //Session Index
+uint16_t channelMask;                                     //Active Channel Mask
+uint16_t sampleRate;                                      //Sample Rate
+uint8_t dataType;                                         //Data Type
+uint8_t reserved;                                         //RESERVED
+uint16_t numUserBytes;                                    //# of User Entered Bytes
+int8_t userBytes[0-50];                                   //up to 50 user entered bytes (if any)
+uint16_t numBytesPerCh         = 0x000A;                  //# of Bytes per Channel
+uint8_t chEquation;                                       //Channel Info: Equation ID (per channel)
+uint8_t chUnit;                                           //Channel Info: Unit ID (per channel)
+float chSlope;                                            //Channel Info: Slope (per channel)
+float chOffset;                                           //Channel Info: Offset (per channel)
 //Repeat of Channel Info bytes for each Active Channel in channelMask
-uint16_t numBytesBeforeEnd 		= 0x0008;	//# of Bytes before end of header
-uint32_t timestampSec;						//UTC Timestamp (Seconds)
-uint32_t timestampNano;						//UTC Timestamp (Nanoseconds)
+uint16_t numBytesBeforeEnd     = 0x0008;                  //# of Bytes before end of header
+uint32_t timestampSec;                                    //UTC Timestamp (Seconds)
+uint32_t timestampNano;                                   //UTC Timestamp (Nanoseconds)
 ```
 
 **Fixed Header:** Each new session is always marked with a 0xFFFF (65535) at its start.
@@ -615,9 +615,9 @@ uint32_t timestampNano;						//UTC Timestamp (Nanoseconds)
 
 **Trigger ID:** Each datalogging session has a Trigger ID signifying how the session was started:
 
-Trigger ID   | Description 
+Trigger ID   | Description
 -------------|--------------
-0            | Started via a datalogging command 
+0            | Started via a datalogging command
 1            | Ceiling Sensor Event Driven Trigger
 2            | Floor Sensor Event Driven Trigger
 3            | Ramp Up Sensor Event Driven Trigger
@@ -634,10 +634,10 @@ the memory was completely filled, the value will not correspond to the actual nu
 
 **Data Type:** The Data type of which the Node saved data to memory as. The following table shows the possible data values and their corresponding data types:
 
-Value   | Type | Description 
+Value   | Type | Description
 --------|------|--------------
 1, 3    |uint16_t | A/D value (bits), no conversions (slope & offset) applied
-2 		|float    | floating point value with any conversions (slope & offset) applied
+2     |float    | floating point value with any conversions (slope & offset) applied
 
 **User Entered Bytes:** Up to 50 optional user entered bytes may have been sent to the node when triggering an Armed Datalogging session. The *numUserBytes* byte specifies how many user bytes follow in the packet. If the number of user entered bytes is an odd number, there will be 1 extra “buffer” byte appended
 to the user data that should be discarded.
@@ -656,19 +656,19 @@ The **Erase Logged Data** command is used to erase all sampled data stored on th
 
 ##### Command:
 ```cpp
-uint8_t commandId 		= 0x06;			//Command ID
-uint16_t nodeAddress;					//Node Address
-uint32_t commandBytes 	= 0x08100CFF;	//Command Bytes
+uint8_t commandId              = 0x06;                    //Command ID
+uint16_t nodeAddress;                                     //Node Address
+uint32_t commandBytes          = 0x08100CFF;              //Command Bytes
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t commandId 		= 0x06;			//Command ID Echo
+uint8_t commandId              = 0x06;                    //Command ID Echo
 ```
 
 ##### Failure Response:
 ```cpp
-uint8_t failId 			= 0x21;			//Fail Indicator
+uint8_t failId                 = 0x21;                    //Fail Indicator
 ```
 
 ##### Notes:
@@ -677,14 +677,14 @@ uint8_t failId 			= 0x21;			//Fail Indicator
 <br>
 ## Initiate Real-Time Streaming (Legacy)
 
-The **Initiate Real-Time Streaming** command is used to start a real-time streaming session on a Node. The Node will respond by immediately sending a stream of data packets as the sensors are read. 
+The **Initiate Real-Time Streaming** command is used to start a real-time streaming session on a Node. The Node will respond by immediately sending a stream of data packets as the sensors are read.
 
 **Note:** The Real-Time Streaming sampling mode is a legacy sampling mode and is no longer a recommended method of sampling. The sample rate is not consistent, data is not timestamped, you can only sample 1 Node at a time, and the data packet provides very little information.
 
 ##### Command:
 ```cpp
-uint8_t commandId 		= 0x38;		//Command ID
-uint16_t nodeAddress;				//Node Address
+uint8_t commandId              = 0x38;                    //Command ID
+uint16_t nodeAddress;                                     //Node Address
 ```
 
 ##### Response:
@@ -692,10 +692,10 @@ Parsing of the streaming packets should begin with the first 0xFF byte. The 0xFF
 
 Response Data Packet:
 ```cpp
-uint8_t commandId 		= 0xFF;		//Command ID Echo
-uint16_t channelValue;				//Channel Value for 1st active channel
+uint8_t commandId              = 0xFF;                    //Command ID Echo
+uint16_t channelValue;                                    //Channel Value for 1st active channel
 //Repeat channelValue bytes for each active channel
-uint8_t checksum;					//Checksum for [channelValue] bytes
+uint8_t checksum;                                         //Checksum for [channelValue] bytes
 ```
 
 ##### Notes:
@@ -713,19 +713,19 @@ The Low Duty Cycle sampling mode is a non-synchronized, low-latency form of samp
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x05;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x02;		//Payload Length
-uint16_t commandId 		= 0x0038;	//Command ID
-uint16_t checksum;					//Checksum of [stopFlag - commandId]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0038;                  //Command ID
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
 ##### Initial Response:
 An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
 ```cpp
-uint8_t packetSentAck 	= 0xAA;		//Package Sent Acknowledgement
+uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
 ```
 
 ##### Success Response:
@@ -743,33 +743,33 @@ For Synchronized Sampling mode, the wireless sensor network needs to be configur
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x05;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x02;		//Payload Length
-uint16_t commandId 		= 0x003B;	//Command ID
-uint16_t checksum;					//Checksum of [stopFlag - commandId]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x003B;                  //Command ID
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
 ##### Initial Response:
 An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
 ```cpp
-uint8_t packetSentAck 	= 0xAA;		//Package Sent Acknowledgement
+uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x03;		//Payload Length
-uint16_t commandId		= 0x003B;	//Command ID Echo
-uint8_t notUsed			= 0x00;		//RESERVED
-int8_t nodeRssi;					//Node RSSI
-int8_t baseRssi;					//Base RSSI
-uint16_t checksum;					//Checksum of [stopFlag - notUsed]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x03;                    //Payload Length
+uint16_t commandId             = 0x003B;                  //Command ID Echo
+uint8_t notUsed                = 0x00;                    //RESERVED
+int8_t nodeRssi;                                          //Node RSSI
+int8_t baseRssi;                                          //Base RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - notUsed]
 ```
 
 ##### Failure Response:
@@ -782,22 +782,22 @@ The **Read Single Sensor** command is used to read the current value of a single
 
 ##### Command:
 ```cpp
-uint8_t commandId 		= 0x03;		//Command ID
-uint16_t nodeAddress;				//Node Address
-uint8_t commandByte 	= 0x01;		//Command Byte
-uint8_t channelNumber;				//Channel Number
+uint8_t commandId              = 0x03;                    //Command ID
+uint16_t nodeAddress;                                     //Node Address
+uint8_t commandByte            = 0x01;                    //Command Byte
+uint8_t channelNumber;                                    //Channel Number
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t commandId 		= 0x03;		//Command ID Echo
-uint16_t channelValue;				//Value of the Requested Channel
-uint16_t checksum;					//Checksum of [channelValue]
+uint8_t commandId              = 0x03;                    //Command ID Echo
+uint16_t channelValue;                                    //Value of the Requested Channel
+uint16_t checksum;                                        //Checksum of [channelValue]
 ```
 
 ##### Failure Response:
 ```cpp
-uint8_t failId 			= 0x21;		//Failure Indicator
+uint8_t failId                 = 0x21;                    //Failure Indicator
 ```
 
 ##### Notes:
@@ -810,10 +810,10 @@ The **Auto-Balance Channel** command is used to auto-balance a particular channe
 
 ##### Command:
 ```cpp
-uint8_t commandId 		= 0x62;		//Command ID
-uint16_t nodeAddress;				//Node Address
-uint8_t channelNumber;				//Channel # to Balance
-uint16_t targetValue;				//Target Balance Value
+uint8_t commandId              = 0x62;                    //Command ID
+uint16_t nodeAddress;                                     //Node Address
+uint8_t channelNumber;                                    //Channel # to Balance
+uint16_t targetValue;                                     //Target Balance Value
 ```
 
 ##### Success Response:
@@ -834,33 +834,33 @@ The **Auto-Balance Channel** command is used to auto-balance a particular channe
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x05;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x07;		//Payload Length
-uint16_t commandId 		= 0x0065;	//Command ID
-uint8_t channelNumber;          //Channel Number to balance
-float targetPercentage;         //Target Balance Percentage
-uint16_t checksum;					//Checksum of [stopFlag - targetPercentage]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x07;                    //Payload Length
+uint16_t commandId             = 0x0065;                  //Command ID
+uint8_t channelNumber;                                    //Channel Number to balance
+float targetPercentage;                                   //Target Balance Percentage
+uint16_t checksum;                                        //Checksum of [stopFlag - targetPercentage]
 ```
 
 ##### Success Response:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		= 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x22;		//App Data Type
-uint16_t nodeAddress;				//Node Address
-uint8_t payloadLen 		= 0x10;		//Payload Length
-uint16_t commandId 		= 0x0065;	//Command ID Echo
-uint8_t channelNumber;          //Channel Number Echo
-float targetPercentage;         //Target Balance Percentage Echo
-uint8_t errorCode;              //Error Code
-float percentAchieved;          //Balance Percentage actually acheived
-uint32_t newHardwareOffset;     //Updated Hardware Offset
-int8_t nodeRssi;					//Node RSSI
-int8_t baseRssi;					//Base Station RSSI
-uint16_t checksum;					//Checksum of [stopFlag - newHardwareOffset]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x10;                    //Payload Length
+uint16_t commandId             = 0x0065;                  //Command ID Echo
+uint8_t channelNumber;                                    //Channel Number Echo
+float targetPercentage;                                   //Target Balance Percentage Echo
+uint8_t errorCode;                                        //Error Code
+float percentAchieved;                                    //Balance Percentage actually acheived
+uint32_t newHardwareOffset;                               //Updated Hardware Offset
+int8_t nodeRssi;                                          //Node RSSI
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - newHardwareOffset]
 ```
 
 ##### Failure Response:
@@ -871,7 +871,7 @@ No Response.
 
 **Error Code:** Describes whether the autobalance succeeded or failed.
 
-Code   | Description 
+Code   | Description
 -------|--------------
 0      | Success
 1      | Potentially Bad AutoBalance (values still applied)
@@ -892,32 +892,32 @@ The **Auto-Calibrate** command is used to auto-calibrate a Node. This command is
 
 ##### Command:
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		  = 0x05;	  //Delivery Stop Flag
-uint8_t appDataType 	= 0x00;		//App Data Type
-uint16_t nodeAddress;				    //Node Address
-uint8_t payloadLen;		          //Payload Length
-uint16_t commandId 		= 0x0064;	//Command ID
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen;                                       //Payload Length
+uint16_t commandId             = 0x0064;                  //Command ID
 // 0 - 116 Specific Command Bytes (varies per device/firmware)
-uint16_t checksum;					    //Checksum of [stopFlag - specific command bytes]
+uint16_t checksum;                                        //Checksum of [stopFlag - specific command bytes]
 ```
 
 ##### Node Received Response:
 
-The Node sends this packet when it initially received the AutoCal command, before any calibration is performed, to notify the user that calibration is being performed. 
+The Node sends this packet when it initially received the AutoCal command, before any calibration is performed, to notify the user that calibration is being performed.
 
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		  = 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x20;		//App Data Type
-uint16_t nodeAddress;				    //Node Address
-uint8_t payloadLen 		= 0x07;		//Payload Length
-uint16_t commandId 		= 0x0064;	//Command ID Echo
-uint8_t status;                 //Status Code
-float timeUntilComplete;        //Time Until Completion
-int8_t nodeRssi;					      //Node RSSI
-int8_t baseRssi;					      //Base Station RSSI
-uint16_t checksum;					   //Checksum of [stopFlag - timeUntilComplete]
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x20;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x07;                    //Payload Length
+uint16_t commandId             = 0x0064;                  //Command ID Echo
+uint8_t status;                                           //Status Code
+float timeUntilComplete;                                  //Time Until Completion
+int8_t nodeRssi;                                          //Node RSSI
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - timeUntilComplete]
 ```
 
 ##### Completion Response:
@@ -925,17 +925,17 @@ uint16_t checksum;					   //Checksum of [stopFlag - timeUntilComplete]
 The Node sends this packet when the AutoCal process has completed and values have been applied to the Node.
 
 ```cpp
-uint8_t startByte 		= 0xAA;		//Start of Packet Byte
-uint8_t stopFlag 		  = 0x07;		//Delivery Stop Flag
-uint8_t appDataType 	= 0x22;		//App Data Type
-uint16_t nodeAddress;				    //Node Address
-uint8_t payloadLen;		          //Payload Length
-uint16_t commandId 		= 0x0064;	//Command ID Echo
-uint8_t completionCode;         //Completion Code
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen;                                       //Payload Length
+uint16_t commandId             = 0x0064;                  //Command ID Echo
+uint8_t completionCode;                                   //Completion Code
 // 0 - 113 Completion Info Info Bytes (varies per device/firmware)
-int8_t nodeRssi;					      //Node RSSI
-int8_t baseRssi;					      //Base Station RSSI
-uint16_t checksum;					    //Checksum of [stopFlag - completion info bytes]
+int8_t nodeRssi;                                          //Node RSSI
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - completion info bytes]
 ```
 
 ##### SHM-Link-2 Specifics
@@ -944,18 +944,18 @@ uint16_t checksum;					    //Checksum of [stopFlag - completion info bytes]
 **Completion Info Bytes:**
 
 ```cpp
-uint8_t ch1Error;     //Channel 1 Error Code
-float ch1Offset;      //Channel 1 Offset
-uint8_t ch2Error;     //Channel 2 Error Code
-float ch2Offset;      //Channel 2 Offset
-uint8_t ch3Error;     //Channel 3 Error Code
-float ch3Offset;      //Channel 3 Offset
-float temperature;    //Temperature (Celsius) at time of cal
+uint8_t ch1Error;                                         //Channel 1 Error Code
+float ch1Offset;                                          //Channel 1 Offset
+uint8_t ch2Error;                                         //Channel 2 Error Code
+float ch2Offset;                                          //Channel 2 Offset
+uint8_t ch3Error;                                         //Channel 3 Error Code
+float ch3Offset;                                          //Channel 3 Offset
+float temperature;                                        //Temperature (Celsius) at time of cal
 ```
 
 **Channel Error Flags:**
 
-Code   | Description 
+Code   | Description
 -------|--------------
 0      | No Error
 1      | Sensor not plugged in
@@ -965,7 +965,7 @@ Code   | Description
 ##### Notes:
 **Status Code (command):**
 
-Code   | Description 
+Code   | Description
 -------|--------------
 0      | AutoCal started successfully
 1      | Failed to parse the payload of the AutoCal command
@@ -974,7 +974,7 @@ Code   | Description
 
 **Completion Flag (completion response):**
 
-Code   | Description 
+Code   | Description
 -------|--------------
 0      | Calibration Completed Successfully
 1      | Potential invalid calibration (cal still applied)
