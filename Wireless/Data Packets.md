@@ -19,6 +19,7 @@
 * [Node Discovery Packet (v2)](#node-discovery-packet-v2)
 * [Node Discovery Packet (v3)](#node-discovery-packet-v3)
 * [Beacon Echo Packet](#beacon-echo-packet)
+* [RF Sweep Packet](#rf-sweep-packet)
 
 ## Low Duty Cycle (LDC) Packet (v1)
 
@@ -576,3 +577,22 @@ int8_t reserved;                        //RESERVED
 uint16_t checksum;                      //Checksum of [stopFlag - reserved]
 ```
 **timestampSec** - The timestamp (seconds since Unix Epoch) of the beacon.
+
+## RF Sweep Packet
+Contains radio frequency information. This is sent when the BaseStation is in RF Sweep Mode.
+
+```cpp
+uint8_t startByte           = 0xAA;     //Start of Packet Byte
+uint8_t stopFlag            = 0x07;     //Delivery Stop Flag
+uint8_t appDataType         = 0x31;     //App Data Type
+uint16_t address            = 0x1234;   //Address
+uint8_t payloadLen;                     //Payload Length
+uint8_t id                  = 0;        //ID, reserved for future use
+uint32_t minFreq;                       //Minimum Sweep Frequency in kHz (2400000 = 2.4GHz)
+uint32_t maxFreq;                       //Maximum Sweep Frequency in kHz (2400000 = 2.4GHz)
+uint32_t interval;                      //The Sweep interval in kHz.
+uint8_t data[];                         //The rssi data values for each frequency (in negative dBm)
+int8_t reserved;                        //RESERVED
+int8_t reserved;                        //RESERVED
+uint16_t checksum;                      //Checksum of [stopFlag - data]
+```
