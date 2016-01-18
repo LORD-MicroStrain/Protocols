@@ -464,6 +464,7 @@ uint8_t appDataType       = 0x30;        //App Data Type
 uint16_t baseAddress      = 0x1234;      //Base Station Address
 uint8_t payloadLen        = 0x0E;        //Payload Length
 uint16_t commandId        = 0x00ED;      //Command ID
+uint16_t options;                        //Options (Used internally)
 uint32_t minFreq;                        //Minimum Sweep Frequency in kHz (2400000 = 2.4GHz)
 uint32_t maxFreq;                        //Maximum Sweep Frequency in kHz (2400000 = 2.4GHz)
 uint32_t interval;                       //The Sweep interval in kHz.
@@ -478,6 +479,7 @@ uint8_t appDataType       = 0x31;        //App Data Type
 uint16_t baseAddress      = 0x1234;      //Base Station Address
 uint8_t payloadLen        = 0x0E;        //Payload Length
 uint16_t commandId        = 0x00ED;      //Command ID Echo
+uint16_t optionsEcho;                    //Options Echo
 uint32_t minFreqEcho;                    //Minimum Sweep Frequency Echo
 uint32_t maxFreqEcho;                    //Maximum Sweep Frequency Echo
 uint32_t intervalEcho;                   //The Sweep interval Echo
