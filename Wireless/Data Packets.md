@@ -2,24 +2,26 @@
 
 **List of Packets:**
 
-* [Low Duty Cycle Packet (v1)](#low-duty-cycle-ldc-packet-v1)
-* [Low Duty Cycle Packet (v2)](#low-duty-cycle-ldc-packet-v2)
-* [Buffered Low Duty Cycle Packet (v1)](#buffered-low-duty-cycle-packet-v1)
-* [Buffered Low Duty Cycle Packet (v2)](#buffered-low-duty-cycle-packet-v2)
-* [Synchronized Sampling Packet (v1)](#synchronized-sampling-packet-v1)
-* [Synchronized Sampling Packet (v2)](#synchronized-sampling-packet-v2)
-* [Asynchronous Digital-Only Packet](#asynchronous-digital-only-packet)
-* [Asynchronous Digital & Analog Packet](#asynchronous-digital--analog-packet)
-* [Structural Health Packet (v1)](#structural-health-packet-v1)
-* [Structural Health Packet (v2)](#structural-health-packet-v2)
-* [Raw Angle Strain Packet (Specific Angle Mode)](#raw-angle-strain-packet-specific-angle-mode)
-* [Raw Angle Strain Packet (Distributed Angle Mode)](#raw-angle-strain-packet-distributed-angle-mode)
-* [Diagnostic Packet](#diagnostic-packet)
-* [Node Discovery Packet (v1)](#node-discovery-packet-v1)
-* [Node Discovery Packet (v2)](#node-discovery-packet-v2)
-* [Node Discovery Packet (v3)](#node-discovery-packet-v3)
-* [Beacon Echo Packet](#beacon-echo-packet)
-* [RF Sweep Packet](#rf-sweep-packet)
+Packet      | App Data Type
+-------------|--------------
+[Low Duty Cycle Packet (v1)](#low-duty-cycle-ldc-packet-v1) | 0x04
+[Low Duty Cycle Packet (v2)](#low-duty-cycle-ldc-packet-v2) | 0x14
+[Buffered Low Duty Cycle Packet (v1)](#buffered-low-duty-cycle-packet-v1) | 0x0D
+[Buffered Low Duty Cycle Packet (v2)](#buffered-low-duty-cycle-packet-v2) | 0x1D
+[Synchronized Sampling Packet (v1)](#synchronized-sampling-packet-v1) | 0x0A
+[Synchronized Sampling Packet (v2)](#synchronized-sampling-packet-v2) | 0x1A
+[Asynchronous Digital-Only Packet](#asynchronous-digital-only-packet) | 0x0E
+[Asynchronous Digital & Analog Packet](#asynchronous-digital--analog-packet) | 0x0F
+[Structural Health Packet (v1)](#structural-health-packet-v1) | 0xA0
+[Structural Health Packet (v2)](#structural-health-packet-v2) | 0xA0
+[Raw Angle Strain Packet (Specific Angle Mode)](#raw-angle-strain-packet-specific-angle-mode) | 0xA3
+[Raw Angle Strain Packet (Distributed Angle Mode)](#raw-angle-strain-packet-distributed-angle-mode) | 0xA3
+[Diagnostic Packet](#diagnostic-packet) | 0x11
+[Node Discovery Packet (v1)](#node-discovery-packet-v1) | 0x00
+[Node Discovery Packet (v2)](#node-discovery-packet-v2) | 0x17
+[Node Discovery Packet (v3)](#node-discovery-packet-v3) | 0x18
+[Beacon Echo Packet](#beacon-echo-packet) | 0x10
+[RF Sweep Packet](#rf-sweep-packet) | 0x31
 
 ## Low Duty Cycle (LDC) Packet (v1)
 
