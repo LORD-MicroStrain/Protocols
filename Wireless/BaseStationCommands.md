@@ -4,27 +4,36 @@
 
 ####ASPP v1.3
 These changes were made in Base Station firmware **4.30448**:
-* [Start RF Sweep Mode](#start-rf-sweep-mode)
+
+Command      | Command ID
+-------------|--------------
+[Start RF Sweep Mode](#start-rf-sweep-mode) | 0x00ED
 
 ####ASPP v1.2
 No Base Station changes.
 
 ####ASPP v1.1
 These changes were made in Base Station firmware **4.0**:
-* [Ping Base Station (v2)](#ping-base-station-v2)
-* [Read EEPROM (v2)](#read-base-station-eeprom-v2)
-* [Write EEPROM (v2)](#write-base-station-eeprom-v2)
-* [Enable Beacon (v2)](#enable-beacon-v2)
-* [Disable Beacon (v2)](#disable-beacon-v2)
-* [Beacon Status](#beacon-status)
+
+Command      | Command ID
+-------------|--------------
+[Ping Base Station (v2)](#ping-base-station-v2) | 0x0001
+[Read EEPROM (v2)](#read-base-station-eeprom-v2) | 0x0073
+[Write EEPROM (v2)](#write-base-station-eeprom-v2) | 0x0078
+[Enable Beacon (v2)](#enable-beacon-v2) | 0xBEAC
+[Disable Beacon (v2)](#disable-beacon-v2) | 0xBEAC
+[Beacon Status](#beacon-status) | 0xBEAD
 
 ####ASPP v1.0
-* [Ping Base Station (v1)](#ping-base-station-v1)
-* [Read EEPROM (v1)](#read-base-station-eeprom-v1)
-* [Write EEPROM (v1)](#write-base-station-eeprom-v1)
-* [Enable Beacon (v1)](#enable-beacon-v1)
-* [Disable Beacon (v1)](#disable-beacon-v1)
-* [Cycle Power & Radio](#cycle-power--radio)
+
+Command      | Command ID
+-------------|--------------
+[Ping Base Station (v1)](#ping-base-station-v1) | 0x01
+[Read EEPROM (v1)](#read-base-station-eeprom-v1) | 0x73
+[Write EEPROM (v1)](#write-base-station-eeprom-v1) | 0x78
+[Enable Beacon (v1)](#enable-beacon-v1) | 0xBEAC
+[Disable Beacon (v1)](#disable-beacon-v1) | 0xBEAC
+[Cycle Power & Radio](#cycle-power--radio) | -
 
 ## Ping Base Station (v1)
 
