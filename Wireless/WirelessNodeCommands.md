@@ -5,35 +5,40 @@
 ####ASPP v1.2
 These changes were made in Node firmware **10.0**.
 
-* [Short Ping (v2)](#short-ping-v2)
-* [Auto-Balance Channel (v2)](#auto-balance-channel-v2)
-* [Auto-Calibrate](#auto-calibrate)
-
+Command      | Command ID
+-------------|--------------
+[Short Ping (v2)](#short-ping-v2) | 0x0012
+[Auto-Balance Channel (v2)](#auto-balance-channel-v2) | 0x0065
+[Auto-Calibrate](#auto-calibrate) | 0x0064
 
 ####ASPP v1.1
 These changes were made in Node firmware **8.21**.
 
-* [Read EEPROM (v2)](#read-node-eeprom-v2)
-* [Write EEPROM (v2)](#write-node-eeprom-v2)
+Command      | Command ID
+-------------|--------------
+[Read EEPROM (v2)](#read-node-eeprom-v2) | 0x0007
+[Write EEPROM (v2)](#write-node-eeprom-v2) | 0x0008
 
 ####ASPP v1.0
 
-* [Short Ping (v1)](#short-ping-v1)
-* [Long Ping](#long-ping)
-* [Read EEPROM (v1)](#read-node-eeprom-v1)
-* [Write EEPROM (v1)](#write-node-eeprom-v1)
-* [Initiate Sleep Mode](#initiate-sleep-mode)
-* [Set to Idle](#set-to-idle)
-* [Arm for Datalogging](#arm-node-for-datalogging)
-* [Trigger Armed Datalogging](#trigger-armed-datalogging)
-* [Page Download](#page-download)
-* [Erase Logged Data](#erase-logged-data)
-* [Initiate Real-Time Streaming](#initiate-real-time-streaming-legacy)
-* [Initiate Low Duty Cycle](#initiate-low-duty-cycle)
-* [Initiate Synchronized Sampling](#initiate-synchronized-sampling)
-* [Read Single Sensor](#read-single-sensor)
-* [Auto-Balance Channel (v1)](#auto-balance-channel-v1)
-* [Cycle Power & Radio](#cycle-power--radio)
+Command      | Command ID
+-------------|--------------
+[Short Ping (v1)](#short-ping-v1) | 0x02
+[Long Ping](#long-ping) | 0x0002
+[Read EEPROM (v1)](#read-node-eeprom-v1) | 0x0003
+[Write EEPROM (v1)](#write-node-eeprom-v1) | 0x0004
+[Initiate Sleep Mode](#initiate-sleep-mode) | 0x32
+[Set to Idle](#set-to-idle) | 0x0090
+[Arm for Datalogging](#arm-node-for-datalogging) | 0x000D
+[Trigger Armed Datalogging](#trigger-armed-datalogging) | 0x000E
+[Page Download](#page-download) | 0x05
+[Erase Logged Data](#erase-logged-data) | 0x06
+[Initiate Real-Time Streaming](#initiate-real-time-streaming-legacy) | 0x38
+[Initiate Low Duty Cycle](#initiate-low-duty-cycle) | 0x0038
+[Initiate Synchronized Sampling](#initiate-synchronized-sampling) | 0x003B
+[Read Single Sensor](#read-single-sensor) | 0x03
+[Auto-Balance Channel (v1)](#auto-balance-channel-v1) | 0x62
+[Cycle Power & Radio](#cycle-power--radio) | -
 
 ## Short Ping (v1)
 
