@@ -569,7 +569,7 @@ On power up, the Node will transmit two identification packets. The packets are 
 ```cpp
 uint8_t startByte       = 0xAA;    //Start of Packet Byte
 uint8_t stopFlag        = 0x07;    //Delivery Stop Flag
-uint8_t appDataType     = 0x18;    //App Data Type
+uint8_t appDataType     = 0x16;    //App Data Type
 uint16_t nodeAddress;              //Node Address
 uint8_t payloadLen      = 0x15;    //Payload Length
 uint8_t frequency;                 //Radio Frequency the Node is on
