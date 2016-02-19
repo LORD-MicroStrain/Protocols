@@ -484,7 +484,7 @@ ID  | Description   | Data Values | # Bytes | Type | Unit
 0x02 | Reset Counter | - | 2 | uint16 | counts
 0x03 | Low Battery Indicator | 0 or 1, 1 = low battery event detected since last diagnostic packet | 1 | uint8 | -
 0x04 | Sample Info | Sweep index <br> Bad sweep count | 4 <br> 4 | uint32 <br> uint32 | counts <br> counts
-0x05| Transmit Info | Total Transmissions <br> Total Retransmissions <br> Total Dropped Packets | 4 <br> 4 <br> 2 | uint32 <br> uint32 <br> uint16  | counts <br> counts <br> counts
+0x05| Transmit Info | Total Transmissions <br> Total Retransmissions <br> Total Dropped Packets | 4 <br> 4 <br> 4 | uint32 <br> uint32 <br> uint32  | counts <br> counts <br> counts
 
 * **(0x00) Current State** - The current state that the device is in when the Diagnostic packet was sent.
 * **(0x01) Run Time** - The # of seconds the Node has been in each state.
