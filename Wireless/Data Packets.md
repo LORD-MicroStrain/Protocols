@@ -483,7 +483,7 @@ ID  | Description   | Data Values | # Bytes | Type | Unit
 0x01 | Run Time | Idle <br> Deep Sleep <br> Active Run <br> Inactive Run | 4 <br> 4 <br> 4 <br> 4 | uint32 <br> uint32 <br> uint32 <br> uint32 | seconds <br> seconds <br> seconds <br> seconds
 0x02 | Reset Counter | - | 2 | uint16 | counts
 0x03 | Low Battery Indicator | 0 or 1, 1 = low battery event detected since last diagnostic packet | 1 | uint8 | -
-0x04 | Sample Info | Swepp index <br> Bad sweep count | 4 <br> 4 | uint32 <br> uint32 | counts <br> counts
+0x04 | Sample Info | Sweep index <br> Bad sweep count | 4 <br> 4 | uint32 <br> uint32 | counts <br> counts
 0x05| Transmit Info | Total Transmissions <br> Total Retransmissions <br> Total Dropped Packets | 4 <br> 4 <br> 2 | uint32 <br> uint32 <br> uint16  | counts <br> counts <br> counts
 
 * **(0x00) Current State** - The current state that the device is in when the Diagnostic packet was sent.
@@ -491,8 +491,8 @@ ID  | Description   | Data Values | # Bytes | Type | Unit
 * **(0x02) Reset Counter** - The # of times the Node has reset.
 * **(0x03) Low Battery Indicator** - If 1, a low battery event has been detected since the last diagnostic packet.
 * **(0x04) Sample Info**
-  * **Sweep index** - 
-  * **Bad sweep count** - 
+  * **Sweep index** - The total # of sweeps (good and bad).
+  * **Bad sweep count** - The total # of sweeps that failed.
 * **(0x05) Transmit Info**
   * **Total Transmissions** - # of unique packets transmitted (not including retransmissions)
   * **Total Retransmissions** - # of retransmitted packets (packets are retransmitted when a node doesn't receive an acknowledgment from the base station)
