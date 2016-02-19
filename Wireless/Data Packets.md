@@ -479,9 +479,12 @@ The Info Item ID represents the type of information that is given in the next In
 
 ID  | Description   | Data Values | # Bytes | Type | Unit
 ----|---------------|----------------|----------|-------|------
-0x01| Transmit Info | Total Transmissions <br> Total Retransmissions <br> Total Dropped Packets | 4 <br> 4 <br> 2 | uint32 <br> uint32 <br> uint16  | counts <br> counts <br> counts
-0x02 | Active Running Time | - | 4 | uint32 | seconds
-0x03 | Battery Life Remaining | - | 1 | uint8 | percent
+0x00| Current State | Idle=0, Deep Sleep=1, Active Run=2, Inactive Run=3 | 1 | uint8 | -
+0x01 | Run Time (per state) | Idle <br> Deep Sleep <br> Active Run <br> Inactive Run | 4 <br> 4 <br> 4 <br> 4 | uint32 <br> uint32 <br> uint32 <br> uint32 | seconds <br> seconds <br> seconds <br> seconds
+0x02 | Reset Counter | - | 2 | uint16 | counts
+0x03 | Low Battery Indicator | 0 or 1, 1 = low battery event detected since last diagnostic packet | 1 | uint8 | -
+0x04 | Sample Info | Swepp index <br> Bad sweep count | 4 <br> 4 | uint32 <br> uint32 | counts <br> counts
+0x05| Transmit Info | Total Transmissions <br> Total Retransmissions <br> Total Dropped Packets | 4 <br> 4 <br> 2 | uint32 <br> uint32 <br> uint16  | counts <br> counts <br> counts
 
 
 * **(0x01) Transmit Info**
