@@ -442,7 +442,7 @@ uint8_t stopFlag            = 0x07;          //Delivery Stop Flag
 uint8_t appDataType         = 0x11;          //App Data Type
 uint16_t nodeAddress;                        //Node Address
 uint8_t payloadLen;                          //Payload Length
-uint8_t packetInterval;                      //Packet Interval
+uint16_t packetInterval;                     //Packet Interval
 uint16_t tick;                               //Tick
 uint8_t info1Len;                            //Info Item 1 Length
 uint8_t info1Id;                             //Info Item 1 ID
@@ -455,14 +455,7 @@ uint16_t checksum;                           //Checksum of [stopFlag - infoXVal]
 
 #####Notes:
 **Diagnostic Packet Interval:**
-The interval of which the Diagnostic Packet is transmitted. The 2 most significant bits of this byte signify the interval type (seconds, minutes, or hours). The remaining 6 bits are the interval value. The interval types are as follows (shows in binary):
-
-* 00 = Seconds
-* 01 = Minutes
-* 10 = Hours
-
-Example (in binary):
-0110 1011 = 43 minutes  -> *first 01 represents minutes, 10 1011 represents the value 43.*
+The interval of which the Diagnostic Packet is transmitted, in seconds.
 
 **Tick:**
 The Tick represents a counter for the Diagnostic Packet, signifying how many of these packets have been sent. When this value reaches the max 2-byte value (0xFFFF), it will roll over to 0.
