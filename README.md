@@ -15,6 +15,8 @@ The following documents describe how MicroStrain devices can be communicated wit
 
 ## Inertial
 
+[3DM-GQ4-45 Data Communications Protocol](http://files.microstrain.com/3DM-GQ4-45+Data+Communications+Protocol.pdf)
+
 [3DM-GX4-45 Data Communications Protocol](http://files.microstrain.com/3DM-GX4-45%20Data%20Communications%20Protocol.pdf)
 
 [3DM-GX4-25 Data Communications Protocol](http://files.microstrain.com/3DM-GX4-25%20Data%20Communications%20Protocol.pdf)
