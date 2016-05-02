@@ -472,12 +472,13 @@ The Info Item ID represents the type of information that is given in the next In
 
 ID  | Description   | Data Values | # Bytes | Type | Unit
 ----|---------------|----------------|----------|-------|------
-0x00| Current State | 0=Idle, 1=Deep Sleep, 2=Active Run, 3=Inactive Run | 1 | uint8 | -
+0x00 | Current State | 0=Idle, 1=Deep Sleep, 2=Active Run, 3=Inactive Run | 1 | uint8 | -
 0x01 | Run Time | Idle <br> Deep Sleep <br> Active Run <br> Inactive Run | 4 <br> 4 <br> 4 <br> 4 | uint32 <br> uint32 <br> uint32 <br> uint32 | seconds <br> seconds <br> seconds <br> seconds
 0x02 | Reset Counter | - | 2 | uint16 | counts
 0x03 | Low Battery Indicator | 0 or 1, 1 = low battery event detected since last diagnostic packet | 1 | uint8 | -
 0x04 | Sample Info | Sweep index <br> Bad sweep count | 4 <br> 4 | uint32 <br> uint32 | counts <br> counts
-0x05| Transmit Info | Total Transmissions <br> Total Retransmissions <br> Total Dropped Packets | 4 <br> 4 <br> 4 | uint32 <br> uint32 <br> uint32  | counts <br> counts <br> counts
+0x05 | Transmit Info | Total Transmissions <br> Total Retransmissions <br> Total Dropped Packets | 4 <br> 4 <br> 4 | uint32 <br> uint32 <br> uint32 | counts <br> counts <br> counts
+0x06 | Built in Test Result | - | 4 | uint32 | -
 
 * **(0x00) Current State** - The current state that the device is in when the Diagnostic packet was sent.
 * **(0x01) Run Time** - The # of seconds the Node has been in each state.
@@ -490,6 +491,7 @@ ID  | Description   | Data Values | # Bytes | Type | Unit
   * **Total Transmissions** - # of unique packets transmitted (not including retransmissions)
   * **Total Retransmissions** - # of retransmitted packets (packets are retransmitted when a node doesn't receive an acknowledgment from the base station)
   * **Total Dropped Packets** - # of packets node has discarded due to buffer overflow or exceeding the max # of retransmissions per packet
+* **(0x06) Built in Test Result** - The result of the Built in Test function.
 
 *Full Example:*
 If the Info Item Length byte is 0x0B, the next 11 bytes make up the Info Item ID and Value. If the next byte is 0x01, then we know the Info Item Value is signifying Transmit Info which is made up of Total Transmissions, Total Retransmissions, and Total Dropped Packets. From the table we know to parse the next 4 bytes as a uint32 representing the Total Transmissions, the next 4 bytes as a uint32 representing the Total Retransmissions, and the last 2 bytes as a uint16 representing the Total Dropped Packets.
