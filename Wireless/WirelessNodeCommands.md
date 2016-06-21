@@ -537,7 +537,7 @@ Pages are numbered sequentially from 0 to 8191:
 
 ##### Header Format Version **1.0**:
 ```cpp
-uint16_t startOfHeader         = 0xAAAA;                  //Start of Header
+uint16_t startOfHeader         = 0xFFFF;                  //Start of Header
 uint8_t headerId               = 0xFD;                    //Header ID
 uint8_t triggerId;                                        //Trigger ID
 uint8_t headerVerMajor         = 0x01;                    //Header Version (Major)
@@ -562,7 +562,7 @@ uint32_t timestampNano;                                   //UTC Timestamp (Nanos
 
 ##### Header Format Version **2.0**:
 ```cpp
-uint16_t startOfHeader         = 0xAAAA;                  //Start of Header
+uint16_t startOfHeader         = 0xFFFF;                  //Start of Header
 uint8_t headerId               = 0xFD;                    //Header ID
 uint8_t triggerId;                                        //Trigger ID
 uint8_t headerVerMajor         = 0x02;                    //NEW: Header Version (Major)
@@ -589,7 +589,7 @@ uint32_t timestampNano;                                   //UTC Timestamp (Nanos
 
 ##### Header Format Version **2.1**:
 ```cpp
-uint16_t startOfHeader         = 0xAAAA;                  //Start of Header
+uint16_t startOfHeader         = 0xFFFF;                  //Start of Header
 uint8_t headerId               = 0xFD;                    //Header ID
 uint8_t triggerId;                                        //Trigger ID
 uint8_t headerVerMajor         = 0x02;                    //NEW: Header Version (Major)
