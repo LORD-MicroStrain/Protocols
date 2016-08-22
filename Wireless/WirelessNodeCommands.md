@@ -8,7 +8,7 @@ These changes were made in Node firmware **10.31758**.
 Command      | Command ID
 -------------|--------------
 [Log Session Info](#log-session-info) | 0x0040
-
+[Erase Logged Data](#erase-logged-data-v2) | 0x0042
 
 ####ASPP v1.2
 These changes were made in Node firmware **10.0**.
@@ -2012,7 +2012,7 @@ uint32_t startAddress;                                    //Flash Address of the
 uint32_t size;                                            //Max number of logged bytes
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
-uint16_t checksum;                                        //Checksum of [stopFlag - completion info bytes]
+uint16_t checksum;                                        //Checksum of [stopFlag - size]
 ```
 
 ##### Error Response:
@@ -2027,7 +2027,54 @@ uint16_t commandId             = 0x0040;                  //Command ID Echo
 uint8_t status;                                           //1 = flash busy
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
-uint16_t checksum;                                        //Checksum of [stopFlag - completion info bytes]
+uint16_t checksum;                                        //Checksum of [stopFlag - status]
+```
+
+<br>
+
+## Erase Logged Data (v2)
+`FW 10.31758+`
+
+The **Erase Logged Data** command is used to erase all sampled data stored on the Node's memory. This cannot be undone.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0042;                  //Command ID
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+```
+
+##### Completion Response:
+
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0042;                  //Command ID Echo
+int8_t nodeRssi;                                          //Node RSSI
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+```
+
+##### Error Response:
+
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x02;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x03;                    //Payload Length
+uint16_t commandId             = 0x0042;                  //Command ID Echo
+uint8_t status;                                           //1 = flash busy
+int8_t nodeRssi;                                          //Node RSSI
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - status]
 ```
 
 <br>
