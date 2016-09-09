@@ -2,7 +2,7 @@
 
 **List of Commands:**
 
-####ASPP v1.3
+####ASPP v1.4
 These changes were made in Node firmware **10.31758**.
 
 Command      | Command ID
@@ -10,6 +10,9 @@ Command      | Command ID
 [Log Session Info](#log-session-info) | 0x0040
 [Erase Logged Data](#erase-logged-data-v2) | 0x0042
 [Get Logged Data](#get-logged-data) | 0x0041
+
+####ASPP v1.3
+No Node changes.
 
 ####ASPP v1.2
 These changes were made in Node firmware **10.0**.
