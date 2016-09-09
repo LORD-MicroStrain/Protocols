@@ -8,6 +8,7 @@ These changes were made in Node firmware **10.33392**.
 Command      | Command ID
 -------------|--------------
 [Initiate Low Duty Cycle (v2)](#initiate-low-duty-cycle-v2) | 0x0039
+[Get Diagnostic Info](#get-diagnostic-info) | 0x0009
 
 ####ASPP v1.4
 These changes were made in Node firmware **10.31758**.
@@ -761,6 +762,8 @@ No Response.
 <br>
 ## Initiate Low Duty Cycle (v2)
 
+`FW 10.33392+`
+
 The **Initiate Low Duty Cycle (LDC) v2** command is used to put the Node in LDC sampling mode. Version 2 of this command adds a timestamp in the command packet, which allows logged data to include a timestamp for use when downloading the data after collection.
 
 The Low Duty Cycle sampling mode is a non-synchronized, low-latency form of sampling. While multiple Nodes can be started sampling, they are not part of a synchronized network. This can cause data packets to be sent over the air at the same time, resulting in data loss. If low-latency is not a requirement, it is highly recommended that you use the [Synchronized Sampling Mode](#initiate-synchronized-sampling).
@@ -774,7 +777,7 @@ uint16_t nodeAddress;                                     //Node Address
 uint8_t payloadLen             = 0x0A;                    //Payload Length
 uint16_t commandId             = 0x0039;                  //Command ID
 uint64_t timestamp;                                       //Current Timestamp (nanoseconds since Unix Epoch)
-uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+uint16_t checksum;                                        //Checksum of [stopFlag - timestamp]
 ```
 
 ##### Success Response:
@@ -785,10 +788,9 @@ uint8_t appDataType            = 0x22;                    //App Data Type
 uint16_t nodeAddress;                                     //Node Address
 uint8_t payloadLen             = 0x02;                    //Payload Length
 uint16_t commandId             = 0x0039;                  //Command ID Echo
-uint64_t timestamp;                                       //Current Timestamp (nanoseconds since Unix Epoch)
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base RSSI
-uint16_t checksum;                                        //Checksum of [stopFlag - timestamp]
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
 ##### Failure Response:
@@ -2245,6 +2247,46 @@ uint8_t sweepCount;      // number of sweeps that follow the header
 uint64_t timestamp;      // timestamp of first sweep following the header
 uint16_t sessionIndex;   // index of the session the data following the header belongs to
 ```
+
+<br>
+## Get Diagnostic Info
+
+`FW 10.33392+`
+
+The **Get Diagnostic Info** command is used to get diagnostic information about the Wireless Node. Note that a Node can also be configured to send a [Diagnostic data packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet) at a specific interval as well. The information in the data packet is the same as in the response for this command.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0009;                  //Command ID
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen;                                       //Payload Length
+uint16_t commandId             = 0x0009;                  //Command ID Echo
+uint8_t info1Len;                                         //Info Item 1 Length
+uint8_t info1Id;                                          //Info Item 1 ID
+uint8_t | uint16_5 | uint32_t info1Val;                   //Info Item 1 Value
+//Repeat Into Item Length, ID, and Value for all the Info Items in the packet
+int8_t nodeRssi;                                          //Node RSSI
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - eepromVal]
+```
+
+##### Failure Response:
+none
+
+For more information on the payload of this packet, see the documentation for the [Diagnostic Data Packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet).
 
 <br>
 ## Cycle Power & Radio
