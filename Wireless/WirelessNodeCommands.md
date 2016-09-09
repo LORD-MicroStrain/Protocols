@@ -2276,7 +2276,7 @@ uint8_t payloadLen;                                       //Payload Length
 uint16_t commandId             = 0x0009;                  //Command ID Echo
 uint8_t info1Len;                                         //Info Item 1 Length
 uint8_t info1Id;                                          //Info Item 1 ID
-uint8_t | uint16_5 | uint32_t info1Val;                   //Info Item 1 Value
+uint8_t | uint16_t | uint32_t info1Val;                   //Info Item 1 Value
 //Repeat Into Item Length, ID, and Value for all the Info Items in the packet
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
