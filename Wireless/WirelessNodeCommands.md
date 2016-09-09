@@ -1004,6 +1004,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 ##### SHM-Link-2 Specifics
 
 **Command Bytes:** None
+
 **Completion Info Bytes:**
 
 ```cpp
@@ -1014,6 +1015,38 @@ float ch2Offset;                                          //Channel 2 Offset
 uint8_t ch3Error;                                         //Channel 3 Error Code
 float ch3Offset;                                          //Channel 3 Offset
 float temperature;                                        //Temperature (Celsius) at time of cal
+```
+
+**Channel Error Flags:**
+
+Code   | Description
+-------|--------------
+0      | No Error
+1      | Sensor not plugged in
+2      | Sensor shorted
+3      | Invalid Sensor input
+
+##### Shunt Cal Specifics (V-Link-200)
+
+**Command Bytes:**
+
+```cpp
+uint8_t channelNumber;                                    //The channel to calibrate (1 = ch1)
+uint8_t hardwareGain;                                     //The Hardware Gain to use in the autocal operation
+uint16_t hardwareOffset;                                  //The Hardware Offset to use in the autocal operation
+uint8_t numActiveGauges;                                  //The number of active gauges to use in the autocal operation
+uint16_t gaugeResistance;                                 //The gauge resistance to use in the autocal operation
+uint16_t shuntResistance;                                 //The shunt resistance to use in the autocal operation
+float gaugeFactor;                                        //The gauge factor to use in the autocal operation
+```
+
+**Completion Info Bytes:**
+
+```cpp
+uint8_t channelNumber;                                    //Channel number echo
+uint8_t channelError;                                     //Channel Error Code
+float slope;                                              //Calculated slope that can be applied (not auto applied)
+float offset;                                             //Calculated offset that can be applied (not auto applied)
 ```
 
 **Channel Error Flags:**
