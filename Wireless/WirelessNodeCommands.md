@@ -2,6 +2,13 @@
 
 **List of Commands:**
 
+####ASPP v1.5
+These changes were made in Node firmware **10.33392**.
+
+Command      | Command ID
+-------------|--------------
+[Initiate Low Duty Cycle (v2)](#initiate-low-duty-cycle-v2) | 0x0039
+
 ####ASPP v1.4
 These changes were made in Node firmware **10.31758**.
 
@@ -46,7 +53,7 @@ Command      | Command ID
 [Page Download](#page-download) | 0x05
 [Erase Logged Data](#erase-logged-data) | 0x06
 [Initiate Real-Time Streaming](#initiate-real-time-streaming-legacy) | 0x38
-[Initiate Low Duty Cycle](#initiate-low-duty-cycle) | 0x0038
+[Initiate Low Duty Cycle](#initiate-low-duty-cycle-v1) | 0x0038
 [Initiate Synchronized Sampling](#initiate-synchronized-sampling) | 0x003B
 [Read Single Sensor](#read-single-sensor) | 0x03
 [Auto-Balance Channel (v1)](#auto-balance-channel-v1) | 0x62
@@ -722,9 +729,9 @@ or the Set to Idle command has been issued to the Node.
 **End of Stream:** The normal end of a finite stream is marked by 4-6 consecutive 0xAA (170) bytes. When parsing the stream, these bytes should be used as a signal that finite streaming has ended.
 
 <br>
-## Initiate Low Duty Cycle
+## Initiate Low Duty Cycle (v1)
 
-The **Initiate Low Duty Cycle (LDC)** command is used to put the Node in LDC sampling mode.
+The **Initiate Low Duty Cycle (LDC) v1** command is used to put the Node in LDC sampling mode.
 
 The Low Duty Cycle sampling mode is a non-synchronized, low-latency form of sampling. While multiple Nodes can be started sampling, they are not part of a synchronized network. This can cause data packets to be sent over the air at the same time, resulting in data loss. If low-latency is not a requirement, it is highly recommended that you use the [Synchronized Sampling Mode](#initiate-synchronized-sampling).
 
@@ -752,6 +759,43 @@ No Response.
 No Response.
 
 <br>
+## Initiate Low Duty Cycle (v2)
+
+The **Initiate Low Duty Cycle (LDC) v2** command is used to put the Node in LDC sampling mode. Version 2 of this command adds a timestamp in the command packet, which allows logged data to include a timestamp for use when downloading the data after collection.
+
+The Low Duty Cycle sampling mode is a non-synchronized, low-latency form of sampling. While multiple Nodes can be started sampling, they are not part of a synchronized network. This can cause data packets to be sent over the air at the same time, resulting in data loss. If low-latency is not a requirement, it is highly recommended that you use the [Synchronized Sampling Mode](#initiate-synchronized-sampling).
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x0A;                    //Payload Length
+uint16_t commandId             = 0x0039;                  //Command ID
+uint64_t timestamp;                                       //Current Timestamp (nanoseconds since Unix Epoch)
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0039;                  //Command ID Echo
+uint64_t timestamp;                                       //Current Timestamp (nanoseconds since Unix Epoch)
+int8_t nodeRssi;                                          //Node RSSI
+int8_t baseRssi;                                          //Base RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - timestamp]
+```
+
+##### Failure Response:
+No Response.
+
+<br>
+
 ## Initiate Synchronized Sampling
 
 The **Initiate Synchronized Sampling command** is used to put the Node into Synchronized Sampling mode. Once in this mode, the node must receive a beacon from the Base Station to begin sampling and transmitting data packets.
