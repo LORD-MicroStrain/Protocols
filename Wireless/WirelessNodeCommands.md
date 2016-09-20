@@ -1001,6 +1001,27 @@ int8_t baseRssi;                                          //Base Station RSSI
 uint16_t checksum;                                        //Checksum of [stopFlag - completion info bytes]
 ```
 
+##### Notes:
+**Status Code (command):**
+
+Code   | Description
+-------|--------------
+0      | AutoCal started successfully
+1      | Failed to parse the payload of the AutoCal command
+
+**Time Until Completion (node received response):** The amount of time (in seconds) until the AutoCal command will complete, and the AutoCal Success/Fail packet will be sent by the Node. This will be a value of 0 if the Status Flag byte is not 0x00 (indicating the process will not be performed).
+
+**Completion Flag (completion response):**
+
+Code   | Description
+-------|--------------
+0      | Calibration Completed Successfully
+1      | Potential invalid calibration (cal still applied)
+2      | Potential invalid calibration (cal not applied)
+
+
+---
+
 ##### SHM-Link-2 Specifics
 
 **Command Bytes:** None
@@ -1025,6 +1046,8 @@ Code   | Description
 1      | Sensor not plugged in
 2      | Sensor shorted
 3      | Invalid Sensor input
+
+---
 
 ##### Shunt Cal Specifics (V-Link-200)
 
@@ -1069,23 +1092,6 @@ Code   | Description
 9      | No shunt was detected in the data.
 10      | A timeout has occurred.
 
-##### Notes:
-**Status Code (command):**
-
-Code   | Description
--------|--------------
-0      | AutoCal started successfully
-1      | Failed to parse the payload of the AutoCal command
-
-**Time Until Completion (node received response):** The amount of time (in seconds) until the AutoCal command will complete, and the AutoCal Success/Fail packet will be sent by the Node. This will be a value of 0 if the Status Flag byte is not 0x00 (indicating the process will not be performed).
-
-**Completion Flag (completion response):**
-
-Code   | Description
--------|--------------
-0      | Calibration Completed Successfully
-1      | Potential invalid calibration (cal still applied)
-2      | Potential invalid calibration (cal not applied)
 
 <br>
 
