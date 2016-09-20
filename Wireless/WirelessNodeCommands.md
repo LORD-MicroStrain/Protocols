@@ -1043,10 +1043,16 @@ float gaugeFactor;                                        //The gauge factor to 
 **Completion Info Bytes:**
 
 ```cpp
-uint8_t channelNumber;                                    //Channel number echo
-uint8_t channelError;                                     //Channel Error Code
-float slope;                                              //Calculated slope that can be applied (not auto applied)
-float offset;                                             //Calculated offset that can be applied (not auto applied)
+uint8_t channelNumber;              //Channel number echo
+uint8_t channelError;               //Channel Error Code
+float slope;                        //Calculated slope that can be applied (not auto applied)
+float offset;                       //Calculated offset that can be applied (not auto applied)
+float baseMedian;                   //The median of the baseline data sampled during the shunt calibration.
+float baseMin;                      //The minimum of the baseline data sampled during the shunt calibration.
+float baseMax;                      //The maximum of the baseline data sampled during the shunt calibration.
+float shuntMedian;                  //The median of the shunted data sampled during the shunt calibration.
+float shuntMin;                     //The minimum of the shunted data sampled during the shunt calibration.
+float shuntMax;                     //The maximum of the shunted data sampled during the shunt calibration.
 ```
 
 **Channel Error Flags:**
@@ -1054,9 +1060,14 @@ float offset;                                             //Calculated offset th
 Code   | Description
 -------|--------------
 0      | No Error
-1      | Sensor not plugged in
-2      | Sensor shorted
-3      | Invalid Sensor input
+3      | Unsupported Channel
+4      | The baseline data may have railed high.
+5      | The baseline data may have railed low.
+6      | The shunted data may have railed high.
+7      | The shunted data may have railed low.
+8      | There was an unexpected slope to the data.
+9      | No shunt was detected in the data.
+10      | A timeout has occurred.
 
 ##### Notes:
 **Status Code (command):**
@@ -1074,6 +1085,7 @@ Code   | Description
 -------|--------------
 0      | Calibration Completed Successfully
 1      | Potential invalid calibration (cal still applied)
+2      | Potential invalid calibration (cal not applied)
 
 <br>
 
