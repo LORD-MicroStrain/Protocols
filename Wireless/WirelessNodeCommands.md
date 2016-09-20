@@ -1002,7 +1002,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 ```
 
 ##### Notes:
-**Status Code (command):**
+**Status (Node Received Response):**
 
 Code   | Description
 -------|--------------
@@ -1011,7 +1011,7 @@ Code   | Description
 
 **Time Until Completion (node received response):** The amount of time (in seconds) until the AutoCal command will complete, and the AutoCal Success/Fail packet will be sent by the Node. This will be a value of 0 if the Status Flag byte is not 0x00 (indicating the process will not be performed).
 
-**Completion Flag (completion response):**
+**Completion Code (completion response):**
 
 Code   | Description
 -------|--------------
@@ -1038,7 +1038,7 @@ float ch3Offset;                                          //Channel 3 Offset
 float temperature;                                        //Temperature (Celsius) at time of cal
 ```
 
-**Channel Error Flags:**
+**Channel Error Codes:**
 
 Code   | Description
 -------|--------------
