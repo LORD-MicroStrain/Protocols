@@ -475,7 +475,7 @@ ID  | Description   | Data Values | # Bytes | Type | Unit
 0x00 | Current State | 0=Idle, 1=Deep Sleep, 2=Active Run, 3=Inactive Run | 1 | uint8 | -
 0x01 | Run Time | Idle <br> Deep Sleep <br> Active Run <br> Inactive Run | 4 <br> 4 <br> 4 <br> 4 | uint32 <br> uint32 <br> uint32 <br> uint32 | seconds <br> seconds <br> seconds <br> seconds
 0x02 | Reset Counter | - | 2 | uint16 | counts
-0x03 | Low Battery Indicator | 0 or 1, 1 = low battery event detected since last diagnostic packet | 1 | uint8 | -
+0x03 | Low Battery Indicator | 0=good, 1=low, 2=critical | 1 | uint8 | -
 0x04 | Sample Info | Sweep index <br> Bad sweep count | 4 <br> 4 | uint32 <br> uint32 | counts <br> counts
 0x05 | Transmit Info | Total Transmissions <br> Total Retransmissions <br> Total Dropped Packets | 4 <br> 4 <br> 4 | uint32 <br> uint32 <br> uint32 | counts <br> counts <br> counts
 0x06 | Built in Test Result | - | 4 | uint32 | -
@@ -486,7 +486,7 @@ ID  | Description   | Data Values | # Bytes | Type | Unit
 * **(0x00) Current State** - The current state that the device is in when the Diagnostic packet was sent.
 * **(0x01) Run Time** - The # of seconds the Node has been in each state.
 * **(0x02) Reset Counter** - The # of times the Node has reset.
-* **(0x03) Low Battery Indicator** - If 1, a low battery event has been detected since the last diagnostic packet.
+* **(0x03) Low Battery Indicator** - If 1, a low battery event has been detected since the last diagnostic packet. If 2, a critical battery event has been detected since the last diagnostic packet.
 * **(0x04) Sample Info**
   * **Sweep index** - The total # of sweeps (good and bad).
   * **Bad sweep count** - The total # of sweeps that failed.
