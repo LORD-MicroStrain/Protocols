@@ -91,7 +91,7 @@ The **Short Ping** command is used to check the communication between the Base S
 ```cpp
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x0E;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x00;                    //App Data Type
+uint8_t appDataType            = 0x30;                    //App Data Type
 uint16_t nodeAddress;                                     //Node Address
 uint8_t payloadLen             = 0x02;                    //Payload Length
 uint16_t commandId             = 0x0012;                  //Command ID
@@ -102,7 +102,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 ```cpp
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x22;                    //App Data Type
+uint8_t appDataType            = 0x31;                    //App Data Type
 uint16_t nodeAddress;                                     //Node Address
 uint8_t payloadLen             = 0x02;                    //Payload Length
 uint16_t commandId             = 0x0012;                  //Command ID Echo
@@ -115,7 +115,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 ```cpp
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x02;                    //App Data Type
+uint8_t appDataType            = 0x32;                    //App Data Type
 uint16_t nodeAddress;                                     //Node Address
 uint8_t payloadLen             = 0x02;                    //Payload Length
 uint16_t commandId             = 0x0012;                  //Command ID Echo
