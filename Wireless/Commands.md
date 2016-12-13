@@ -559,8 +559,6 @@ uint8_t failId                 = 0x21;                    //Failure ID
 <br>
 ## Quick Ping (v2)
 
-`FW 10.0+`
-
 The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
 
 ##### Command:
@@ -682,8 +680,6 @@ No Response.
 <br>
 ## Read Node EEPROM (v2)
 
-`FW 8.21+`
-
 The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM.
 
 See the Node EEPROM Map for specific memory address details.
@@ -787,8 +783,6 @@ No Response.
 
 <br>
 ## Write Node EEPROM (v2)
-
-`FW 8.21+`
 
 The **Write Node EEPROM** command is used to write a value to a specific memory address on the Node's EEPROM.
 
@@ -1238,8 +1232,6 @@ No Response.
 <br>
 ## Initiate Low Duty Cycle (v2)
 
-`FW 10.33392+`
-
 The **Initiate Low Duty Cycle (LDC) v2** command is used to put the Node in LDC sampling mode. Version 2 of this command adds a timestamp in the command packet, which allows logged data to include a timestamp for use when downloading the data after collection.
 
 The Low Duty Cycle sampling mode is a non-synchronized, low-latency form of sampling. While multiple Nodes can be started sampling, they are not part of a synchronized network. This can cause data packets to be sent over the air at the same time, resulting in data loss. If low-latency is not a requirement, it is highly recommended that you use the [Synchronized Sampling Mode](#initiate-synchronized-sampling).
@@ -1367,8 +1359,6 @@ No Response.
 <br>
 ## Auto-Balance Channel (v2)
 
-`FW 10.0+`
-
 The **Auto-Balance Channel** command is used to auto-balance a particular channel on the Node. This command is only applicable to the differential channels on certain Nodes.
 
 ##### Command:
@@ -1424,8 +1414,6 @@ Code   | Description
 
 <br>
 ## Auto-Calibrate
-
-`FW 10.0+`
 
 The **Auto-Calibrate** command is used to auto-calibrate a Node. This command is only applicable to specific Nodes.
 
@@ -1572,7 +1560,6 @@ Code   | Description
 <br>
 
 ## Log Session Info
-`FW 10.31758+`
 
 The **Log Session Info** command retrieves datalogging information about the Node.
 
@@ -1622,7 +1609,6 @@ uint16_t checksum;                                        //Checksum of [stopFla
 <br>
 
 ## Erase Logged Data (v2)
-`FW 10.31758+`
 
 The **Erase Logged Data** command is used to erase all sampled data stored on the Node's memory. This cannot be undone.
 
@@ -1669,7 +1655,6 @@ uint16_t checksum;                                        //Checksum of [stopFla
 <br>
 
 ## Get Logged Data
-`FW 10.31758+`
 
 The **Get Logged Data** command is used to download sampled data stored on the Node's memory.
 
@@ -1789,8 +1774,6 @@ uint16_t sessionIndex;   // index of the session the data following the header b
 
 <br>
 ## Get Diagnostic Info
-
-`FW 10.33392+`
 
 The **Get Diagnostic Info** command is used to get diagnostic information about the Wireless Node. Note that a Node can also be configured to send a [Diagnostic data packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet) at a specific interval as well. The information in the data packet is the same as in the response for this command.
 
