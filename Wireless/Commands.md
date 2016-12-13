@@ -571,6 +571,24 @@ uint16_t commandId             = 0x0012;                  //Command ID
 uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
+##### Initial Received Response:
+This response comes from the Base Station indicating that the command was received and the Base Station is attempting to ping the Node.
+
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint16_t baseAddress;                                     //Base Station Address
+uint8_t payloadLen             = 0x09;                    //Payload Length
+uint16_t commandId             = 0x0012;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the operation should complete.
+uint16_t nodeAddress;                                     //Node Address
+int8_t reserved;                                          //Reserved Byte
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+```
+
 ##### Success Response:
 ```cpp
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
