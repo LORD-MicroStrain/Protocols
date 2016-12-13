@@ -21,20 +21,20 @@ ASPP v1.0      | FW v1.0                    |  FW v1.0
 Command      | Command ID    |  Base Station ASPP Version required
 -------------|---------------|--------------------
 [Start RF Sweep Mode](#start-rf-sweep-mode) | 0x00ED | ASPP v1.3
-[Ping Base Station (v2)](#ping-base-station-v2) | 0x0001 | ASPP v1.1
 [Ping Base Station (v1)](#ping-base-station-v1) | 0x01 | ASPP v1.0
-[Read Base Station EEPROM (v2)](#read-base-station-eeprom-v2) | 0x0073 | ASPP v1.1
+[Ping Base Station (v2)](#ping-base-station-v2) | 0x0001 | ASPP v1.1
 [Read Base Station EEPROM (v1)](#read-base-station-eeprom-v1) | 0x73 | ASPP v1.0
-[Write Base Station EEPROM (v2)](#write-base-station-eeprom-v2) | 0x0078 | ASPP v1.1
+[Read Base Station EEPROM (v2)](#read-base-station-eeprom-v2) | 0x0073 | ASPP v1.1
 [Write Base Station EEPROM (v1)](#write-base-station-eeprom-v1) | 0x78 | ASPP v1.0
-[Enable Beacon (v2)](#enable-beacon-v2) | 0xBEAC | ASPP v1.1
+[Write Base Station EEPROM (v2)](#write-base-station-eeprom-v2) | 0x0078 | ASPP v1.1
 [Enable Beacon (v1)](#enable-beacon-v1) | 0xBEAC | ASPP v1.0
-[Disable Beacon (v2)](#disable-beacon-v2) | 0xBEAC | ASPP v1.1
+[Enable Beacon (v2)](#enable-beacon-v2) | 0xBEAC | ASPP v1.1
 [Disable Beacon (v1)](#disable-beacon-v1) | 0xBEAC | ASPP v1.0
+[Disable Beacon (v2)](#disable-beacon-v2) | 0xBEAC | ASPP v1.1
 [Beacon Status](#beacon-status) | 0xBEAD | ASPP v1.1
 [Cycle Power & Radio](#cycle-power--radio) | - | ASPP v1.0
-[Node Quick Ping (v2)*](#node-quick-ping-v2) | 0x0012 | ASPP v1.2
 [Node Quick Ping (v1)*](#node-quick-ping-v1) | 0x02 | ASPP v1.0
+[Node Quick Ping (v2)*](#node-quick-ping-v2) | 0x0012 | ASPP v1.2
 
 *This command targets a Node, but is handled by the Base Station itself.
 
@@ -45,23 +45,23 @@ Command      | Command ID    |  Node ASPP Version required
 [Detailed Ping](#detailed-ping) | 0x0002 | ASPP v1.0
 [Initiate Sleep Mode](#initiate-sleep-mode) | 0x32 | ASPP v1.0
 [Set to Idle](#set-to-idle) | 0x0090 | ASPP v1.0
-[Read EEPROM (v2)](#read-node-eeprom-v2) | 0x0007 | ASPP v1.1
-[Read EEPROM (v1)](#read-node-eeprom-v1) | 0x0003 | ASPP v1.0
-[Write EEPROM (v2)](#write-node-eeprom-v2) | 0x0008 | ASPP v1.1
-[Write EEPROM (v1)](#write-node-eeprom-v1) | 0x0004 | ASPP v1.0
+[Read Node EEPROM (v1)](#read-node-eeprom-v1) | 0x0003 | ASPP v1.0
+[Read Node EEPROM (v2)](#read-node-eeprom-v2) | 0x0007 | ASPP v1.1
+[Write Node EEPROM (v1)](#write-node-eeprom-v1) | 0x0004 | ASPP v1.0
+[Write Node EEPROM (v2)](#write-node-eeprom-v2) | 0x0008 | ASPP v1.1
 [Initiate Synchronized Sampling](#initiate-synchronized-sampling) | 0x003B | ASPP v1.0
-[Initiate Low Duty Cycle (v2)](#initiate-low-duty-cycle-v2) | 0x0039 | ASPP v1.5
 [Initiate Low Duty Cycle (v1)](#initiate-low-duty-cycle-v1) | 0x0038 | ASPP v1.0
+[Initiate Low Duty Cycle (v2)](#initiate-low-duty-cycle-v2) | 0x0039 | ASPP v1.5
 [Initiate Legacy Streaming](#initiate-real-time-streaming-legacy) | 0x38 | ASPP v1.0
 [Arm for Datalogging](#arm-node-for-datalogging) | 0x000D | ASPP v1.0
 [Trigger Armed Datalogging](#trigger-armed-datalogging) | 0x000E | ASPP v1.0
 [Get Logged Data](#get-logged-data) | 0x0041 | ASPP v1.4
 [Page Download](#page-download) | 0x05 | ASPP v1.0
 [Log Session Info](#log-session-info) | 0x0040 | ASPP v1.4
-[Erase Logged Data (v2)](#erase-logged-data-v2) | 0x0042 | ASPP v1.4
 [Erase Logged Data (v1)](#erase-logged-data) | 0x06 | ASPP v1.0
-[Auto-Balance Channel (v2)](#auto-balance-channel-v2) | 0x0065 | ASPP v1.2
+[Erase Logged Data (v2)](#erase-logged-data-v2) | 0x0042 | ASPP v1.4
 [Auto-Balance Channel (v1)](#auto-balance-channel-v1) | 0x62 | ASPP v1.0
+[Auto-Balance Channel (v2)](#auto-balance-channel-v2) | 0x0065 | ASPP v1.2
 [Auto-Calibrate](#auto-calibrate) | 0x0064 | ASPP v1.2
 [Get Diagnostic Info](#get-diagnostic-info) | 0x0009 | ASPP v1.5
 [Read Single Sensor](#read-single-sensor) | 0x03 | ASPP v1.0
