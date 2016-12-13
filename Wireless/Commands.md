@@ -33,14 +33,15 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Disable Beacon (v1)](#disable-beacon-v1) | 0xBEAC | ASPP v1.0
 [Beacon Status](#beacon-status) | 0xBEAD | ASPP v1.1
 [Cycle Power & Radio](#cycle-power--radio) | - | ASPP v1.0
+[Node Quick Ping (v2)*](#node-quick-ping-v2) | 0x0012 | ASPP v1.2
+[Node Quick Ping (v1)*](#node-quick-ping-v1) | 0x02 | ASPP v1.0
 
+*This command targets a Node, but is handled by the Base Station itself.
 
 ### Node Commands
 
 Command      | Command ID    |  Node ASPP Version required
 -------------|---------------|--------------------
-[Quick Ping (v2)](#quick-ping-v2) | 0x0012 | ASPP v1.2
-[Quick Ping (v1)](#quick-ping-v1) | 0x02 | ASPP v1.0
 [Detailed Ping](#detailed-ping) | 0x0002 | ASPP v1.0
 [Initiate Sleep Mode](#initiate-sleep-mode) | 0x32 | ASPP v1.0
 [Set to Idle](#set-to-idle) | 0x0090 | ASPP v1.0
@@ -533,10 +534,8 @@ uint16_t checksum;                       //Checksum of [stopFlag - timestamp]
 If the device cannot support the requested parameters, they will be clamped to the closest valid value.
 The data packets will relect such changes.
 
-
--------
-
-## Quick Ping (v1)
+<br>
+## Node Quick Ping (v1)
 
 The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
 
@@ -557,7 +556,7 @@ uint8_t failId                 = 0x21;                    //Failure ID
 ```
 
 <br>
-## Quick Ping (v2)
+## Node Quick Ping (v2)
 
 The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
 
@@ -577,9 +576,10 @@ uint16_t checksum;                                        //Checksum of [stopFla
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x31;                    //App Data Type
-uint16_t nodeAddress;                                     //Node Address
+uint16_t baseAddress;                                     //Base Station Address
 uint8_t payloadLen             = 0x02;                    //Payload Length
 uint16_t commandId             = 0x0012;                  //Command ID Echo
+uint16_t nodeAddress;                                     //Node Address
 int8_t reserved;                                          //Reserved Byte
 int8_t baseRssi;                                          //Base Station RSSI
 uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
@@ -590,15 +590,17 @@ uint16_t checksum;                                        //Checksum of [stopFla
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x32;                    //App Data Type
-uint16_t nodeAddress;                                     //Node Address
+uint16_t baseAddress;                                     //Base Station Address
 uint8_t payloadLen             = 0x02;                    //Payload Length
 uint16_t commandId             = 0x0012;                  //Command ID Echo
+uint16_t nodeAddress;                                     //Node Address
 int8_t reserved1;                                         //Reserved Byte
 int8_t reserved2;                                         //Reserved Byte
 uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
-<br>
+-------
+
 ## Detailed Ping
 
 The **Detailed Ping** command is used to check the communication between the Base Station and the Node, and gives more information (like node RSSI) than the Quick Ping command. This is useful for range tests.
