@@ -35,6 +35,7 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Cycle Power & Radio](#cycle-power--radio) | - | ASPP v1.0
 [Node Quick Ping (v1)*](#node-quick-ping-v1) | 0x02 | ASPP v1.0
 [Node Quick Ping (v2)*](#node-quick-ping-v2) | 0x0012 | ASPP v1.2
+[Set Node to Idle*](#set-to-idle) | 0x0090 | ASPP v1.0
 
 *This command targets a Node, but is handled by the Base Station itself.
 
@@ -44,7 +45,6 @@ Command      | Command ID    |  Node ASPP Version required
 -------------|---------------|--------------------
 [Detailed Ping](#detailed-ping) | 0x0002 | ASPP v1.0
 [Initiate Sleep Mode](#initiate-sleep-mode) | 0x32 | ASPP v1.0
-[Set to Idle](#set-to-idle) | 0x0090 | ASPP v1.0
 [Read Node EEPROM (v1)](#read-node-eeprom-v1) | 0x0003 | ASPP v1.0
 [Read Node EEPROM (v2)](#read-node-eeprom-v2) | 0x0007 | ASPP v1.1
 [Write Node EEPROM (v1)](#write-node-eeprom-v1) | 0x0004 | ASPP v1.0
@@ -599,6 +599,47 @@ int8_t reserved2;                                         //Reserved Byte
 uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
+<br>
+## Set to Idle
+
+The **Set to Idle** command is used to put a Node that is sampling, or sleeping, back into the Idle Mode so that it may be communicated with.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0xFE;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0090;                  //Command ID
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+```
+
+##### Initial Response:
+An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
+```cpp
+uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
+```
+
+##### Success Response:
+The Node was set to idle and can now be communicated with.
+```cpp
+uint8_t commandId              = 0x90;                    //Command ID Echo
+uint8_t commandCeased          = 0x01;                    //The Set to Idle command has ceased
+```
+
+##### Failure Response:
+The Set to Idle process was aborted.
+```cpp
+uint8_t failId                 = 0x21;                    //Failed/Aborted ID
+uint8_t commandCeased          = 0x01;                    //The Set to Idle command has ceased
+```
+
+##### Notes:
+**Ongoing Operation:** The Set to Idle command puts the Base Station in a mode that sends small packets as fast as possible in an attempt to communicate with the Node. The Base Station will periodically check to see if the Node has responded to a ping request. The function will continue indefinitely until either the Node responds, or the user sends any byte to the Base Station, which cancels the operation. No incoming packets will be heard while the Base Station is in this mode.
+
+**Broadcast Special Case:** When the broadcast Node address 65535 (0xFFFF) is used, the Base Station does not check for a ping response. It will continue sending the stop Node command until interrupted by the user (any single byte sent to the Base Station). This will attempt to stop all Nodes on the current frequency that the Base Station is on.
+
 -------
 
 ## Detailed Ping
@@ -873,47 +914,6 @@ No Response.
 **Sleep Interval:** The Node’s Sleep Interval is the interval at which the Node will awake and listen for the Set to Idle command. See the Node EEPROM map for more details.
 
 **User Inactivity Timeout:** The Node's User Inactivity Timeout is the length of time, without user activity, before the Node enters its Default Mode. If the Default Mode is idle, or sleep, the Node will automatically enter Sleep Mode when this timeout expires. See the Node EEPROM map for more details.
-
-<br>
-## Set to Idle
-
-The **Set to Idle** command is used to put a Node that is sampling, or sleeping, back into the Idle Mode so that it may be communicated with.
-
-##### Command:
-```cpp
-uint8_t startByte              = 0xAA;                    //Start of Packet Byte
-uint8_t stopFlag               = 0xFE;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x00;                    //App Data Type
-uint16_t nodeAddress;                                     //Node Address
-uint8_t payloadLen             = 0x02;                    //Payload Length
-uint16_t commandId             = 0x0090;                  //Command ID
-uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
-```
-
-##### Initial Response:
-An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
-```cpp
-uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
-```
-
-##### Success Response:
-The Node was set to idle and can now be communicated with.
-```cpp
-uint8_t commandId              = 0x90;                    //Command ID Echo
-uint8_t commandCeased          = 0x01;                    //The Set to Idle command has ceased
-```
-
-##### Failure Response:
-The Set to Idle process was aborted.
-```cpp
-uint8_t failId                 = 0x21;                    //Failed/Aborted ID
-uint8_t commandCeased          = 0x01;                    //The Set to Idle command has ceased
-```
-
-##### Notes:
-**Ongoing Operation:** The Set to Idle command puts the Base Station in a mode that sends small packets as fast as possible in an attempt to communicate with the Node. The Base Station will periodically check to see if the Node has responded to a ping request. The function will continue indefinitely until either the Node responds, or the user sends any byte to the Base Station, which cancels the operation. No incoming packets will be heard while the Base Station is in this mode.
-
-**Broadcast Special Case:** When the broadcast Node address 65535 (0xFFFF) is used, the Base Station does not check for a ping response. It will continue sending the stop Node command until interrupted by the user (any single byte sent to the Base Station). This will attempt to stop all Nodes on the current frequency that the Base Station is on.
 
 <br>
 ## Arm Node for Datalogging
