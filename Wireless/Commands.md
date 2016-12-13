@@ -35,7 +35,7 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Cycle Power & Radio](#cycle-power--radio) | - | ASPP v1.0
 [Node Quick Ping (v1)*](#node-quick-ping-v1) | 0x02 | ASPP v1.0
 [Node Quick Ping (v2)*](#node-quick-ping-v2) | 0x0012 | ASPP v1.2
-[Set Node to Idle (v1)*](#set-to-idle) | 0x0090 | ASPP v1.0
+[Set Node to Idle (v1)*](#set-to-idle-v1) | 0x0090 | ASPP v1.0
 [Set Node to Idle (v2)*](#set-to-idle-v2) | 0x0090 | ASPP v1.4
 
 *This command targets a Node, but is handled by the Base Station itself.
@@ -619,7 +619,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 ```
 
 <br>
-## Set to Idle
+## Set to Idle (v1)
 
 The **Set to Idle** command is used to put a Node that is sampling, or sleeping, back into the Idle Mode so that it may be communicated with.
 
