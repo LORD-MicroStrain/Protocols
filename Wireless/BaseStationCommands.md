@@ -2,8 +2,19 @@
 
 **List of Commands:**
 
+New devices/firmware support `Eeprom 124`, which identifies the ASPP version (msb.lsb) that the device supports.
+The firmware version of the device was originally used to determine the ASPP version. The following lookup table is provided for legacy purposes:
+
+ASPP Version  |  Base Station FW version  |  Node FW version
+--------------|---------------------------|-----------------
+ASPP 1.5      | -                         |  FW 10.33392
+ASPP 1.4      | -                         |  FW 10.31758
+ASPP 1.3      | FW 4.30448                |  -
+ASPP 1.2      | -                         |  FW 10.0
+ASPP 1.1      | FW 4.0                    |  FW 8.21
+ASPP 1.0      | FW 1.0                    |  FW 1.0
+
 ####ASPP v1.3
-These changes were made in Base Station firmware **4.30448**:
 
 Command      | Command ID
 -------------|--------------
@@ -13,7 +24,6 @@ Command      | Command ID
 No Base Station changes.
 
 ####ASPP v1.1
-These changes were made in Base Station firmware **4.0**:
 
 Command      | Command ID
 -------------|--------------
