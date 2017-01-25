@@ -482,6 +482,7 @@ ID  | Description   | Data Values | # Bytes | Type | Unit
 0x07 | Event Trigger Index | - | 2 | uint16 | -
 0x08 | External Power | 0=Not Connected, 1=External Power Connected | 1 | uint8 | -
 0x09 | Internal Temperature | - | 1 | int8 | Celsius
+0x0A | LXRS Synchronization Info | Synchronization Attempts <br> Synchronization Failures <br> Seconds since last synchronization | 4 <br> 4 <br> 4 | uint32 <br> uint32 <br> uint32 | counts <br> counts <br> seconds
 
 * **(0x00) Current State** - The current state that the device is in when the Diagnostic packet was sent.
 * **(0x01) Run Time** - The # of seconds the Node has been in each state.
