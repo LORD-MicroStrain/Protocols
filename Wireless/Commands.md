@@ -566,10 +566,11 @@ The **Quick Ping** command is used to check the communication between the Base S
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x0E;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x30;                    //App Data Type
-uint16_t nodeAddress;                                     //Node Address
-uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t baseAddress           = 0x1234;                  //Base Station Address
+uint8_t payloadLen             = 0x04;                    //Payload Length
 uint16_t commandId             = 0x0012;                  //Command ID
-uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+uint16_t nodeAddress;                                     //Node Address
+uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
 ```
 
 ##### Initial Received Response:
@@ -586,7 +587,7 @@ uint8_t status;                                           //Status byte
 float timeUntilComplete;                                  //The estimated time until the operation should complete.
 uint16_t nodeAddress;                                     //Node Address
 int8_t reserved;                                          //Reserved Byte
-int8_t baseRssi;                                          //Base Station RSSI
+int8_t reserved;                                          //Reserved Byte
 uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
