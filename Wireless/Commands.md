@@ -672,7 +672,7 @@ uint8_t stopFlag               = 0x0E;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x30;                    //App Data Type
 uint16_t baseAddress           = 0x1234;                  //Base Station Address
 uint8_t payloadLen             = 0x04;                    //Payload Length
-uint16_t commandId             = 0x0090;                  //Command ID
+uint16_t commandId             = 0x0091;                  //Command ID
 uint16_t nodeAddress;                                     //Node Address
 uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
 ```
@@ -686,7 +686,7 @@ uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x34;                    //App Data Type
 uint16_t baseAddress;                                     //Base Station Address
 uint8_t payloadLen             = 0x09;                    //Payload Length
-uint16_t commandId             = 0x0090;                  //Command ID Echo
+uint16_t commandId             = 0x0091;                  //Command ID Echo
 uint8_t status;                                           //Status byte
 float timeUntilComplete;                                  //The estimated time until the operation should complete (0x7F800000 = indefinite until canceled)
 uint16_t nodeAddress;                                     //Node Address
@@ -704,7 +704,7 @@ uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x31;                    //App Data Type
 uint16_t baseAddress;                                     //Base Station Address
 uint8_t payloadLen             = 0x05;                    //Payload Length
-uint16_t commandId             = 0x0090;                  //Command ID Echo
+uint16_t commandId             = 0x0091;                  //Command ID Echo
 uint16_t nodeAddress;                                     //Node Address
 uint8_t statusFlag;                                       //Completion Status Flag (0 = success, 1 = canceled)
 int8_t reserved;                                          //Reserved Byte
