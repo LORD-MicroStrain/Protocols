@@ -32,6 +32,7 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Disable Beacon (v1)](#disable-beacon-v1) | 0xBEAC | ASPP v1.0
 [Disable Beacon (v2)](#disable-beacon-v2) | 0xBEAC | ASPP v1.1
 [Beacon Status](#beacon-status) | 0xBEAD | ASPP v1.1
+[Set Beacon Time](#set-beacon-time) | 0xBEAB | ASPP v1.1
 [Cycle Power & Radio](#cycle-power--radio) | - | ASPP v1.0
 [Node Quick Ping (v1)*](#node-quick-ping-v1) | 0x02 | ASPP v1.0
 [Node Quick Ping (v2)*](#node-quick-ping-v2) | 0x0012 | ASPP v1.6
@@ -490,6 +491,52 @@ uint16_t checksum;                       //Checksum of [stopFlag - errorCode]
 Code         | Description
 -------------|--------------
 4            | Hardware Error
+
+<br>
+## Set Beacon Time
+
+The **Set Beacon Time** command is used to set the time that is used by the beacon without re-enabling the beacon. This can be useful when relying on a PPS for time synchronization and not the internal clock. In most scenarios, the **Enable Beacon** command should be used to set the beacon time while enabling the beacon.
+
+##### Command:
+```cpp
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x0E;        //Delivery Stop Flag
+uint8_t appDataType       = 0x30;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x06;        //Payload Length
+uint16_t commandId        = 0xBEAB;      //Command ID
+uint32_t timestamp;                      //Timestamp to give to the Beacon
+uint16_t checksum;                       //Checksum of [stopFlag - timestamp]
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x31;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x06;        //Payload Length
+uint16_t commandId        = 0xBEAB;      //Command ID Echo
+uint32_t timestamp;                      //Timestamp given to the beacon
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - timestamp]
+```
+
+##### Fail Response:
+```cpp
+uint8_t startByte         = 0xAA;        //Start of Packet byte
+uint8_t stopFlag          = 0x07;        //Delivery Stop Flag
+uint8_t appDataType       = 0x32;        //App Data Type
+uint16_t baseAddress      = 0x1234;      //Base Station Address
+uint8_t payloadLen        = 0x07;        //Payload Length
+uint16_t commandId        = 0xBEAB;      //Command ID Echo
+uint32_t timestamp;                      //Timestamp attempted to set
+uint8_t errorCode;                       //Error Code
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint16_t checksum;                       //Checksum of [stopFlag - errorCode]
+```
 
 <br>
 ## Start RF Sweep Mode
