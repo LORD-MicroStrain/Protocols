@@ -53,7 +53,7 @@ uint8_t payloadLen;                       //Payload Length
 uint8_t appId                     = 0x02; //App ID
 uint8_t channelMask;                      //Active Channel Mask
 uint8_t sampleRate;                       //Sample Rate
-uint8_t dataType;                         //Data Type
+uint8_t dataFormat;                       //Data Format
 uint16_t tick;                            //Timer Tick
 uint16_t | uint32_t | float chData[N];     //Channel Data (per active channel)
 //Repeat Channel Data bytes for each active channel
@@ -74,7 +74,7 @@ uint16_t nodeAddress;                     //Node Address
 uint8_t payloadLen;                       //Payload Length
 uint16_t channelMask;                     //Active Channel Mask
 uint8_t sampleRate;                       //Sample Rate
-uint8_t appIdAndDataType          = 0x02; //App ID / Data Type
+uint8_t appIdAndDataFormat;               //App ID / Data Format
 uint16_t tick;                            //Timer Tick
 uint16_t | uint32_t | float chData[];     //Channel Data (per active channel)
 //Repeat Channel Data bytes for each active channel
@@ -85,13 +85,9 @@ uint16_t checksum;                        //Checksum of [stopFlag - chData]
 
 #####Notes:
 
-**Data Type:**
+**Data Format:**
 
-The `appIdAndDataType` byte uses the last 4 (Least Significant) bits as the Data Type:
- * 0x01 = 2 byte unsigned integer (uint16) (bit-shifted)
- * 0x02 = 4 byte float (float)
- * 0x03 = 2 byte unsigned integer (uint16)
- * 0x04 = 4 byte unsigned integer (uint32)
+The `appIdAndDataType` byte uses the last 4 (Least Significant) bits as the [Data Format](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#data-format).
 
 ## Buffered Low Duty Cycle Packet (v1)
 ```cpp
@@ -103,7 +99,7 @@ uint8_t payloadLen;                         //Payload Length
 uint8_t appId                       = 0x02; //App ID
 uint8_t channelMask;                        //Active Channel Mask
 uint8_t sampleRate;                         //Sample Rate
-uint8_t dataType;                           //Data Type
+uint8_t dataFormat;                         //Data Format
 uint16_t tick;                              //Sweep Tick
 uint16_t | uint32_t | float chData[];       //Channel Data (per active channel, per sweep)
 //Repeat Channel Data bytes for each active channel, and for each sweep
@@ -135,13 +131,9 @@ uint16_t checksum;                          //Checksum of [stopFlag - chData]
 
 #####Notes:
 
-**Data Type:**
+**Data Format:**
 
-The `appIdAndDataType` byte uses the last 4 (Least Significant) bits as the Data Type:
- * 0x01 = 2 byte unsigned integer (uint16) (bit-shifted)
- * 0x02 = 4 byte float (float)
- * 0x03 = 2 byte unsigned integer (uint16)
- * 0x04 = 4 byte unsigned integer (uint32)
+The `appIdAndDataType` byte uses the last 4 (Least Significant) bits as the [Data Format](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#data-format):
 
 ## Synchronized Sampling Packet (v1)
 ```cpp
