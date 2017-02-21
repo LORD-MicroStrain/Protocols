@@ -1,6 +1,6 @@
 # Wireless Data Packets
 
-**Data Format:**
+### Data Format
 The following Data Formats can be transmitted in the data packets defined below.
 
 Value    |  Data Format  |  Details
@@ -18,7 +18,7 @@ Value    |  Data Format  |  Details
 0x0B     | int24 (20-bit)  | 24-bit signed value from a 20-bit device, if bit 19 is a 1 change all upper bits in new value to 1s
 0x0C     | int16 (20-bit)  | 16-bit signed value from a 20-bit device, (val « 4) to get correct value
 
-**List of Packets:**
+### List of Packets
 
 Packet      | App Data Type
 -------------|--------------
