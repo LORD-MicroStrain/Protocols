@@ -1,5 +1,23 @@
 # Wireless Data Packets
 
+**Data Format:**
+The following Data Formats can be transmitted in the data packets defined below.
+
+Value    |  Data Format  |  Details
+---------|-------------|--------------
+0x01     | uint16 (legacy) | value must be divided by 2 to get the correct value
+0x02     | float           | calibration coefficients are pre-applied to the data
+0x03     | uint16 (12-bit) | only has 12-bit resolution
+0x04     | uint32          |
+0x05     | uint16 (odd avg) | Average (mean) where the number of samples used is an odd power of 2
+0x06     | uint16 (even avg) | Average (mean) where the number of samples used is an even power of 2
+0x07     | uint16          |
+0x08     | float (no cals) | 4-byte float, with no calibration coefficients applied
+0x09     | uint24          |
+0x0A     | uint16 (18-bit) | 16-bit value from an 18-bit device, truncated, (val « 2) to get correct value
+0x0B     | int24 (20-bit)  | 24-bit signed value from a 20-bit device, if bit 19 is a 1 change all upper bits in new value to 1s
+0x0C     | int16 (20-bit)  | 16-bit signed value from a 20-bit device, (val « 4) to get correct value
+
 **List of Packets:**
 
 Packet      | App Data Type
