@@ -120,7 +120,7 @@ uint16_t nodeAddress;                       //Node Address
 uint8_t payloadLen;                         //Payload Length
 uint16_t channelMask;                       //Active Channel Mask
 uint8_t sampleRate;                         //Sample Rate
-uint8_t appIdAndDataType;                   //App ID / Data Type
+uint8_t appIdAndDataFormat;                 //App ID / Data Format
 uint16_t tick;                              //Sweep Tick
 uint16_t | uint32_t | float chData[];       //Channel Data (per channel, per sweep)
 //Repeat Channel Data bytes for each active channel, and for each sweep
@@ -145,7 +145,7 @@ uint8_t payloadLen;                         //Payload Length
 uint8_t sampleMode;                         //Sample Mode
 uint8_t channelMask;                        //Active Channel Mask
 uint8_t sampleRate;                         //Sample Rate
-uint8_t dataType;                           //Data Type
+uint8_t dataFormat;                         //Data Format
 uint16_t tick;                              //Sweep Tick
 uint32_t timestampSec;                      //UTC Timestamp (seconds)
 uint32_t timestampNano;                     //UTC Timestamp (nanoseconds)
@@ -200,7 +200,7 @@ uint16_t nodeAddress;                     //Node Address
 uint8_t payloadLen;                       //Payload Length
 uint16_t channelMask;                     //Active Channel Mask
 uint8_t sampleRate;                       //Sample Rate
-uint8_t sampleModeAndDataType;            //Sample Mode / Data Type
+uint8_t sampleModeAndDataFormat;          //Sample Mode / Data Format
 uint16_t tick;                            //Sweep Tick
 uint32_t timestampSec;                    //UTC Timestamp (seconds)
 uint32_t timestampNano;                   //UTC Timestamp (nanoseconds)
@@ -221,11 +221,7 @@ The `sampleModeAndDataType` byte uses the first 4 (Most Significant) bits as the
 
 **Sample Mode:**
 
-The `sampleModeAndDataType` byte uses the last 4 (Least Significant) bits as the Data Type:
- * 0x01 = 2 byte unsigned integer (uint16) (bit-shifted)
- * 0x02 = 4 byte float (float)
- * 0x03 = 2 byte unsigned integer (uint16)
- * 0x04 = 4 byte unsigned integer (uint32)
+The `sampleModeAndDataType` byte uses the last 4 (Least Significant) bits as the [Data Format](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#data-format).
 
 **Timestamp / Tick:**
 Although each packet may contain more than one sweep per channel, there is only one timestamp and tick acquired per packet. Therefore the tick and timestamp values must be incremented manually for each sweep in the packet. This can be done via the following:
@@ -299,7 +295,7 @@ uint8_t appDataType         = 0x0F;                  //App Data Type
 uint16_t nodeAddress;                                //Node Address
 uint8_t payloadLen;                                  //Payload Length
 uint16_t channelMask;                                //Channel Mask
-uint8_t dataType;                                    //Data Type
+uint8_t dataFormat;                                  //Data Format
 uint16_t tick;                                       //Event Tick
 uint32_t timestampSec;                               //UTC Timestamp (seconds)
 uint32_t timestampNano;                              //UTC Timestamp (nanoseconds)
@@ -316,7 +312,7 @@ uint16_t checksum;                                   //Checksum of [stopFlag - a
 #####Notes:
 **Digital Channel Mask:** The Digital Channel Mask represents the digital channels that are actively being monitored by the Node.
 
-**Data Type:** The Data Type determines the format of **Analog** data that is transmitted in the packet.
+**Data Format:** The Data Format determines the format of **Analog** data that is transmitted in the packet.
 
 **Event Tick:** The Event Tick represents a counter for each event. Although multiple events may be in the same packet, only one Event Tick will be found per packet. The tick for each event can be found by incrementing the Event Tick for each event that is contained in that packet.
 
