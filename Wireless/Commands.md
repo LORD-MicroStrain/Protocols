@@ -87,6 +87,7 @@ uint8_t commandId         = 0x01;        //Command ID Echo
 None.
 
 <br>
+
 ## Ping Base Station (v2)
 
 The **Ping Base Station** command is used to ensure that the host computer and the Base Station are properly communicating.
@@ -119,6 +120,7 @@ uint16_t checksum;                       //Checksum of [stopFlag - commandId]
 None.
 
 <br>
+
 ## Read Base Station EEPROM (v1)
 
 The **Read Base Station EEPROM** command is used to read the value of a specific memory address from the Base Station's EEPROM.  
@@ -145,6 +147,7 @@ uint8_t failId            = 0x21;        //Fail ID
 ```
 
 <br>
+
 ## Read Base Station EEPROM (v2)
 
 The **Read Base Station EEPROM** command is used to read the value of a specific memory address from the Base Station's EEPROM.  
@@ -200,6 +203,7 @@ Code         | Description
 4            | Hardware Error
 
 <br>
+
 ## Write Base Station EEPROM (v1)
 
 The **Write Base Station EEPROM** command is used to write a value to a specific memory address on the Base Station's EEPROM.
@@ -227,6 +231,7 @@ uint8_t failId            = 0x21;        //Fail ID
 ```
 
 <br>
+
 ## Write Base Station EEPROM (v2)
 
 The **Write Base Station EEPROM** command is used to write a value to a specific memory address on the Base Station's EEPROM.
@@ -286,6 +291,7 @@ Code         | Description
 4            | Hardware Error
 
 <br>
+
 ## Enable Beacon (v1)
 
 The **Enable Beacon** command is used to turn on the beacon on the Base Station.<br>
@@ -309,6 +315,7 @@ None.
 **Command Timestamp**: The last 4 bytes in the Command Packet are Timestamp bytes. The beacon that is started from this command will send a Timestamp beginning from this value. These bytes represent the current UTC time in seconds from the Unix Epoch (January 1, 1970).
 
 <br>
+
 ## Enable Beacon (v2)
 
 The **Enable Beacon** command is used to turn on the beacon on the Base Station.<br>
@@ -361,6 +368,7 @@ Code         | Description
 4            | Hardware Error
 
 <br>
+
 ## Disable Beacon (v1)
 
 The **Disable Beacon** command is used to turn off the beacon on the Base Station.
@@ -382,6 +390,7 @@ None.
 Notice that the **Disable Beacon** command packet is the same as the Enable Beacon command packet, but with 0xFFFFFFFF for its "Timestamp" bytes.
 
 <br>
+
 ## Disable Beacon (v2)
 
 The **Disable Beacon** command is used to turn off the beacon on the Base Station.
@@ -436,6 +445,7 @@ Code         | Description
 Notice that the **Disable Beacon** command packet is the same as the Enable Beacon command packet, but with 0xFFFFFFFF for its "Timestamp" bytes.
 
 <br>
+
 ## Beacon Status
 
 The **Beacon Status** command is used to get information about the Beacon on the Base Station.
@@ -493,6 +503,7 @@ Code         | Description
 4            | Hardware Error
 
 <br>
+
 ## Set Beacon Time
 
 The **Set Beacon Time** command is used to set the time that is used by the beacon without re-enabling the beacon. This can be useful when relying on a PPS for time synchronization and not the internal clock. In most scenarios, the **Enable Beacon** command should be used to set the beacon time while enabling the beacon.
@@ -539,6 +550,7 @@ uint16_t checksum;                       //Checksum of [stopFlag - errorCode]
 ```
 
 <br>
+
 ## Start RF Sweep Mode
 
 The **Start RF Sweep Mode** command puts the Base Station into a mode where radio frequencies can be scanned for traffic.
@@ -583,6 +595,7 @@ If the device cannot support the requested parameters, they will be clamped to t
 The data packets will relect such changes.
 
 <br>
+
 ## Node Quick Ping (v1)
 
 The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
@@ -604,6 +617,7 @@ uint8_t failId                 = 0x21;                    //Failure ID
 ```
 
 <br>
+
 ## Node Quick Ping (v2)
 
 The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
@@ -667,6 +681,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 ```
 
 <br>
+
 ## Set Node to Idle (v1)
 
 The **Set to Idle** command is used to put a Node that is sampling, or sleeping, back into the Idle Mode so that it may be communicated with.
@@ -708,6 +723,7 @@ uint8_t commandCeased          = 0x01;                    //The Set to Idle comm
 **Broadcast Special Case:** When the broadcast Node address 65535 (0xFFFF) is used, the Base Station does not check for a ping response. It will continue sending the Set to Idle command until interrupted by the user (any single byte sent to the Base Station). This will attempt to set all Nodes to idle on the current frequency that the Base Station is on.
 
 <br>
+
 ## Set Node to Idle (v2)
 
 The **Set to Idle** command is used to put a Node that is sampling, or sleeping, back into the Idle Mode so that it may be communicated with.
@@ -804,6 +820,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 No Response.
 
 <br>
+
 ## Read Node EEPROM (v1)
 
 The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM.
@@ -845,6 +862,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 No Response.
 
 <br>
+
 ## Read Node EEPROM (v2)
 
 The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM.
@@ -907,6 +925,7 @@ Code         | Description
 4            | Hardware Error
 
 <br>
+
 ## Write Node EEPROM (v1)
 
 The **Write Node EEPROM** command is used to write a value to a specific memory address on the Node's EEPROM.
@@ -949,6 +968,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 No Response.
 
 <br>
+
 ## Write Node EEPROM (v2)
 
 The **Write Node EEPROM** command is used to write a value to a specific memory address on the Node's EEPROM.
@@ -1015,6 +1035,7 @@ Code         | Description
 4            | Hardware Error
 
 <br>
+
 ## Initiate Sleep Mode
 
 The **Initiate Sleep Mode** command is used to put the Node in a low power state. When the Node is in this low power Sleep Mode, it will not hear any commands except for the Set to Idle command, which will wake the node and put it back into its normal, idle state. The Node should be put into Sleep Mode when
@@ -1040,6 +1061,7 @@ No Response.
 **User Inactivity Timeout:** The Node's User Inactivity Timeout is the length of time, without user activity, before the Node enters its Default Mode. If the Default Mode is idle, or sleep, the Node will automatically enter Sleep Mode when this timeout expires. See the Node EEPROM map for more details.
 
 <br>
+
 ## Arm Node for Datalogging
 
 Use the **Arm Node** command to put the node in an armed state waiting for the [Trigger Armed Datalogging](#trigger-armed-datalogging) command.
@@ -1085,6 +1107,7 @@ No Response.
 **Disarming:** A Node will stay in this armed state for a default of 10 seconds (EEPROM adjustable). To disarm an Armed Node manually, use the [Set to Idle](#set-to-idle) command.
 
 <br>
+
 ## Trigger Armed Datalogging
 
 The **Trigger Armed Datalogging** command is used to initiate a data capture session on-board the Node.The data will be stored in the Node's internal memory and may be downloaded at a later time.
@@ -1114,6 +1137,7 @@ No Response.
 **Timestamp:** The Timestamp is made up of 2 values, each of which are 4 bytes. The first value represents the seconds of the timestamp, and the second value represents the nanoseconds of the timestamp. When downloading the logged data from the node, this timestamp will be transmitted in the header information and can be used to determine the exact timestamp of each data point. These bytes represent the current UTC time in seconds from the Unix Epoch (January 1, 1970).
 
 <br>
+
 ## Page Download
 
 The **Page Download** command is used to retrieve a logged data session from the Node. Note that it can also be used to read large chunks of EEPROM values as well.
@@ -1271,6 +1295,7 @@ to the user data that should be discarded.
 pattern during download. These byte immediately follow the header bytes.
 
 <br>
+
 ## Erase Logged Data
 
 The **Erase Logged Data** command is used to erase all sampled data stored on the Node's memory. This cannot be undone.
@@ -1296,6 +1321,7 @@ uint8_t failId                 = 0x21;                    //Fail Indicator
 **Response:** The response is returned immediately when the erasing processes begins, and no acknowledgment is sent when the process completes. The process may take up to 5 seconds, and the Node will not respond to any commands until the erasing is complete. Completion of the erase can be detected by repeatedly pinging the Node; when the erase is complete, the Node will return to idle mode and respond successfully to the ping.
 
 <br>
+
 ## Initiate Real-Time Streaming (Legacy)
 
 The **Initiate Real-Time Streaming** command is used to start a real-time streaming session on a Node. The Node will respond by immediately sending a stream of data packets as the sensors are read.
@@ -1326,6 +1352,7 @@ or the Set to Idle command has been issued to the Node.
 **End of Stream:** The normal end of a finite stream is marked by 4-6 consecutive 0xAA (170) bytes. When parsing the stream, these bytes should be used as a signal that finite streaming has ended.
 
 <br>
+
 ## Initiate Low Duty Cycle (v1)
 
 The **Initiate Low Duty Cycle (LDC) v1** command is used to put the Node in LDC sampling mode.
@@ -1356,6 +1383,7 @@ No Response.
 No Response.
 
 <br>
+
 ## Initiate Low Duty Cycle (v2)
 
 The **Initiate Low Duty Cycle (LDC) v2** command is used to put the Node in LDC sampling mode. Version 2 of this command adds a timestamp in the command packet, which allows logged data to include a timestamp for use when downloading the data after collection.
@@ -1461,6 +1489,7 @@ uint8_t failId                 = 0x21;                    //Failure Indicator
 **Erroneous Data:** Values read using the Read Single Sensor command may be off due to there being no excitation time taken into account. The other full sampling modes use a Sampling Delay, which is an amount of time between sensor excitation power up and A/D sampling.
 
 <br>
+
 ## Auto-Balance Channel (v1)
 
 The **Auto-Balance Channel** command is used to auto-balance a particular channel on the Node. This command is only applicable to the differential channels on certain Nodes.
@@ -1483,6 +1512,7 @@ No Response.
 **Target Balance Value:** The target balance value represents the desired sensor output value in bits. All differential inputs have a programmable offset feature that allows the user to trim sensor offset (see hardware user manual for more information). This programmable offset can be manually altered via Node EEPROM, or auto-tuned such that the sensor output is balanced to a user-defined target. For example, a common use is to auto-balance to mid-scale (2048 bits) to obtain maximum bipolar dynamic range.
 
 <br>
+
 ## Auto-Balance Channel (v2)
 
 The **Auto-Balance Channel** command is used to auto-balance a particular channel on the Node. This command is only applicable to the differential channels on certain Nodes.
@@ -1539,6 +1569,7 @@ Code   | Description
 **Updated Hardware Offset:** The hardware offset value that the channel has been updated to after a successful autobalance.
 
 <br>
+
 ## Auto-Calibrate
 
 The **Auto-Calibrate** command is used to auto-calibrate a Node. This command is only applicable to specific Nodes.
@@ -1899,6 +1930,7 @@ uint16_t sessionIndex;   // index of the session the data following the header b
 ```
 
 <br>
+
 ## Get Diagnostic Info
 
 The **Get Diagnostic Info** command is used to get diagnostic information about the Wireless Node. Note that a Node can also be configured to send a [Diagnostic data packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet) at a specific interval as well. The information in the data packet is the same as in the response for this command.
@@ -1939,6 +1971,7 @@ For more information on the payload of this packet, see the documentation for th
 -------
 
 <br>
+
 ## Cycle Power & Radio
 
 To cycle the power on the device, use the `Write EEPROM` command and write a `1` to `EEPROM 250`.
