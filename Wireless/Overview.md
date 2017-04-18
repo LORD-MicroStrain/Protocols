@@ -90,6 +90,7 @@ uint32_t ValueFrom4Bytes(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4)
     return (hiWord << 16) | loWord; //Shift hiWord 16 bits left, then OR the loWord in.
 }
 ```
+
 ## RSSI
 
 The Received Signal Strength Indicator (RSSI) is a measurement of the power present in a received radio signal.  Node commands such as Long Ping and Node Discovery return a true RSSI value, measured in dBm, in their response packet.  This signed 1-byte value can range from -95 dBm (worst) to +5 dBm (best). 
