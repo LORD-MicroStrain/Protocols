@@ -474,7 +474,7 @@ uint32_t timestamp_sec;                  //The Current Timestamp of the Beacon (
 uint32_t timestamp_nano;                 //The Current Timestamp of the Beacon (nanoseconds)
 uint8_t RESERVED;                        //Reserved Byte
 uint8_t RESERVED;                        //Reserved Byte
-uint16_t checksum;                       //Checksum of [stopFlag - timestamp]
+uint16_t checksum;                       //Checksum of [stopFlag - timestamp_nano]
 ```
 
 ##### Fail Response:
@@ -569,7 +569,7 @@ uint16_t options;                        //Options (Used internally)
 uint32_t minFreq;                        //Minimum Sweep Frequency in kHz (2400000 = 2.4GHz)
 uint32_t maxFreq;                        //Maximum Sweep Frequency in kHz (2400000 = 2.4GHz)
 uint32_t interval;                       //The Sweep interval in kHz.
-uint16_t checksum;                       //Checksum of [stopFlag - timestamp]
+uint16_t checksum;                       //Checksum of [stopFlag - interval]
 ```
 
 ##### Success Response:
@@ -586,7 +586,7 @@ uint32_t maxFreqEcho;                    //Maximum Sweep Frequency Echo
 uint32_t intervalEcho;                   //The Sweep interval Echo
 uint8_t RESERVED;                        //Reserved Byte
 uint8_t RESERVED;                        //Reserved Byte
-uint16_t checksum;                       //Checksum of [stopFlag - timestamp]
+uint16_t checksum;                       //Checksum of [stopFlag - intervalEcho]
 ```
 
 ##### Notes:
@@ -649,7 +649,7 @@ float timeUntilComplete;                                  //The estimated time u
 uint16_t nodeAddress;                                     //Node Address
 int8_t reserved;                                          //Reserved Byte
 int8_t reserved;                                          //Reserved Byte
-uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
 ```
 
 ##### Success Response:
@@ -663,7 +663,7 @@ uint16_t commandId             = 0x0012;                  //Command ID Echo
 uint16_t nodeAddress;                                     //Node Address
 int8_t reserved;                                          //Reserved Byte
 int8_t baseRssi;                                          //Base Station RSSI
-uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
 ```
 
 ##### Failure Response:
@@ -677,7 +677,7 @@ uint16_t commandId             = 0x0012;                  //Command ID Echo
 uint16_t nodeAddress;                                     //Node Address
 int8_t reserved1;                                         //Reserved Byte
 int8_t reserved2;                                         //Reserved Byte
-uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
 ```
 
 <br>
@@ -755,7 +755,7 @@ float timeUntilComplete;                                  //The estimated time u
 uint16_t nodeAddress;                                     //Node Address
 int8_t reserved;                                          //Reserved Byte
 int8_t baseRssi;                                          //Base Station RSSI
-uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
 ```
 
 ##### Completion Response:
@@ -772,7 +772,7 @@ uint16_t nodeAddress;                                     //Node Address
 uint8_t statusFlag;                                       //Completion Status Flag (0 = success, 1 = canceled)
 int8_t reserved;                                          //Reserved Byte
 int8_t baseRssi;                                          //Base Station RSSI
-uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+uint16_t checksum;                                        //Checksum of [stopFlag - statusFlag]
 ```
 
 ##### Notes:
@@ -1006,7 +1006,7 @@ uint16_t eepromAddress;                                   //EEPROM Address Writt
 uint16_t valueWritten;                                    //Value Written to EEPROM
 int8_t notUsed;                                           //RESERVED
 int8_t baseRssi;                                          //Base RSSI
-uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+uint16_t checksum;                                        //Checksum of [stopFlag - valueWritten]
 ```
 
 ##### Failure Response:
@@ -1616,7 +1616,7 @@ uint16_t nodeAddress;                                     //Node Address
 uint8_t payloadLen;                                       //Payload Length
 uint16_t commandId             = 0x0064;                  //Command ID Echo
 uint8_t completionCode;                                   //Completion Code
-// 0 - 113 Completion Info Info Bytes (varies per device/firmware)
+// 0 - 113 Completion Info Bytes (varies per device/firmware)
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
 uint16_t checksum;                                        //Checksum of [stopFlag - completion info bytes]
@@ -1824,7 +1824,7 @@ uint16_t nodeAddress;                                     //Node Address
 uint8_t payloadLen             = 0x06;                    //Payload Length
 uint16_t commandId             = 0x0041;                  //Command ID
 uint32_t address;                                         //Flash Address to read
-uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+uint16_t checksum;                                        //Checksum of [stopFlag - address]
 ```
 
 ##### Completion Response:
@@ -1840,7 +1840,7 @@ uint32_t address;                                         //Flash Address of fir
 uint8_t data[102];                                        //Data read from flash
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
-uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+uint16_t checksum;                                        //Checksum of [stopFlag - data]
 ```
 
 ##### Error Response:
@@ -1960,7 +1960,7 @@ uint8_t | uint16_t | uint32_t info1Val;                   //Info Item 1 Value
 //Repeat Into Item Length, ID, and Value for all the Info Items in the packet
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
-uint16_t checksum;                                        //Checksum of [stopFlag - eepromVal]
+uint16_t checksum;                                        //Checksum of [stopFlag - info item bytes]
 ```
 
 ##### Failure Response:
