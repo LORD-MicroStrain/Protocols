@@ -103,7 +103,7 @@ The **Base Station RSSI** is the signal strength that the base station received 
 
 Most commands and responses require or supply a checksum.  The checksum is used to ensure that the data was transmitted without error.  The documentation for each command or response that uses a checksum will detail how the checksum is calculated.
 
-**ASPP v3** uses a CRC checksum of all the bytes in the packet. The CRC will be a 32-bit CRC with polynomial 0x04C11DB7, an initial value of 0xFFFFFFFF, and inverted output. If you are using the Boost C++ library, this can be done as follows:
+**ASPP v3** uses a CRC checksum of all the bytes in the packet. The CRC will be a 32-bit CRC with polynomial `0x04C11DB7`, an initial value of `0xFFFFFFFF`, and inverted output. If you are using the Boost C++ library, this can be done as follows:
 
 ```cpp
 #include <boost/crc.hpp>
