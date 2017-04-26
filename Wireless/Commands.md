@@ -46,7 +46,7 @@ Command      | Command ID    |  Base Station ASPP Version required
 Command      | Command ID    |  Node ASPP Version required
 -------------|---------------|--------------------
 [Detailed Ping (v1)](#detailed-ping-v1) | 0x0002 | ASPP v1.0
-[Detailed Ping (v2)](#detailed-ping-v1) | 0x0002 | ASPP v3.0
+[Detailed Ping (v2)](#detailed-ping-v2) | 0x0002 | ASPP v3.0
 [Initiate Sleep Mode](#initiate-sleep-mode) | 0x32 | ASPP v1.0
 [Read Node EEPROM (v1)](#read-node-eeprom-v1) | 0x0003 | ASPP v1.0
 [Read Node EEPROM (v2)](#read-node-eeprom-v2) | 0x0007 | ASPP v1.1
