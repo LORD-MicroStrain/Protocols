@@ -852,7 +852,7 @@ uint32_t nodeAddress;                                     //Node Address
 uint8_t payloadLen             = 0x00;                    //Payload Length
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
-uint16_t checksum;                                        //CRC Checksum of [startByte - baseRssi]
+uint32_t checksum;                                        //CRC Checksum of [startByte - baseRssi]
 ```
 
 ##### Failure Response:
