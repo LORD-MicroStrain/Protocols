@@ -45,7 +45,8 @@ Command      | Command ID    |  Base Station ASPP Version required
 
 Command      | Command ID    |  Node ASPP Version required
 -------------|---------------|--------------------
-[Detailed Ping](#detailed-ping) | 0x0002 | ASPP v1.0
+[Detailed Ping (v1)](#detailed-ping-v1) | 0x0002 | ASPP v1.0
+[Detailed Ping (v2)](#detailed-ping-v1) | 0x0002 | ASPP v3.0
 [Initiate Sleep Mode](#initiate-sleep-mode) | 0x32 | ASPP v1.0
 [Read Node EEPROM (v1)](#read-node-eeprom-v1) | 0x0003 | ASPP v1.0
 [Read Node EEPROM (v2)](#read-node-eeprom-v2) | 0x0007 | ASPP v1.1
@@ -782,7 +783,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 
 -------
 
-## Detailed Ping
+## Detailed Ping (v1)
 
 The **Detailed Ping** command is used to check the communication between the Base Station and the Node, and gives more information (like node RSSI) than the Quick Ping command. This is useful for range tests.
 
@@ -814,6 +815,86 @@ uint16_t notUsed               = 0x0000;                  //Empty Payload (not u
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
 uint16_t checksum;                                        //Checksum of [stopFlag - notUsed]
+```
+
+##### Failure Response:
+No Response.
+
+<br>
+
+## Detailed Ping (v2)
+
+The **Detailed Ping** command is used to check the communication between the Base Station and the Node, and gives more information (like node RSSI) than the Quick Ping command. This is useful for range tests.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x0A;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID
+uint32_t checksum;                                        //Checksum of [startByte - commandId]
+```
+
+##### Initial Response:
+An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
+```cpp
+uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x00;                    //Payload Length
+int8_t nodeRssi;                                          //Node RSSI
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [startByte - baseRssi]
+```
+
+##### Failure Response:
+No Response.
+
+<br>
+
+## Read Node EEPROM (v1)
+
+The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM.
+
+See the Node EEPROM Map for specific memory address details.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x04;                    //Payload Length
+uint16_t commandId             = 0x0003;                  //Command ID
+uint16_t eepromAddress;                                   //EEPROM Address to Read
+uint16_t checksum;                                        //Checksum of [stopFlag - eepromAddress]
+```
+
+##### Initial Response:
+An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
+```cpp
+uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x00;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t eepromVal;                                       //Value Read from EEPROM
+int8_t notUsed;                                           //RESERVED
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - eepromVal]
 ```
 
 ##### Failure Response:
