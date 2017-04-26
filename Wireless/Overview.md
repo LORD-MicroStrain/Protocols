@@ -7,17 +7,17 @@ The MicroStrain Wireless Protocol describes how to communicate at a low level wi
 
 This includes [BaseStations](http://www.microstrain.com/wireless/gateways) and [Wireless Nodes](http://www.microstrain.com/wireless/sensors).
 
-Most users who want to write their own code to interact with MicroStrain devices should check out [MSCL (MicroStrain Communication Library)](http://lord-microstrain.github.io/MSCL/). MSCL abstracts all of the low-level logic and provides an easy to use, unit tested, high-level interface to communicate with our devices. It can be used in C++, C#, Python, and LabView.
+Most users who want to write their own code to interact with MicroStrain devices should check out [MSCL (MicroStrain Communication Library)](https://github.com/LORD-MicroStrain/MSCL). MSCL abstracts all of the low-level logic and provides an easy to use, unit tested, high-level interface to communicate with our devices. It can be used in C++, C#, Python, and LabView.
 
 For users who do not wish to use MSCL, this protocol should provide all the information you need to get up and running with writing your own software.
 
 ## Interface
 
 ### USB:
-When communicating with a WSDA-Base Station via USB, a virtual serial port is created using the [Silicon Labs CP210x USB to UART Bridge VCP driver](https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx) for some devices, or an equivalent driver for other devices.
+When communicating with a WSDA-Base Station via USB, a virtual serial port is created using the [Silicon Labs CP210x USB to UART Bridge VCP driver](https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx) for some devices, or an equivalent driver for other devices. This driver will be installed automatically if installing the MicroStrain Wireless Software, [SensorConnect](http://www.microstrain.com/software/sensorconnect).
 
 The following settings should be used:
-<br>**Baud Rate**: 921600
+<br>**Baud Rate**: 921600 (WSDA-Base-104) or 3000000 (WSDA-Base-200)
 <br>**Parity**: None
 <br>**Data Bits**: 8
 <br>**Stop Bits**: 1
@@ -101,7 +101,31 @@ The **Base Station RSSI** is the signal strength that the base station received 
 
 ## Checksums
 
-Most commands and responses require or supply a checksum.  The checksum is used to ensure that the data was transmitted without error.  The documentation for each command or response that uses a checksum will detail how the checksum is calculated.  The checksum is calculated by summing all the bytes protected by the checksum and taking the modulo N of the sum, where N is 256 for a 1 byte checksum and 65536 for a 2 byte checksum.
+Most commands and responses require or supply a checksum.  The checksum is used to ensure that the data was transmitted without error.  The documentation for each command or response that uses a checksum will detail how the checksum is calculated.
+
+**ASPP v3** uses a CRC checksum of all the bytes in the packet. The CRC will be a 32-bit CRC with polynomial 0x04C11DB7, an initial value of 0xFFFFFFFF, and inverted output. If you are using the Boost C++ library, this can be done as follows:
+
+```cpp
+#include <boost/crc.hpp>
+ 
+uint32_t crc32(const uint8_t* data, unsigned int dataSize)
+{
+  boost::crc_32_type crc;
+  crc.process_bytes(data, dataSize);
+  return crc.checksum();
+}
+```
+
+In Python, this can be achieved as follows:
+
+```py
+import binascii
+ 
+def checksum(data):
+  return binascii.crc32(bytes(data))
+```
+
+**ASPP v1** uses a simple checksum. The checksum is calculated by summing all the bytes protected by the checksum and taking the modulo N of the sum, where N is 256 for a 1 byte checksum and 65536 for a 2 byte checksum.
 
 ```cpp
 //Sample Code (C++) for calculating a checksum
