@@ -834,7 +834,7 @@ uint8_t appDataType            = 0x00;                    //App Data Type
 uint32_t nodeAddress;                                     //Node Address
 uint8_t payloadLen             = 0x02;                    //Payload Length
 uint16_t commandId             = 0x0002;                  //Command ID
-uint32_t checksum;                                        //Checksum of [startByte - commandId]
+uint32_t checksum;                                        //CRC Checksum of [startByte - commandId]
 ```
 
 ##### Initial Response:
@@ -852,7 +852,7 @@ uint32_t nodeAddress;                                     //Node Address
 uint8_t payloadLen             = 0x00;                    //Payload Length
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
-uint16_t checksum;                                        //Checksum of [startByte - baseRssi]
+uint16_t checksum;                                        //CRC Checksum of [startByte - baseRssi]
 ```
 
 ##### Failure Response:
