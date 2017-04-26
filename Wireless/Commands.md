@@ -832,7 +832,7 @@ uint8_t startByte              = 0xAC;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x0A;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x00;                    //App Data Type
 uint32_t nodeAddress;                                     //Node Address
-uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t payloadLen            = 0x0002;                  //Payload Length
 uint16_t commandId             = 0x0002;                  //Command ID
 uint32_t checksum;                                        //CRC Checksum of [startByte - commandId]
 ```
@@ -849,7 +849,7 @@ uint8_t startByte              = 0xAC;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x22;                    //App Data Type
 uint32_t nodeAddress;                                     //Node Address
-uint8_t payloadLen             = 0x00;                    //Payload Length
+uint16_t payloadLen            = 0x0000;                  //Payload Length
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
 uint32_t checksum;                                        //CRC Checksum of [startByte - baseRssi]
