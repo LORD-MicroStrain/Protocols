@@ -93,11 +93,15 @@ uint32_t ValueFrom4Bytes(uint8_t b1, uint8_t b2, uint8_t b3, uint8_t b4)
 
 ## RSSI
 
-The Received Signal Strength Indicator (RSSI) is a measurement of the power present in a received radio signal.  Node commands such as Long Ping and Node Discovery return a true RSSI value, measured in dBm, in their response packet.  This signed 1-byte value can range from -95 dBm (worst) to +5 dBm (best). 
+The Received Signal Strength Indicator (RSSI) is a measurement of the power present in a received radio signal.  Node commands such as Long Ping and Node Discovery return a true RSSI value, measured in dBm, in their response packet.
 
 Some command responses return two RSSI values, **Node RSSI** and **Base Station RSSI**.<br>
 The **Node RSSI** is the signal strength that the node received the command from the base station.<br>
 The **Base Station RSSI** is the signal strength that the base station received the response back from the node.
+
+**ASPP v3** uses an unsigned 1-byte integer (uint8_t). 205 must be subtracted from this value once received to get the actual RSSI value, making the full available range -205 to 50.
+
+**ASPP v1** uses a signed 1-byte integer (int8_t). The value can be read as-is, and can range from -95 dBm (worst) to +5 dBm (best). 
 
 ## Checksums
 
