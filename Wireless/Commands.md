@@ -845,7 +845,7 @@ uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowl
 
 ##### Success Response:
 ```cpp
-uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x22;                    //App Data Type
 uint32_t nodeAddress;                                     //Node Address
