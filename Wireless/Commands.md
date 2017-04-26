@@ -850,8 +850,8 @@ uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x22;                    //App Data Type
 uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen            = 0x0000;                  //Payload Length
-int8_t nodeRssi;                                          //Node RSSI
-int8_t baseRssi;                                          //Base Station RSSI
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
 uint32_t checksum;                                        //CRC Checksum of [startByte - baseRssi]
 ```
 
