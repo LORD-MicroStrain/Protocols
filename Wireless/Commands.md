@@ -47,7 +47,8 @@ Command      | Command ID    |  Node ASPP Version required
 -------------|---------------|--------------------
 [Detailed Ping (v1)](#detailed-ping-v1) | 0x0002 | ASPP v1.0
 [Detailed Ping (v2)](#detailed-ping-v2) | 0x0002 | ASPP v3.0
-[Initiate Sleep Mode](#initiate-sleep-mode) | 0x32 | ASPP v1.0
+[Initiate Sleep Mode (v1)](#initiate-sleep-mode-v1) | 0x32 | ASPP v1.0
+[Initiate Sleep Mode (v2)](#initiate-sleep-mode-v2) | 0x0032 | ASPP v3.0
 [Read Node EEPROM (v1)](#read-node-eeprom-v1) | 0x0003 | ASPP v1.0
 [Read Node EEPROM (v2)](#read-node-eeprom-v2) | 0x0007 | ASPP v1.1
 [Write Node EEPROM (v1)](#write-node-eeprom-v1) | 0x0004 | ASPP v1.0
@@ -55,7 +56,7 @@ Command      | Command ID    |  Node ASPP Version required
 [Initiate Synchronized Sampling](#initiate-synchronized-sampling) | 0x003B | ASPP v1.0
 [Initiate Low Duty Cycle (v1)](#initiate-low-duty-cycle-v1) | 0x0038 | ASPP v1.0
 [Initiate Low Duty Cycle (v2)](#initiate-low-duty-cycle-v2) | 0x0039 | ASPP v1.5
-[Initiate Legacy Streaming](#initiate-real-time-streaming-legacy) | 0x38 | ASPP v1.0
+[Initiate Legacy Streaming](#initiate-real-time-streaming-legacy-sampling-mode) | 0x38 | ASPP v1.0
 [Arm for Datalogging](#arm-node-for-datalogging) | 0x000D | ASPP v1.0
 [Trigger Armed Datalogging](#trigger-armed-datalogging) | 0x000E | ASPP v1.0
 [Get Logged Data](#get-logged-data) | 0x0041 | ASPP v1.4
@@ -857,6 +858,66 @@ No Response.
 
 <br>
 
+## Initiate Sleep Mode (v1)
+
+The **Initiate Sleep Mode** command is used to put the Node in a low power state. When the Node is in this low power Sleep Mode, it will not hear any commands except for the Set to Idle command, which will wake the node and put it back into its normal, idle state. The Node should be put into Sleep Mode when you no longer needs to communicate with the node, but want to keep it powered on and preserve battery life.
+
+##### Command:
+```cpp
+uint8_t commandId              = 0x32;                    //Command ID
+uint16_t nodeAddress;                                     //Node Address
+```
+
+##### Success Response:
+No Response.
+
+##### Failure Response:
+No Response.
+
+##### Notes:
+**Waking a Node:** A Node in Sleep Mode periodically awakes, listens for a Set to Idle command, and if none is received, returns to sleep. To wake a sleeping Node, send the Set to Idle command.
+
+**Sleep Interval:** The Node’s Sleep Interval is the interval at which the Node will awake and listen for the Set to Idle command. See the Node EEPROM map for more details.
+
+**User Inactivity Timeout:** The Node's User Inactivity Timeout is the length of time, without user activity, before the Node enters its Default Mode. If the Default Mode is idle, or sleep, the Node will automatically enter Sleep Mode when this timeout expires. See the Node EEPROM map for more details.
+
+<br>
+
+## Initiate Sleep Mode (v2)
+
+The **Initiate Sleep Mode** command is used to put the Node in a low power state. When the Node is in this low power Sleep Mode, it will not hear any commands except for the Set to Idle command, which will wake the node and put it back into its normal, idle state. The Node should be put into Sleep Mode when you no longer needs to communicate with the node, but want to keep it powered on and preserve battery life.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x04;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0002;                  //Payload Length
+uint16_t commandId             = 0x0032;                  //Command ID
+uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
+uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0002;                  //Payload Length
+uint16_t commandId             = 0x0032;                  //Command ID echo
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Failure Response:
+No Response.
+
+<br>
+
 ## Read Node EEPROM (v1)
 
 The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM.
@@ -1111,32 +1172,6 @@ Code         | Description
 2            | Value out of Bounds
 3            | EEPROM Address is read-only
 4            | Hardware Error
-
-<br>
-
-## Initiate Sleep Mode
-
-The **Initiate Sleep Mode** command is used to put the Node in a low power state. When the Node is in this low power Sleep Mode, it will not hear any commands except for the Set to Idle command, which will wake the node and put it back into its normal, idle state. The Node should be put into Sleep Mode when
-you no longer needs to communicate with the node, but want to keep it powered on and preserve battery life.
-
-##### Command:
-```cpp
-uint8_t commandId              = 0x32;                    //Command ID
-uint16_t nodeAddress;                                     //Node Address
-```
-
-##### Success Response:
-No Response.
-
-##### Failure Response:
-No Response.
-
-##### Notes:
-**Waking a Node:** A Node in Sleep Mode periodically awakes, listens for a Set to Idle command, and if none is received, returns to sleep. To wake a sleeping Node, send the Set to Idle command.
-
-**Sleep Interval:** The Node’s Sleep Interval is the interval at which the Node will awake and listen for the Set to Idle command. See the Node EEPROM map for more details.
-
-**User Inactivity Timeout:** The Node's User Inactivity Timeout is the length of time, without user activity, before the Node enters its Default Mode. If the Default Mode is idle, or sleep, the Node will automatically enter Sleep Mode when this timeout expires. See the Node EEPROM map for more details.
 
 <br>
 
@@ -1400,7 +1435,7 @@ uint8_t failId                 = 0x21;                    //Fail Indicator
 
 <br>
 
-## Initiate Real-Time Streaming (Legacy)
+## Initiate Real-Time Streaming (Legacy Sampling Mode)
 
 The **Initiate Real-Time Streaming** command is used to start a real-time streaming session on a Node. The Node will respond by immediately sending a stream of data packets as the sensors are read.
 
