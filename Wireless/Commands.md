@@ -62,7 +62,7 @@ Command      | Command ID    |  Node ASPP Version required
 [Get Logged Data](#get-logged-data) | 0x0041 | ASPP v1.4
 [Page Download](#page-download) | 0x05 | ASPP v1.0
 [Log Session Info](#log-session-info) | 0x0040 | ASPP v1.4
-[Erase Logged Data (v1)](#erase-logged-data) | 0x06 | ASPP v1.0
+[Erase Logged Data (v1)](#erase-logged-data-v1) | 0x06 | ASPP v1.0
 [Erase Logged Data (v2)](#erase-logged-data-v2) | 0x0042 | ASPP v1.4
 [Auto-Balance Channel (v1)](#auto-balance-channel-v1) | 0x62 | ASPP v1.0
 [Auto-Balance Channel (v2)](#auto-balance-channel-v2) | 0x0065 | ASPP v1.2
@@ -72,6 +72,7 @@ Command      | Command ID    |  Node ASPP Version required
 [Cycle Power & Radio](#cycle-power--radio) | - | ASPP v1.0
 
 ## Ping Base Station (v1)
+``ASPP v1.0``
 
 The **Ping Base Station** command is used to ensure that the host computer and the Base Station are properly communicating.
 
@@ -91,6 +92,7 @@ None.
 <br>
 
 ## Ping Base Station (v2)
+``ASPP v1.1``
 
 The **Ping Base Station** command is used to ensure that the host computer and the Base Station are properly communicating.
 
@@ -124,6 +126,7 @@ None.
 <br>
 
 ## Read Base Station EEPROM (v1)
+``ASPP v1.0``
 
 The **Read Base Station EEPROM** command is used to read the value of a specific memory address from the Base Station's EEPROM.  
 
@@ -151,6 +154,7 @@ uint8_t failId            = 0x21;        //Fail ID
 <br>
 
 ## Read Base Station EEPROM (v2)
+``ASPP v1.1``
 
 The **Read Base Station EEPROM** command is used to read the value of a specific memory address from the Base Station's EEPROM.  
 
@@ -207,6 +211,7 @@ Code         | Description
 <br>
 
 ## Write Base Station EEPROM (v1)
+``ASPP v1.0``
 
 The **Write Base Station EEPROM** command is used to write a value to a specific memory address on the Base Station's EEPROM.
 
@@ -235,6 +240,7 @@ uint8_t failId            = 0x21;        //Fail ID
 <br>
 
 ## Write Base Station EEPROM (v2)
+``ASPP v1.1``
 
 The **Write Base Station EEPROM** command is used to write a value to a specific memory address on the Base Station's EEPROM.
 
@@ -295,6 +301,7 @@ Code         | Description
 <br>
 
 ## Enable Beacon (v1)
+``ASPP v1.0``
 
 The **Enable Beacon** command is used to turn on the beacon on the Base Station.<br>
 The beacon is used to synchronize and start a group of nodes when performing Synchronized Sampling.
@@ -319,6 +326,7 @@ None.
 <br>
 
 ## Enable Beacon (v2)
+``ASPP v1.1``
 
 The **Enable Beacon** command is used to turn on the beacon on the Base Station.<br>
 The beacon is used to synchronize and start a group of nodes when performing Synchronized Sampling.
@@ -372,6 +380,7 @@ Code         | Description
 <br>
 
 ## Disable Beacon (v1)
+``ASPP v1.0``
 
 The **Disable Beacon** command is used to turn off the beacon on the Base Station.
 
@@ -394,6 +403,7 @@ Notice that the **Disable Beacon** command packet is the same as the Enable Beac
 <br>
 
 ## Disable Beacon (v2)
+``ASPP v1.1``
 
 The **Disable Beacon** command is used to turn off the beacon on the Base Station.
 
@@ -449,6 +459,7 @@ Notice that the **Disable Beacon** command packet is the same as the Enable Beac
 <br>
 
 ## Beacon Status
+``ASPP v1.1``
 
 The **Beacon Status** command is used to get information about the Beacon on the Base Station.
 
@@ -507,6 +518,7 @@ Code         | Description
 <br>
 
 ## Update Beacon Time
+``ASPP v1.1``
 
 The **Update Beacon Time** command is used to update the time that is used by the beacon without re-enabling the beacon. This can be useful when relying on a PPS for time synchronization and not the internal clock. In most scenarios, the **Enable Beacon** command should be used to set the beacon time while enabling the beacon.
 
@@ -554,6 +566,7 @@ uint16_t checksum;                       //Checksum of [stopFlag - errorCode]
 <br>
 
 ## Start RF Sweep Mode
+``ASPP v1.3``
 
 The **Start RF Sweep Mode** command puts the Base Station into a mode where radio frequencies can be scanned for traffic.
 All other over-the-air data will be ignored when this mode is active.
@@ -599,6 +612,7 @@ The data packets will relect such changes.
 <br>
 
 ## Node Quick Ping (v1)
+``ASPP v1.0``
 
 The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
 
@@ -621,6 +635,7 @@ uint8_t failId                 = 0x21;                    //Failure ID
 <br>
 
 ## Node Quick Ping (v2)
+``ASPP v1.6``
 
 The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
 
@@ -685,6 +700,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 <br>
 
 ## Set Node to Idle (v1)
+``ASPP v1.0``
 
 The **Set to Idle** command is used to put a Node that is sampling, or sleeping, back into the Idle Mode so that it may be communicated with.
 
@@ -727,6 +743,7 @@ uint8_t commandCeased          = 0x01;                    //The Set to Idle comm
 <br>
 
 ## Set Node to Idle (v2)
+``ASPP v1.6``
 
 The **Set to Idle** command is used to put a Node that is sampling, or sleeping, back into the Idle Mode so that it may be communicated with.
 
@@ -785,6 +802,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 -------
 
 ## Detailed Ping (v1)
+``ASPP v1.0``
 
 The **Detailed Ping** command is used to check the communication between the Base Station and the Node, and gives more information (like node RSSI) than the Quick Ping command. This is useful for range tests.
 
@@ -824,6 +842,7 @@ No Response.
 <br>
 
 ## Detailed Ping (v2)
+``ASPP v3.0``
 
 The **Detailed Ping** command is used to check the communication between the Base Station and the Node, and gives more information (like node RSSI) than the Quick Ping command. This is useful for range tests.
 
@@ -859,6 +878,7 @@ No Response.
 <br>
 
 ## Initiate Sleep Mode (v1)
+``ASPP v1.0``
 
 The **Initiate Sleep Mode** command is used to put the Node in a low power state. When the Node is in this low power Sleep Mode, it will not hear any commands except for the Set to Idle command, which will wake the node and put it back into its normal, idle state. The Node should be put into Sleep Mode when you no longer needs to communicate with the node, but want to keep it powered on and preserve battery life.
 
@@ -884,6 +904,7 @@ No Response.
 <br>
 
 ## Initiate Sleep Mode (v2)
+``ASPP v3.0``
 
 The **Initiate Sleep Mode** command is used to put the Node in a low power state. When the Node is in this low power Sleep Mode, it will not hear any commands except for the Set to Idle command, which will wake the node and put it back into its normal, idle state. The Node should be put into Sleep Mode when you no longer needs to communicate with the node, but want to keep it powered on and preserve battery life.
 
@@ -919,48 +940,7 @@ No Response.
 <br>
 
 ## Read Node EEPROM (v1)
-
-The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM.
-
-See the Node EEPROM Map for specific memory address details.
-
-##### Command:
-```cpp
-uint8_t startByte              = 0xAA;                    //Start of Packet Byte
-uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x00;                    //App Data Type
-uint16_t nodeAddress;                                     //Node Address
-uint8_t payloadLen             = 0x04;                    //Payload Length
-uint16_t commandId             = 0x0003;                  //Command ID
-uint16_t eepromAddress;                                   //EEPROM Address to Read
-uint16_t checksum;                                        //Checksum of [stopFlag - eepromAddress]
-```
-
-##### Initial Response:
-An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
-```cpp
-uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
-```
-
-##### Success Response:
-```cpp
-uint8_t startByte              = 0xAA;                    //Start of Packet Byte
-uint8_t stopFlag               = 0x00;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x00;                    //App Data Type
-uint16_t nodeAddress;                                     //Node Address
-uint8_t payloadLen             = 0x02;                    //Payload Length
-uint16_t eepromVal;                                       //Value Read from EEPROM
-int8_t notUsed;                                           //RESERVED
-int8_t baseRssi;                                          //Base Station RSSI
-uint16_t checksum;                                        //Checksum of [stopFlag - eepromVal]
-```
-
-##### Failure Response:
-No Response.
-
-<br>
-
-## Read Node EEPROM (v1)
+``ASPP v1.0``
 
 The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM.
 
@@ -1003,6 +983,7 @@ No Response.
 <br>
 
 ## Read Node EEPROM (v2)
+``ASPP v1.1``
 
 The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM.
 
@@ -1066,6 +1047,7 @@ Code         | Description
 <br>
 
 ## Write Node EEPROM (v1)
+``ASPP v1.0``
 
 The **Write Node EEPROM** command is used to write a value to a specific memory address on the Node's EEPROM.
 
@@ -1109,6 +1091,7 @@ No Response.
 <br>
 
 ## Write Node EEPROM (v2)
+``ASPP v1.1``
 
 The **Write Node EEPROM** command is used to write a value to a specific memory address on the Node's EEPROM.
 
@@ -1176,6 +1159,7 @@ Code         | Description
 <br>
 
 ## Arm Node for Datalogging
+``ASPP v1.0``
 
 Use the **Arm Node** command to put the node in an armed state waiting for the [Trigger Armed Datalogging](#trigger-armed-datalogging) command.
 
@@ -1222,6 +1206,7 @@ No Response.
 <br>
 
 ## Trigger Armed Datalogging
+``ASPP v1.0``
 
 The **Trigger Armed Datalogging** command is used to initiate a data capture session on-board the Node.The data will be stored in the Node's internal memory and may be downloaded at a later time.
 
@@ -1252,6 +1237,7 @@ No Response.
 <br>
 
 ## Page Download
+``ASPP v1.0``
 
 The **Page Download** command is used to retrieve a logged data session from the Node. Note that it can also be used to read large chunks of EEPROM values as well.
 
@@ -1409,7 +1395,8 @@ pattern during download. These byte immediately follow the header bytes.
 
 <br>
 
-## Erase Logged Data
+## Erase Logged Data (v1)
+``ASPP v1.0``
 
 The **Erase Logged Data** command is used to erase all sampled data stored on the Node's memory. This cannot be undone.
 
@@ -1436,6 +1423,7 @@ uint8_t failId                 = 0x21;                    //Fail Indicator
 <br>
 
 ## Initiate Real-Time Streaming (Legacy Sampling Mode)
+``ASPP v1.0``
 
 The **Initiate Real-Time Streaming** command is used to start a real-time streaming session on a Node. The Node will respond by immediately sending a stream of data packets as the sensors are read.
 
@@ -1467,6 +1455,7 @@ or the Set to Idle command has been issued to the Node.
 <br>
 
 ## Initiate Low Duty Cycle (v1)
+``ASPP v1.0``
 
 The **Initiate Low Duty Cycle (LDC) v1** command is used to put the Node in LDC sampling mode.
 
@@ -1498,6 +1487,7 @@ No Response.
 <br>
 
 ## Initiate Low Duty Cycle (v2)
+``ASPP v1.5``
 
 The **Initiate Low Duty Cycle (LDC) v2** command is used to put the Node in LDC sampling mode. Version 2 of this command adds a timestamp in the command packet, which allows logged data to include a timestamp for use when downloading the data after collection.
 
@@ -1534,6 +1524,7 @@ No Response.
 <br>
 
 ## Initiate Synchronized Sampling
+``ASPP v1.0``
 
 The **Initiate Synchronized Sampling command** is used to put the Node into Synchronized Sampling mode. Once in this mode, the node must receive a beacon from the Base Station to begin sampling and transmitting data packets.
 
@@ -1574,7 +1565,9 @@ uint16_t checksum;                                        //Checksum of [stopFla
 No Response.
 
 <br>
+
 ## Read Single Sensor
+``ASPP v1.0``
 
 The **Read Single Sensor** command is used to read the current value of a single channel on the Node.
 
@@ -1604,6 +1597,7 @@ uint8_t failId                 = 0x21;                    //Failure Indicator
 <br>
 
 ## Auto-Balance Channel (v1)
+``ASPP v1.0``
 
 The **Auto-Balance Channel** command is used to auto-balance a particular channel on the Node. This command is only applicable to the differential channels on certain Nodes.
 
@@ -1627,6 +1621,7 @@ No Response.
 <br>
 
 ## Auto-Balance Channel (v2)
+``ASPP v1.2``
 
 The **Auto-Balance Channel** command is used to auto-balance a particular channel on the Node. This command is only applicable to the differential channels on certain Nodes.
 
@@ -1684,6 +1679,7 @@ Code   | Description
 <br>
 
 ## Auto-Calibrate
+``ASPP v1.2``
 
 The **Auto-Calibrate** command is used to auto-calibrate a Node. This command is only applicable to specific Nodes.
 
@@ -1830,6 +1826,7 @@ Code   | Description
 <br>
 
 ## Log Session Info
+``ASPP v1.4``
 
 The **Log Session Info** command retrieves datalogging information about the Node.
 
@@ -1879,6 +1876,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 <br>
 
 ## Erase Logged Data (v2)
+``ASPP v1.4``
 
 The **Erase Logged Data** command is used to erase all sampled data stored on the Node's memory. This cannot be undone.
 
@@ -1925,6 +1923,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 <br>
 
 ## Get Logged Data
+``ASPP v1.4``
 
 The **Get Logged Data** command is used to download sampled data stored on the Node's memory.
 
@@ -2045,6 +2044,7 @@ uint16_t sessionIndex;   // index of the session the data following the header b
 <br>
 
 ## Get Diagnostic Info
+``ASPP v1.5``
 
 The **Get Diagnostic Info** command is used to get diagnostic information about the Wireless Node. Note that a Node can also be configured to send a [Diagnostic data packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet) at a specific interval as well. The information in the data packet is the same as in the response for this command.
 
@@ -2086,6 +2086,7 @@ For more information on the payload of this packet, see the documentation for th
 <br>
 
 ## Cycle Power & Radio
+``ASPP v1.0``
 
 To cycle the power on the device, use the `Write EEPROM` command and write a `1` to `EEPROM 250`.
 
