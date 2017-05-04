@@ -51,6 +51,7 @@ Command      | Command ID    |  Node ASPP Version required
 [Initiate Sleep Mode (v2)](#initiate-sleep-mode-v2) | 0x0032 | ASPP v3.0
 [Read Node EEPROM (v1)](#read-node-eeprom-v1) | 0x0003 | ASPP v1.0
 [Read Node EEPROM (v2)](#read-node-eeprom-v2) | 0x0007 | ASPP v1.1
+[Read Node EEPROM (v3)](#read-node-eeprom-v3) | 0x0007 | ASPP v3.0
 [Write Node EEPROM (v1)](#write-node-eeprom-v1) | 0x0004 | ASPP v1.0
 [Write Node EEPROM (v2)](#write-node-eeprom-v2) | 0x0008 | ASPP v1.1
 [Initiate Synchronized Sampling](#initiate-synchronized-sampling) | 0x003B | ASPP v1.0
@@ -1035,6 +1036,66 @@ uint8_t errorCode;                                        //Error Code
 int8_t notUsed;                                           //RESERVED
 int8_t baseRssi;                                          //Base Station RSSI
 uint16_t checksum;                                        //Checksum of [stopFlag - errorCode]
+```
+
+**Error Codes:**
+
+Code         | Description
+-------------|--------------
+1            | Unknown EEPROM Address
+4            | Hardware Error
+
+<br>
+
+## Read Node EEPROM (v3)
+``ASPP v3.0``
+
+The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM.
+
+See the Node EEPROM Map for specific memory address details.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x04;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0004;                  //Payload Length
+uint16_t commandId             = 0x0007;                  //Command ID
+uint16_t eepromAddress;                                   //EEPROM Address to Read
+uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
+uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0006;                  //Payload Length
+uint16_t commandId             = 0x0007;                  //Command ID Echo
+uint16_t eepromAddress;                                   //EEPROM Address Read
+uint16_t eepromValue;                                     //Value Read from EEPROM
+uint8_t notUsed;                                          //RESERVED
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Failure Response:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x02;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x05;                    //Payload Length
+uint16_t commandId             = 0x0007;                  //Command ID Echo
+uint16_t eepromAddress;                                   //EEPROM Address Echo
+uint8_t errorCode;                                        //Error Code
+uint8_t notUsed;                                          //RESERVED
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
 **Error Codes:**
