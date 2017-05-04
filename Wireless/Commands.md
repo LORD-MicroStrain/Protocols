@@ -14,6 +14,7 @@ ASPP v1.2      | -                          |  FW v10.0
 ASPP v1.1      | FW v4.0                    |  FW v8.21
 ASPP v1.0      | FW v1.0                    |  FW v1.0
 
+
 -----
 
 ### Base Station Commands
@@ -55,7 +56,8 @@ Command      | Command ID    |  Node ASPP Version required
 [Write Node EEPROM (v1)](#write-node-eeprom-v1) | 0x0004 | ASPP v1.0
 [Write Node EEPROM (v2)](#write-node-eeprom-v2) | 0x0008 | ASPP v1.1
 [Write Node EEPROM (v3)](#write-node-eeprom-v3) | 0x0008 | ASPP v3.0
-[Initiate Synchronized Sampling](#initiate-synchronized-sampling) | 0x003B | ASPP v1.0
+[Initiate Synchronized Sampling (v1)](#initiate-synchronized-sampling-v1) | 0x003B | ASPP v1.0
+[Initiate Synchronized Sampling (v2)](#initiate-synchronized-sampling-v2) | 0x003B | ASPP v3.0
 [Initiate Low Duty Cycle (v1)](#initiate-low-duty-cycle-v1) | 0x0038 | ASPP v1.0
 [Initiate Low Duty Cycle (v2)](#initiate-low-duty-cycle-v2) | 0x0039 | ASPP v1.5
 [Initiate Legacy Streaming](#initiate-real-time-streaming-legacy-sampling-mode) | 0x38 | ASPP v1.0
@@ -1649,7 +1651,7 @@ No Response.
 
 <br>
 
-## Initiate Synchronized Sampling
+## Initiate Synchronized Sampling (v1)
 ``ASPP v1.0``
 
 The **Initiate Synchronized Sampling command** is used to put the Node into Synchronized Sampling mode. Once in this mode, the node must receive a beacon from the Base Station to begin sampling and transmitting data packets.
@@ -1691,6 +1693,47 @@ uint16_t checksum;                                        //Checksum of [stopFla
 No Response.
 
 <br>
+
+
+## Initiate Synchronized Sampling (v2)
+``ASPP v3.0``
+
+The **Initiate Synchronized Sampling command** is used to put the Node into Synchronized Sampling mode. Once in this mode, the node must receive a beacon from the Base Station to begin sampling and transmitting data packets.
+
+For Synchronized Sampling mode, the wireless sensor network needs to be configured so that each node is assigned an appropriate TDMA slot prior to issuing the Initiate Synchronized Sampling command. To set up the wireless sensor network, use either the Synchronized Sampling Network within the MicroStrain provided desktop software, or the MicroStrain Communication Library (MSCL). Failure to configure the network correctly will lead to wireless packets colliding, resulting in data loss.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x04;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0002;                  //Payload Length
+uint16_t commandId             = 0x003B;                  //Command ID
+uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
+uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0003;                  //Payload Length
+uint16_t commandId             = 0x003B;                  //Command ID Echo
+uint8_t notUsed                = 0x00;                    //RESERVED
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Failure Response:
+No Response.
+
+<br>
+
 
 ## Read Single Sensor
 ``ASPP v1.0``
