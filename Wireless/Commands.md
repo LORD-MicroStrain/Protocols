@@ -64,7 +64,8 @@ Command      | Command ID    |  Node ASPP Version required
 [(Legacy) Initiate Real-Time Streaming](#legacy-initiate-real-time-streaming) | 0x38 | ASPP v1.0
 [(Legacy) Arm for Datalogging](#legacy-arm-node-for-datalogging) | 0x000D | ASPP v1.0
 [(Legacy) Trigger Armed Datalogging](#legacy-trigger-armed-datalogging) | 0x000E | ASPP v1.0
-[Get Logged Data](#get-logged-data) | 0x0041 | ASPP v1.4
+[Get Logged Data (v1)](#get-logged-data-v1) | 0x0041 | ASPP v1.4
+[Get Logged Data (v2)](#get-logged-data-v2) | 0x0041 | ASPP v3.0
 [(Legacy) Page Download](#legacy-page-download) | 0x05 | ASPP v1.0
 [Log Session Info](#log-session-info) | 0x0040 | ASPP v1.4
 [Erase Logged Data (v1)](#erase-logged-data-v1) | 0x06 | ASPP v1.0
@@ -2139,7 +2140,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 
 <br>
 
-## Get Logged Data
+## Get Logged Data (v1)
 ``ASPP v1.4``
 
 The **Get Logged Data** command is used to download sampled data stored on the Node's memory.
@@ -2156,7 +2157,7 @@ uint32_t address;                                         //Flash Address to rea
 uint16_t checksum;                                        //Checksum of [stopFlag - address]
 ```
 
-##### Completion Response:
+##### Success Response:
 
 ```cpp
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
@@ -2188,6 +2189,61 @@ int8_t baseRssi;                                          //Base Station RSSI
 uint16_t checksum;                                        //Checksum of [stopFlag - status]
 ```
 
+See [Get Logged Data (v2) for logged data format details](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Commands.md#logged-data-format).
+
+<br>
+
+## Get Logged Data (v2)
+``ASPP v3.0``
+
+The **Get Logged Data** command is used to download sampled data stored on the Node's memory.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x04;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0006;                  //Payload Length
+uint16_t commandId             = 0x0041;                  //Command ID
+uint32_t address;                                         //Flash Address to read
+uint8_t nodeRssi               = 0x7F;                    //Node RSSI (placeholder)
+uint8_t baseRssi               = 0x7F;                    //Base RSSI (placeholder)
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Success Response:
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x006C;                  //Payload Length
+uint16_t commandId             = 0x0041;                  //Command ID Echo
+uint32_t address;                                         //Flash Address of first byte downloaded
+uint8_t data[102];                                        //Data read from flash
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Error Response:
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x02;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x07;                    //Payload Length
+uint16_t commandId             = 0x0041;                  //Command ID Echo
+uint32_t address;                                         //Flash Address of first byte downloaded
+uint8_t status;                                           //1 = flash busy
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
 #### Logged Data Format
 
 Data stored in flash is always preceded by a block header, a refresh header, or a session change header. Block headers are written at the start of each flash block. Refresh headers are written after data associated with a block header is written, when no parameters have changed, and a new flash block hasn't been reached. Session change headers are written when either the timestamp or session index has changed and a new flash block hasn't been reached. If there is not enough room at the end of the flash block to store the next chunk of data the logging algorithm will move to the next block, writing a block header with the data, and leaving the rest of the previous block erased (0xFF in the case of most nodes). All header fields are encoded in node endianness (little endian in the case of most nodes).
@@ -2217,7 +2273,12 @@ A logging session is defined as a contiguous section of logged data. A new sessi
 
 Each logging packet (header + data) contains a 16 bit fletcher checksum at the end of the data. The checksum encompasses all bytes in the packet before the checksum (up to and including the header id).
 
-##### Block Header
+
+##### Block Header 
+
+There are multiple versions of block headers. The version of the block header is contained in the block header itself, and determines how the header should be parsed.
+
+###### Block Header version 0
 
 ```cpp
 // cal data exactly as it is in eeprom, no padding between values
@@ -2242,6 +2303,47 @@ uint8_t dataType;               // ASPP data type identifier
 CalData calData[numChannels];   // Calibration data for each channel (numChannels is hamming weight of channelMask)
 ```
 
+###### Block Header version 1
+
+```cpp
+// cal data exactly as it is in eeprom, no padding between values
+struct CalData
+{
+  uint8_t equationId;
+  uint8_t unitId;
+  float slope;
+  float offset;
+}
+
+struct AlgorithmMeta
+{
+  uint8_t algorithmId;
+  uint16_t channelMask;
+}
+ 
+uint8_t id = 0xBB;              // block header id
+uint8_t version = 1;            // version number of the block header
+uint8_t headerSize;             // number of bytes between this field and the start of data
+uint8_t sweepCount;             // number of sweeps that follow the header
+uint8_t sweepType;              // type of sweeps that follow the header: 0 for normal data, 1 for math data
+uint16_t index;                 // incremented every block
+uint16_t sessionIndex;          // incremented for every new logging session
+uint64_t timestamp;             // timestamp of the first following sweep in nanoseconds since 1970
+uint8_t sampleRate;             // ASPP sample rate identifier
+uint16_t channelMask;           // bit mask of logged channels
+uint8_t dataType;               // ASPP data type identifier
+uint8_t numActiveAlgorithms;    // Number of algorithms being used
+uint32_t calculationRate;       // Rate at which processed data was sampled
+CalData calData[numChannels];   // Calibration data for each channel (numChannels is hamming weight of channelMask)
+AlgorithmMeta algorithmMeta[numActiveAlgorithms];  // Meta information about used algorithms
+```
+
+The `calculationRate` is the rate at which the calculated channels are determined. This field relative to the sample rate of the raw data defines the window of raw samples from which the calculation is made. The calculation rate is encoded as a unsigned 32 bit number with the most significant bit designating hertz, 1, or seconds, 0, and the 31 least significant bits designating the sample rate value. For example:
+```
+0x8000001C = 28 Hz
+0x0000001C = 28 Seconds
+```
+
 ##### Refresh Header
 
 ```cpp
@@ -2251,9 +2353,23 @@ uint8_t sweepCount;    // number of sweeps that follow the header
 
 ##### Session Change Header
 
+There are multiple versions of the Session Change Header. The session change header id can be used to identify the version and how the header should be parsed:
+
+###### Session Change Header version 0 (0xBC)
+
 ```cpp
 uint8_t id = 0xBC;       // session change header id
 uint8_t sweepCount;      // number of sweeps that follow the header
+uint64_t timestamp;      // timestamp of first sweep following the header
+uint16_t sessionIndex;   // index of the session the data following the header belongs to
+```
+
+###### Session Change Header version 1 (0xBD)
+
+```cpp
+uint8_t id = 0xBD;       // session change header id
+uint8_t sweepCount;      // number of sweeps that follow the header
+uint8_t sweepType;       // type of sweeps that follow the header: 0 for normal data, 1 for math data
 uint64_t timestamp;      // timestamp of first sweep following the header
 uint16_t sessionIndex;   // index of the session the data following the header belongs to
 ```
