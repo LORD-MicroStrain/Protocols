@@ -61,11 +61,11 @@ Command      | Command ID    |  Node ASPP Version required
 [Initiate Low Duty Cycle (v1)](#initiate-low-duty-cycle-v1) | 0x0038 | ASPP v1.0
 [Initiate Low Duty Cycle (v2)](#initiate-low-duty-cycle-v2) | 0x0039 | ASPP v1.5
 [Initiate Low Duty Cycle (v3)](#initiate-low-duty-cycle-v3) | 0x0039 | ASPP v3.0
-[Initiate Legacy Streaming](#initiate-real-time-streaming-legacy-sampling-mode) | 0x38 | ASPP v1.0
-[Arm for Datalogging](#arm-node-for-datalogging) | 0x000D | ASPP v1.0
-[Trigger Armed Datalogging](#trigger-armed-datalogging) | 0x000E | ASPP v1.0
+[(Legacy) Initiate Real-Time Streaming](#legacy-initiate-real-time-streaming) | 0x38 | ASPP v1.0
+[(Legacy) Arm for Datalogging](#legacy-arm-node-for-datalogging) | 0x000D | ASPP v1.0
+[(Legacy) Trigger Armed Datalogging](#legacy-trigger-armed-datalogging) | 0x000E | ASPP v1.0
 [Get Logged Data](#get-logged-data) | 0x0041 | ASPP v1.4
-[Page Download](#page-download) | 0x05 | ASPP v1.0
+[(Legacy) Page Download](#legacy-page-download) | 0x05 | ASPP v1.0
 [Log Session Info](#log-session-info) | 0x0040 | ASPP v1.4
 [Erase Logged Data (v1)](#erase-logged-data-v1) | 0x06 | ASPP v1.0
 [Erase Logged Data (v2)](#erase-logged-data-v2) | 0x0042 | ASPP v1.4
@@ -1287,8 +1287,10 @@ Code         | Description
 
 <br>
 
-## Arm Node for Datalogging
+## (Legacy) Arm Node for Datalogging
 ``ASPP v1.0``
+
+``Legacy Command - This command is no longer supported by our latest products``
 
 Use the **Arm Node** command to put the node in an armed state waiting for the [Trigger Armed Datalogging](#trigger-armed-datalogging) command.
 
@@ -1334,8 +1336,10 @@ No Response.
 
 <br>
 
-## Trigger Armed Datalogging
+## (Legacy) Trigger Armed Datalogging
 ``ASPP v1.0``
+
+``Legacy Command - This command is no longer supported by our latest products``
 
 The **Trigger Armed Datalogging** command is used to initiate a data capture session on-board the Node.The data will be stored in the Node's internal memory and may be downloaded at a later time.
 
@@ -1365,8 +1369,10 @@ No Response.
 
 <br>
 
-## Page Download
+## (Legacy) Page Download
 ``ASPP v1.0``
+
+``Legacy Command - This command is no longer supported by our latest products``
 
 The **Page Download** command is used to retrieve a logged data session from the Node. Note that it can also be used to read large chunks of EEPROM values as well.
 
@@ -1551,8 +1557,10 @@ uint8_t failId                 = 0x21;                    //Fail Indicator
 
 <br>
 
-## Initiate Real-Time Streaming (Legacy Sampling Mode)
+## (Legacy) Initiate Real-Time Streaming
 ``ASPP v1.0``
+
+``Legacy Command - This command is no longer supported by our latest products``
 
 The **Initiate Real-Time Streaming** command is used to start a real-time streaming session on a Node. The Node will respond by immediately sending a stream of data packets as the sensors are read.
 
