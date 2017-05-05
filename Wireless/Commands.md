@@ -60,6 +60,7 @@ Command      | Command ID    |  Node ASPP Version required
 [Initiate Synchronized Sampling (v2)](#initiate-synchronized-sampling-v2) | 0x003B | ASPP v3.0
 [Initiate Low Duty Cycle (v1)](#initiate-low-duty-cycle-v1) | 0x0038 | ASPP v1.0
 [Initiate Low Duty Cycle (v2)](#initiate-low-duty-cycle-v2) | 0x0039 | ASPP v1.5
+[Initiate Low Duty Cycle (v3)](#initiate-low-duty-cycle-v3) | 0x0039 | ASPP v3.0
 [Initiate Legacy Streaming](#initiate-real-time-streaming-legacy-sampling-mode) | 0x38 | ASPP v1.0
 [Arm for Datalogging](#arm-node-for-datalogging) | 0x000D | ASPP v1.0
 [Trigger Armed Datalogging](#trigger-armed-datalogging) | 0x000E | ASPP v1.0
@@ -1585,9 +1586,9 @@ or the Set to Idle command has been issued to the Node.
 ## Initiate Low Duty Cycle (v1)
 ``ASPP v1.0``
 
-The **Initiate Low Duty Cycle (LDC) v1** command is used to put the Node in LDC sampling mode.
+The **Initiate Low Duty Cycle (LDC) v1** command is used to put the Node in LDC (Non-Sync) sampling mode.
 
-The Low Duty Cycle sampling mode is a non-synchronized, low-latency form of sampling. While multiple Nodes can be started sampling, they are not part of a synchronized network. This can cause data packets to be sent over the air at the same time, resulting in data loss. If low-latency is not a requirement, it is highly recommended that you use the [Synchronized Sampling Mode](#initiate-synchronized-sampling).
+The Low Duty Cycle sampling mode is a non-synchronized, low-latency form of sampling. While multiple Nodes can be started sampling, they are not part of a synchronized network. This can cause data packets to be sent over the air at the same time, resulting in data loss. If low-latency is not a requirement, it is highly recommended that you use the Synchronized Sampling Mode.
 
 ##### Command:
 ```cpp
@@ -1617,9 +1618,9 @@ No Response.
 ## Initiate Low Duty Cycle (v2)
 ``ASPP v1.5``
 
-The **Initiate Low Duty Cycle (LDC) v2** command is used to put the Node in LDC sampling mode. Version 2 of this command adds a timestamp in the command packet, which allows logged data to include a timestamp for use when downloading the data after collection.
+The **Initiate Low Duty Cycle (LDC) v2** command is used to put the Node in LDC (Non-Sync) sampling mode. Version 2 of this command adds a timestamp in the command packet, which allows logged data to include a timestamp for use when downloading the data after collection.
 
-The Low Duty Cycle sampling mode is a non-synchronized, low-latency form of sampling. While multiple Nodes can be started sampling, they are not part of a synchronized network. This can cause data packets to be sent over the air at the same time, resulting in data loss. If low-latency is not a requirement, it is highly recommended that you use the [Synchronized Sampling Mode](#initiate-synchronized-sampling).
+The Low Duty Cycle sampling mode is a non-synchronized, low-latency form of sampling. While multiple Nodes can be started sampling, they are not part of a synchronized network. This can cause data packets to be sent over the air at the same time, resulting in data loss. If low-latency is not a requirement, it is highly recommended that you use the Synchronized Sampling Mode.
 
 ##### Command:
 ```cpp
@@ -1644,6 +1645,45 @@ uint16_t commandId             = 0x0039;                  //Command ID Echo
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base RSSI
 uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+```
+
+##### Failure Response:
+No Response.
+
+<br>
+
+## Initiate Low Duty Cycle (v3)
+``ASPP v3.0``
+
+The **Initiate Low Duty Cycle (LDC)** command is used to put the Node in LDC (Non-Sync) sampling mode.
+
+The Low Duty Cycle sampling mode is a non-synchronized, low-latency form of sampling. While multiple Nodes can be started sampling, they are not part of a synchronized network. This can cause data packets to be sent over the air at the same time, resulting in data loss. If low-latency is not a requirement, it is highly recommended that you use the Synchronized Sampling Mode.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x04;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x000A;                  //Payload Length
+uint16_t commandId             = 0x0039;                  //Command ID
+uint64_t timestamp;                                       //Current Timestamp (nanoseconds since Unix Epoch)
+uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
+uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0002;                  //Payload Length
+uint16_t commandId             = 0x0039;                  //Command ID Echo
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
 ##### Failure Response:
