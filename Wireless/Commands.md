@@ -67,7 +67,8 @@ Command      | Command ID    |  Node ASPP Version required
 [Get Logged Data (v1)](#get-logged-data-v1) | 0x0041 | ASPP v1.4
 [Get Logged Data (v2)](#get-logged-data-v2) | 0x0041 | ASPP v3.0
 [(Legacy) Page Download](#legacy-page-download) | 0x05 | ASPP v1.0
-[Log Session Info](#log-session-info) | 0x0040 | ASPP v1.4
+[Log Session Info (v1)](#log-session-info-v1) | 0x0040 | ASPP v1.4
+[Log Session Info (v2)](#log-session-info-v2) | 0x0040 | ASPP v3.0
 [Erase Logged Data (v1)](#erase-logged-data-v1) | 0x06 | ASPP v1.0
 [Erase Logged Data (v2)](#erase-logged-data-v2) | 0x0042 | ASPP v1.4
 [Auto-Balance Channel (v1)](#auto-balance-channel-v1) | 0x62 | ASPP v1.0
@@ -2043,7 +2044,7 @@ Code   | Description
 
 <br>
 
-## Log Session Info
+## Log Session Info (v1)
 ``ASPP v1.4``
 
 The **Log Session Info** command retrieves datalogging information about the Node.
@@ -2089,6 +2090,58 @@ uint8_t status;                                           //1 = flash busy
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
 uint16_t checksum;                                        //Checksum of [stopFlag - status]
+```
+
+<br>
+
+## Log Session Info (v2)
+``ASPP v3.0``
+
+The **Log Session Info** command retrieves datalogging information about the Node.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x04;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0002;                  //Payload Length
+uint16_t commandId             = 0x0040;                  //Command ID
+uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
+uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Success Response:
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x000C;                  //Payload Length
+uint16_t commandId             = 0x0040;                  //Command ID Echo
+uint16_t sessionCount;                                    //Total number of sessions logged on the Node
+uint32_t startAddress;                                    //Flash Address of the first log header
+uint32_t size;                                            //Max number of logged bytes
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Error Response:
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x02;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0003;                  //Payload Length
+uint16_t commandId             = 0x0040;                  //Command ID Echo
+uint8_t status;                                           //1 = flash busy
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
 <br>
