@@ -71,6 +71,7 @@ Command      | Command ID    |  Node ASPP Version required
 [Log Session Info (v2)](#log-session-info-v2) | 0x0040 | ASPP v3.0
 [Erase Logged Data (v1)](#erase-logged-data-v1) | 0x06 | ASPP v1.0
 [Erase Logged Data (v2)](#erase-logged-data-v2) | 0x0042 | ASPP v1.4
+[Erase Logged Data (v3)](#erase-logged-data-v3) | 0x0042 | ASPP v3.0
 [Auto-Balance Channel (v1)](#auto-balance-channel-v1) | 0x62 | ASPP v1.0
 [Auto-Balance Channel (v2)](#auto-balance-channel-v2) | 0x0065 | ASPP v1.2
 [Auto-Calibrate](#auto-calibrate) | 0x0064 | ASPP v1.2
@@ -2189,6 +2190,55 @@ uint8_t status;                                           //1 = flash busy
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
 uint16_t checksum;                                        //Checksum of [stopFlag - status]
+```
+
+<br>
+
+## Erase Logged Data (v3)
+``ASPP v3.0``
+
+The **Erase Logged Data** command is used to erase all sampled data stored on the Node's memory. This cannot be undone.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x04;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0002;                  //Payload Length
+uint16_t commandId             = 0x0042;                  //Command ID
+uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
+uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Completion Response:
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0002;                  //Payload Length
+uint16_t commandId             = 0x0042;                  //Command ID Echo
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Error Response:
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x02;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0003;                  //Payload Length
+uint16_t commandId             = 0x0042;                  //Command ID Echo
+uint8_t status;                                           //1 = flash busy
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
 <br>
