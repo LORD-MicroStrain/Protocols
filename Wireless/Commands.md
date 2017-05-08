@@ -74,6 +74,7 @@ Command      | Command ID    |  Node ASPP Version required
 [Erase Logged Data (v3)](#erase-logged-data-v3) | 0x0042 | ASPP v3.0
 [Auto-Balance Channel (v1)](#auto-balance-channel-v1) | 0x62 | ASPP v1.0
 [Auto-Balance Channel (v2)](#auto-balance-channel-v2) | 0x0065 | ASPP v1.2
+[Auto-Balance Channel (v3)](#auto-balance-channel-v3) | 0x0065 | ASPP v3.0
 [Auto-Calibrate](#auto-calibrate) | 0x0064 | ASPP v1.2
 [Get Diagnostic Info](#get-diagnostic-info) | 0x0009 | ASPP v1.5
 [Read Single Sensor](#read-single-sensor) | 0x03 | ASPP v1.0
@@ -1874,6 +1875,66 @@ uint32_t newHardwareOffset;                               //Updated Hardware Off
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
 uint16_t checksum;                                        //Checksum of [stopFlag - newHardwareOffset]
+```
+
+##### Failure Response:
+No Response.
+
+##### Notes:
+**Target Balance Percentage:** The percentage desired to balance to. For example, a common use it to auto-balance to mid-scale (50%) to obtain maximum bipolar dynamic range.
+
+**Error Code:** Describes whether the autobalance succeeded or failed.
+
+Code   | Description
+-------|--------------
+0      | Success
+1      | Potentially Bad AutoBalance (values still applied)
+2      | Not Supported by the Node
+3      | Not Support on the given channel
+4      | Target Balance value out of range
+
+**Percent Achieved:** It is not always possible to balance exactly to the requested percentage. The Percentage Achieved gives the result that a successful autobalance actually balanced the channel to.
+
+**Updated Hardware Offset:** The hardware offset value that the channel has been updated to after a successful autobalance.
+
+<br>
+
+## Auto-Balance Channel (v3)
+``ASPP v3.0``
+
+The **Auto-Balance Channel** command is used to auto-balance a particular channel on the Node. This command is only applicable to the differential channels on certain Nodes.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x04;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0007;                  //Payload Length
+uint16_t commandId             = 0x0065;                  //Command ID
+uint8_t channelNumber;                                    //Channel Number to balance
+float targetPercentage;                                   //Target Balance Percentage
+uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
+uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0010;                  //Payload Length
+uint16_t commandId             = 0x0065;                  //Command ID Echo
+uint8_t channelNumber;                                    //Channel Number Echo
+float targetPercentage;                                   //Target Balance Percentage Echo
+uint8_t errorCode;                                        //Error Code
+float percentAchieved;                                    //Balance Percentage actually acheived
+uint32_t newHardwareOffset;                               //Updated Hardware Offset
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
 ##### Failure Response:
