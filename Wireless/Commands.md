@@ -75,7 +75,8 @@ Command      | Command ID    |  Node ASPP Version required
 [Auto-Balance Channel (v1)](#auto-balance-channel-v1) | 0x62 | ASPP v1.0
 [Auto-Balance Channel (v2)](#auto-balance-channel-v2) | 0x0065 | ASPP v1.2
 [Auto-Balance Channel (v3)](#auto-balance-channel-v3) | 0x0065 | ASPP v3.0
-[Auto-Calibrate](#auto-calibrate) | 0x0064 | ASPP v1.2
+[Auto-Calibrate (v1)](#auto-calibrate-v1) | 0x0064 | ASPP v1.2
+[Auto-Calibrate (v2)](#auto-calibrate-v2) | 0x0064 | ASPP v3.0
 [Get Diagnostic Info](#get-diagnostic-info) | 0x0009 | ASPP v1.5
 [Read Single Sensor](#read-single-sensor) | 0x03 | ASPP v1.0
 [Cycle Power & Radio](#cycle-power--radio) | - | ASPP v1.0
@@ -1959,7 +1960,7 @@ Code   | Description
 
 <br>
 
-## Auto-Calibrate
+## Auto-Calibrate (v1)
 ``ASPP v1.2``
 
 The **Auto-Calibrate** command is used to auto-calibrate a Node. This command is only applicable to specific Nodes.
@@ -2031,6 +2032,82 @@ Code   | Description
 2      | Potential invalid calibration (cal not applied)
 
 
+<br>
+
+## Auto-Calibrate (v2)
+``ASPP v3.0``
+
+The **Auto-Calibrate** command is used to auto-calibrate a Node. This command is only applicable to specific Nodes.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x04;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen;                                      //Payload Length
+uint16_t commandId             = 0x0064;                  //Command ID
+//Specific Command Bytes (varies per device/firmware)
+uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
+uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Node Received Response:
+
+The Node sends this packet when it initially received the AutoCal command, before any calibration is performed, to notify the user that calibration is being performed.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x20;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0007;                  //Payload Length
+uint16_t commandId             = 0x0064;                  //Command ID Echo
+uint8_t status;                                           //Status Code
+float timeUntilComplete;                                  //Time Until Completion
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Completion Response:
+
+The Node sends this packet when the AutoCal process has completed and values have been applied to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen;                                      //Payload Length
+uint16_t commandId             = 0x0064;                  //Command ID Echo
+uint8_t completionCode;                                   //Completion Code
+// 0 - 113 Completion Info Bytes (varies per device/firmware)
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Notes:
+**Status (Node Received Response):**
+
+Code   | Description
+-------|--------------
+0      | AutoCal started successfully
+1      | Failed to parse the payload of the AutoCal command
+
+**Time Until Completion (node received response):** The amount of time (in seconds) until the AutoCal command will complete, and the AutoCal Success/Fail packet will be sent by the Node. This will be a value of 0 if the Status Flag byte is not 0x00 (indicating the process will not be performed).
+
+**Completion Code (completion response):**
+
+Code   | Description
+-------|--------------
+0      | Calibration Completed Successfully
+1      | Potential invalid calibration (cal still applied)
+2      | Potential invalid calibration (cal not applied)
+
+
 ---
 
 ##### SHM-Link-2 Specifics
@@ -2057,6 +2134,7 @@ Code   | Description
 1      | Sensor not plugged in
 2      | Sensor shorted
 3      | Invalid Sensor input
+
 
 ---
 
