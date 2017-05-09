@@ -77,7 +77,8 @@ Command      | Command ID    |  Node ASPP Version required
 [Auto-Balance Channel (v3)](#auto-balance-channel-v3) | 0x0065 | ASPP v3.0
 [Auto-Calibrate (v1)](#auto-calibrate-v1) | 0x0064 | ASPP v1.2
 [Auto-Calibrate (v2)](#auto-calibrate-v2) | 0x0064 | ASPP v3.0
-[Get Diagnostic Info](#get-diagnostic-info) | 0x0009 | ASPP v1.5
+[Get Diagnostic Info (v1)](#get-diagnostic-info-v1) | 0x0009 | ASPP v1.5
+[Get Diagnostic Info (v2)](#get-diagnostic-info-v2) | 0x0009 | ASPP v3.0
 [Read Single Sensor](#read-single-sensor) | 0x03 | ASPP v1.0
 [Cycle Power & Radio](#cycle-power--radio) | - | ASPP v1.0
 
@@ -2618,7 +2619,7 @@ uint16_t sessionIndex;   // index of the session the data following the header b
 
 <br>
 
-## Get Diagnostic Info
+## Get Diagnostic Info (v1)
 ``ASPP v1.5``
 
 The **Get Diagnostic Info** command is used to get diagnostic information about the Wireless Node. Note that a Node can also be configured to send a [Diagnostic data packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet) at a specific interval as well. The information in the data packet is the same as in the response for this command.
@@ -2649,6 +2650,48 @@ uint8_t | uint16_t | uint32_t info1Val;                   //Info Item 1 Value
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
 uint16_t checksum;                                        //Checksum of [stopFlag - info item bytes]
+```
+
+##### Failure Response:
+none
+
+For more information on the payload of this packet, see the documentation for the [Diagnostic Data Packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet).
+
+<br>
+
+## Get Diagnostic Info (v2)
+``ASPP v3.0``
+
+The **Get Diagnostic Info** command is used to get diagnostic information about the Wireless Node. Note that a Node can also be configured to send a [Diagnostic data packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet) at a specific interval as well. The information in the data packet is the same as in the response for this command.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x04;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0002;                  //Payload Length
+uint16_t commandId             = 0x0009;                  //Command ID
+uint8_t nodeRssi               = 0x7F;                    //Node RSSI (placeholder)
+uint8_t baseRssi               = 0x7F;                    //Base RSSI (placeholder)
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen;                                      //Payload Length
+uint16_t commandId             = 0x0009;                  //Command ID Echo
+uint8_t info1Len;                                         //Info Item 1 Length
+uint8_t info1Id;                                          //Info Item 1 ID
+uint8_t | uint16_t | uint32_t info1Val;                   //Info Item 1 Value
+//Repeat Into Item Length, ID, and Value for all the Info Items in the packet
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
 ##### Failure Response:
