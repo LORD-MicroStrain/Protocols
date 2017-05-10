@@ -34,7 +34,7 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Disable Beacon (v2)](#disable-beacon-v2) | 0xBEAC | ASPP v1.1
 [Beacon Status](#beacon-status) | 0xBEAD | ASPP v1.1
 [Update Beacon Time](#update-beacon-time) | 0xBEAB | ASPP v1.1
-[Cycle Power & Radio](#cycle-power--radio) | - | ASPP v1.0
+[Cycle Base Station Power & Radio (v1)](#cycle-base-station-power--radio-v1) | - | ASPP v1.0
 [Node Quick Ping (v1)*](#node-quick-ping-v1) | 0x02 | ASPP v1.0
 [Node Quick Ping (v2)*](#node-quick-ping-v2) | 0x0012 | ASPP v1.6
 [Set Node to Idle (v1)*](#set-node-to-idle-v1) | 0x0090 | ASPP v1.0
@@ -80,7 +80,9 @@ Command      | Command ID    |  Node ASPP Version required
 [Get Diagnostic Info (v1)](#get-diagnostic-info-v1) | 0x0009 | ASPP v1.5
 [Get Diagnostic Info (v2)](#get-diagnostic-info-v2) | 0x0009 | ASPP v3.0
 [Read Single Sensor](#read-single-sensor) | 0x03 | ASPP v1.0
-[Cycle Power & Radio](#cycle-power--radio) | - | ASPP v1.0
+[Cycle Power & Radio (v1)](#cycle-power--radio-v1) | - | ASPP v1.0
+[Cycle Power & Radio (v2)](#cycle-power--radio-v2) | - | ASPP v3.0
+
 
 ## Ping Base Station (v1)
 ``ASPP v1.0``
@@ -573,6 +575,15 @@ uint8_t RESERVED;                        //Reserved Byte
 uint8_t RESERVED;                        //Reserved Byte
 uint16_t checksum;                       //Checksum of [stopFlag - errorCode]
 ```
+
+<br>
+
+## Cycle Base Station Power & Radio (v1)
+``ASPP v1.0``
+
+To cycle the power on the BaseStation, use the `Write EEPROM` command and write a `1` to `EEPROM 250`.
+
+To cycle the radio on the BaseStation, use the `Write EEPROM` command and write a `2` to `EEPROM 250`.
 
 <br>
 
@@ -2699,13 +2710,48 @@ none
 
 For more information on the payload of this packet, see the documentation for the [Diagnostic Data Packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet).
 
--------
+<br>
+
+## Cycle Power & Radio (v1)
+``ASPP v1.0``
+
+To cycle the power on the Node, use the `Write EEPROM` command and write a `1` to `EEPROM 250`.
+
+To cycle the radio on the Node, use the `Write EEPROM` command and write a `2` to `EEPROM 250`.
 
 <br>
 
-## Cycle Power & Radio
-``ASPP v1.0``
+## Cycle Power & Radio (v2)
+``ASPP v3.0``
 
-To cycle the power on the device, use the `Write EEPROM` command and write a `1` to `EEPROM 250`.
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x04;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0003;                  //Payload Length
+uint16_t commandId             = 0x0031;                  //Command ID
+uint8_t resetType;                                        //Reset Type (1 = hard reset, 2 = soft reset)
+uint8_t nodeRssi               = 0x7F;                    //Node RSSI (placeholder)
+uint8_t baseRssi               = 0x7F;                    //Base RSSI (placeholder)
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
 
-To cycle the radio on the device, use the `Write EEPROM` command and write a `2` to `EEPROM 250`.
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0003;                  //Payload Length
+uint16_t commandId             = 0x0031;                  //Command ID Echo
+uint8_t resetType;                                        //Reset Type Echo
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Failure Response:
+none
+
