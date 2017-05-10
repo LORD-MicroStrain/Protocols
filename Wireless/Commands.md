@@ -81,7 +81,7 @@ Command      | Command ID    |  Node ASPP Version required
 [Get Diagnostic Info (v2)](#get-diagnostic-info-v2) | 0x0009 | ASPP v3.0
 [Read Single Sensor](#read-single-sensor) | 0x03 | ASPP v1.0
 [Cycle Power & Radio (v1)](#cycle-power--radio-v1) | - | ASPP v1.0
-[Cycle Power & Radio (v2)](#cycle-power--radio-v2) | - | ASPP v3.0
+[Cycle Power & Radio (v2)](#cycle-power--radio-v2) | 0x0031 | ASPP v3.0
 
 
 ## Ping Base Station (v1)
