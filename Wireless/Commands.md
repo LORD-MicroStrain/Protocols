@@ -25,6 +25,7 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Start RF Sweep Mode (v2)](#start-rf-sweep-mode-v2) | 0x00ED | ASPP v3.0
 [Ping Base Station (v1)](#ping-base-station-v1) | 0x01 | ASPP v1.0
 [Ping Base Station (v2)](#ping-base-station-v2) | 0x0001 | ASPP v1.1
+[Ping Base Station (v3)](#ping-base-station-v3) | 0x0001 | ASPP v3.0
 [Read Base Station EEPROM (v1)](#read-base-station-eeprom-v1) | 0x73 | ASPP v1.0
 [Read Base Station EEPROM (v2)](#read-base-station-eeprom-v2) | 0x0073 | ASPP v1.1
 [Write Base Station EEPROM (v1)](#write-base-station-eeprom-v1) | 0x78 | ASPP v1.0
@@ -132,6 +133,42 @@ uint16_t commandId        = 0x0001;      //Command ID Echo
 uint8_t RESERVED;                        //Reserved Byte
 uint8_t RESERVED;                        //Reserved Byte
 uint16_t checksum;                       //Checksum of [stopFlag - commandId]
+```
+
+##### Failure Response:
+None.
+
+<br>
+
+## Ping Base Station (v3)
+``ASPP v3.0``
+
+The **Ping Base Station** command is used to ensure that the host computer and the Base Station are properly communicating.
+
+##### Command:
+```cpp
+uint8_t startByte         = 0xAC;        //Start of Packet byte
+uint8_t stopFlag          = 0x01;        //Delivery Stop Flag
+uint8_t appDataType       = 0x30;        //App Data Type
+uint32_t baseAddress      = 0x00001234;  //Base Station Address
+uint16_t payloadLen       = 0x0002;      //Payload Length
+uint16_t commandId        = 0x0001;      //Command ID
+uint8_t nodeRssi          = 0x7F;        //Node RSSI (placeholder)
+uint8_t baseRssi          = 0x7F;        //Base RSSI (placeholder)
+uint32_t checksum;                       //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte         = 0xAC;        //Start of Packet byte
+uint8_t stopFlag          = 0x08;        //Delivery Stop Flag
+uint8_t appDataType       = 0x31;        //App Data Type
+uint32_t baseAddress      = 0x00001234;  //Base Station Address
+uint16_t payloadLen       = 0x0002;      //Payload Length
+uint16_t commandId        = 0x0001;      //Command ID Echo
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint32_t checksum;                       //CRC Checksum of all bytes
 ```
 
 ##### Failure Response:
