@@ -653,6 +653,8 @@ uint16_t options;                        //Options (Used internally)
 uint32_t minFreq;                        //Minimum Sweep Frequency in kHz (2400000 = 2.4GHz)
 uint32_t maxFreq;                        //Maximum Sweep Frequency in kHz (2400000 = 2.4GHz)
 uint32_t interval;                       //The Sweep interval in kHz.
+uint8_t nodeRssi          = 0x7F;        //Node RSSI (placeholder)
+uint8_t baseRssi          = 0x7F;        //Base RSSI (placeholder)
 uint32_t checksum;                       //CRC Checksum of all bytes
 ```
 
