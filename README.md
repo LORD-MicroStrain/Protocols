@@ -3,6 +3,8 @@ The following documents describe how MicroStrain devices can be communicated wit
 
 ## Wireless
 
+**Note**: It is highly recommended that you use [MSCL](https://github.com/LORD-MicroStrain/MSCL) to interact with our Wireless devices. MSCL handles all the complexities of our Wireless Protocols and abstracts it for you in a much cleaner interface. If you have determined MSCL will not work for you, the following links describe our protocol in detail.
+
 [Overview](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Overview.md)
 
 [Commands](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Commands.md)
