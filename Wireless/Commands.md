@@ -34,8 +34,10 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Write Base Station EEPROM (v3)](#write-base-station-eeprom-v3) | 0x0078 | ASPP v3.0
 [Enable Beacon (v1)](#enable-beacon-v1) | 0xBEAC | ASPP v1.0
 [Enable Beacon (v2)](#enable-beacon-v2) | 0xBEAC | ASPP v1.1
+[Enable Beacon (v3)](#enable-beacon-v3) | 0xBEAC | ASPP v3.0
 [Disable Beacon (v1)](#disable-beacon-v1) | 0xBEAC | ASPP v1.0
 [Disable Beacon (v2)](#disable-beacon-v2) | 0xBEAC | ASPP v1.1
+[Disable Beacon (v3)](#disable-beacon-v3) | 0xBEAC | ASPP v3.0
 [Beacon Status](#beacon-status) | 0xBEAD | ASPP v1.1
 [Update Beacon Time](#update-beacon-time) | 0xBEAB | ASPP v1.1
 [Cycle Base Station Power & Radio (v1)](#cycle-base-station-power--radio-v1) | - | ASPP v1.0
@@ -555,6 +557,62 @@ Code         | Description
 
 <br>
 
+## Enable Beacon (v3)
+``ASPP v3.0``
+
+The **Enable Beacon** command is used to turn on the beacon on the Base Station.<br>
+The beacon is used to synchronize and start a group of nodes when performing Synchronized Sampling.
+
+##### Command:
+```cpp
+uint8_t startByte         = 0xAC;        //Start of Packet byte
+uint8_t stopFlag          = 0x01;        //Delivery Stop Flag
+uint8_t appDataType       = 0x30;        //App Data Type
+uint32_t baseAddress      = 0x00001234;  //Base Station Address
+uint16_t payloadLen       = 0x0006;      //Payload Length
+uint16_t commandId        = 0xBEAC;      //Command ID
+uint32_t timestamp;                      //Timestamp to give to the Beacon
+uint8_t nodeRssi          = 0x7F;        //Node RSSI (placeholder)
+uint8_t baseRssi          = 0x7F;        //Base RSSI (placeholder)
+uint32_t checksum;                       //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte         = 0xAC;        //Start of Packet byte
+uint8_t stopFlag          = 0x08;        //Delivery Stop Flag
+uint8_t appDataType       = 0x31;        //App Data Type
+uint32_t baseAddress      = 0x00001234;  //Base Station Address
+uint16_t payloadLen       = 0x0006;      //Payload Length
+uint16_t commandId        = 0xBEAC;      //Command ID Echo
+uint32_t timestamp;                      //Timestamp given to the Beacon
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint32_t checksum;                       //CRC Checksum of all bytes
+```
+
+##### Fail Response:
+```cpp
+uint8_t startByte         = 0xAC;        //Start of Packet byte
+uint8_t stopFlag          = 0x08;        //Delivery Stop Flag
+uint8_t appDataType       = 0x32;        //App Data Type
+uint32_t baseAddress      = 0x00001234;  //Base Station Address
+uint16_t payloadLen       = 0x0007;      //Payload Length
+uint16_t commandId        = 0xBEAC;      //Command ID Echo
+uint32_t timestamp;                      //Timestamp Attempted to Set
+uint8_t errorCode;                       //Error Code
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint32_t checksum;                       //CRC Checksum of all bytes
+```
+**Error Codes:**
+
+Code         | Description
+-------------|--------------
+4            | Hardware Error
+
+<br>
+
 ## Disable Beacon (v1)
 ``ASPP v1.0``
 
@@ -622,6 +680,65 @@ uint8_t errorCode;                       //Error Code
 uint8_t RESERVED;                        //Reserved Byte
 uint8_t RESERVED;                        //Reserved Byte
 uint16_t checksum;                       //Checksum of [stopFlag - errorCode]
+```
+**Error Codes:**
+
+Code         | Description
+-------------|--------------
+4            | Hardware Error
+
+##### Notes:
+Notice that the **Disable Beacon** command packet is the same as the Enable Beacon command packet, but with 0xFFFFFFFF for its "Timestamp" bytes.
+
+<br>
+
+## Disable Beacon (v3)
+``ASPP v3.0``
+
+The **Enable Beacon** command is used to turn on the beacon on the Base Station.<br>
+The beacon is used to synchronize and start a group of nodes when performing Synchronized Sampling.
+
+##### Command:
+```cpp
+uint8_t startByte         = 0xAC;        //Start of Packet byte
+uint8_t stopFlag          = 0x01;        //Delivery Stop Flag
+uint8_t appDataType       = 0x30;        //App Data Type
+uint32_t baseAddress      = 0x00001234;  //Base Station Address
+uint16_t payloadLen       = 0x0006;      //Payload Length
+uint16_t commandId        = 0xBEAC;      //Command ID
+uint32_t disableBeacon    = 0xFFFFFFFF;  //Value to Disable the Beacon
+uint8_t nodeRssi          = 0x7F;        //Node RSSI (placeholder)
+uint8_t baseRssi          = 0x7F;        //Base RSSI (placeholder)
+uint32_t checksum;                       //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte         = 0xAC;        //Start of Packet byte
+uint8_t stopFlag          = 0x08;        //Delivery Stop Flag
+uint8_t appDataType       = 0x31;        //App Data Type
+uint32_t baseAddress      = 0x00001234;  //Base Station Address
+uint16_t payloadLen       = 0x0006;      //Payload Length
+uint16_t commandId        = 0xBEAC;      //Command ID Echo
+uint32_t disableBeacon    = 0xFFFFFFFF;  //Value to Disable the Beacon
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint32_t checksum;                       //CRC Checksum of all bytes
+```
+
+##### Fail Response:
+```cpp
+uint8_t startByte         = 0xAC;        //Start of Packet byte
+uint8_t stopFlag          = 0x08;        //Delivery Stop Flag
+uint8_t appDataType       = 0x32;        //App Data Type
+uint32_t baseAddress      = 0x00001234;  //Base Station Address
+uint16_t payloadLen       = 0x0007;      //Payload Length
+uint16_t commandId        = 0xBEAC;      //Command ID Echo
+uint32_t disableBeacon    = 0xFFFFFFFF;  //Value to Disable the Beacon
+uint8_t errorCode;                       //Error Code
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint32_t checksum;                       //CRC Checksum of all bytes
 ```
 **Error Codes:**
 
