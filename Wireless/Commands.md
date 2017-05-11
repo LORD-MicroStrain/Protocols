@@ -21,7 +21,8 @@ ASPP v1.0      | FW v1.0                    |  FW v1.0
 
 Command      | Command ID    |  Base Station ASPP Version required
 -------------|---------------|--------------------
-[Start RF Sweep Mode](#start-rf-sweep-mode) | 0x00ED | ASPP v1.3
+[Start RF Sweep Mode (v1)](#start-rf-sweep-mode-v1) | 0x00ED | ASPP v1.3
+[Start RF Sweep Mode (v2)](#start-rf-sweep-mode-v2) | 0x00ED | ASPP v3.0
 [Ping Base Station (v1)](#ping-base-station-v1) | 0x01 | ASPP v1.0
 [Ping Base Station (v2)](#ping-base-station-v2) | 0x0001 | ASPP v1.1
 [Read Base Station EEPROM (v1)](#read-base-station-eeprom-v1) | 0x73 | ASPP v1.0
@@ -587,7 +588,7 @@ To cycle the radio on the BaseStation, use the `Write EEPROM` command and write 
 
 <br>
 
-## Start RF Sweep Mode
+## Start RF Sweep Mode (v1)
 ``ASPP v1.3``
 
 The **Start RF Sweep Mode** command puts the Base Station into a mode where radio frequencies can be scanned for traffic.
@@ -624,6 +625,52 @@ uint32_t intervalEcho;                   //The Sweep interval Echo
 uint8_t RESERVED;                        //Reserved Byte
 uint8_t RESERVED;                        //Reserved Byte
 uint16_t checksum;                       //Checksum of [stopFlag - intervalEcho]
+```
+
+##### Notes:
+
+If the device cannot support the requested parameters, they will be clamped to the closest valid value.
+The data packets will relect such changes.
+
+<br>
+
+## Start RF Sweep Mode (v2)
+``ASPP v3.0``
+
+The **Start RF Sweep Mode** command puts the Base Station into a mode where radio frequencies can be scanned for traffic.
+All other over-the-air data will be ignored when this mode is active.
+To cancel this mode, send any byte or command to the Base Station.
+
+##### Command:
+```cpp
+uint8_t startByte         = 0xAC;        //Start of Packet byte
+uint8_t stopFlag          = 0x01;        //Delivery Stop Flag
+uint8_t appDataType       = 0x30;        //App Data Type
+uint32_t baseAddress      = 0x00001234;  //Base Station Address
+uint16_t payloadLen       = 0x000E;      //Payload Length
+uint16_t commandId        = 0x00ED;      //Command ID
+uint16_t options;                        //Options (Used internally)
+uint32_t minFreq;                        //Minimum Sweep Frequency in kHz (2400000 = 2.4GHz)
+uint32_t maxFreq;                        //Maximum Sweep Frequency in kHz (2400000 = 2.4GHz)
+uint32_t interval;                       //The Sweep interval in kHz.
+uint32_t checksum;                       //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte         = 0xAC;        //Start of Packet byte
+uint8_t stopFlag          = 0x08;        //Delivery Stop Flag
+uint8_t appDataType       = 0x31;        //App Data Type
+uint32_t baseAddress      = 0x00001234;  //Base Station Address
+uint16_t payloadLen       = 0x000E;      //Payload Length
+uint16_t commandId        = 0x00ED;      //Command ID Echo
+uint16_t optionsEcho;                    //Options Echo
+uint32_t minFreqEcho;                    //Minimum Sweep Frequency Echo
+uint32_t maxFreqEcho;                    //Maximum Sweep Frequency Echo
+uint32_t intervalEcho;                   //The Sweep interval Echo
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint32_t checksum;                       //CRC Checksum of all bytes
 ```
 
 ##### Notes:
