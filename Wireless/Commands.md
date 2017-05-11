@@ -38,7 +38,8 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Disable Beacon (v1)](#disable-beacon-v1) | 0xBEAC | ASPP v1.0
 [Disable Beacon (v2)](#disable-beacon-v2) | 0xBEAC | ASPP v1.1
 [Disable Beacon (v3)](#disable-beacon-v3) | 0xBEAC | ASPP v3.0
-[Beacon Status](#beacon-status) | 0xBEAD | ASPP v1.1
+[Beacon Status (v1)](#beacon-status-v1) | 0xBEAD | ASPP v1.1
+[Beacon Status (v2)](#beacon-status-v2) | 0xBEAD | ASPP v3.0
 [Update Beacon Time](#update-beacon-time) | 0xBEAB | ASPP v1.1
 [Cycle Base Station Power & Radio (v1)](#cycle-base-station-power--radio-v1) | - | ASPP v1.0
 [Node Quick Ping (v1)*](#node-quick-ping-v1) | 0x02 | ASPP v1.0
@@ -751,7 +752,7 @@ Notice that the **Disable Beacon** command packet is the same as the Enable Beac
 
 <br>
 
-## Beacon Status
+## Beacon Status (v1)
 ``ASPP v1.1``
 
 The **Beacon Status** command is used to get information about the Beacon on the Base Station.
@@ -795,6 +796,67 @@ uint8_t errorCode;                       //Error Code
 uint8_t RESERVED;                        //Reserved Byte
 uint8_t RESERVED;                        //Reserved Byte
 uint16_t checksum;                       //Checksum of [stopFlag - errorCode]
+```
+
+**beaconStatus**
+
+ - 0x00 - Beacon is Off
+ - 0x01 - Beacon is On
+
+**Error Codes:**
+
+Code         | Description
+-------------|--------------
+4            | Hardware Error
+
+<br>
+
+## Beacon Status (v2)
+``ASPP v3.0``
+
+The **Beacon Status** command is used to get information about the Beacon on the Base Station.
+
+##### Command:
+```cpp
+uint8_t startByte         = 0xAC;        //Start of Packet byte
+uint8_t stopFlag          = 0x01;        //Delivery Stop Flag
+uint8_t appDataType       = 0x30;        //App Data Type
+uint32_t baseAddress      = 0x00001234;  //Base Station Address
+uint16_t payloadLen       = 0x0002;      //Payload Length
+uint16_t commandId        = 0xBEAD;      //Command ID
+uint8_t nodeRssi          = 0x7F;        //Node RSSI (placeholder)
+uint8_t baseRssi          = 0x7F;        //Base RSSI (placeholder)
+uint32_t checksum;                       //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte         = 0xAC;        //Start of Packet byte
+uint8_t stopFlag          = 0x08;        //Delivery Stop Flag
+uint8_t appDataType       = 0x31;        //App Data Type
+uint32_t baseAddress      = 0x00001234;  //Base Station Address
+uint16_t payloadLen       = 0x000B;      //Payload Length
+uint16_t commandId        = 0xBEAD;      //Command ID Echo
+uint8_t beaconStatus;                    //The Status of the Beacon
+uint32_t timestamp_sec;                  //The Current Timestamp of the Beacon (seconds)
+uint32_t timestamp_nano;                 //The Current Timestamp of the Beacon (nanoseconds)
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint32_t checksum;                       //CRC Checksum of all bytes
+```
+
+##### Fail Response:
+```cpp
+uint8_t startByte         = 0xAC;        //Start of Packet byte
+uint8_t stopFlag          = 0x08;        //Delivery Stop Flag
+uint8_t appDataType       = 0x32;        //App Data Type
+uint32_t baseAddress      = 0x00001234;  //Base Station Address
+uint16_t payloadLen       = 0x0003;      //Payload Length
+uint16_t commandId        = 0xBEAD;      //Command ID Echo
+uint8_t errorCode;                       //Error Code
+uint8_t RESERVED;                        //Reserved Byte
+uint8_t RESERVED;                        //Reserved Byte
+uint32_t checksum;                       //CRC Checksum of all bytes
 ```
 
 **beaconStatus**
