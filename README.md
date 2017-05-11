@@ -16,7 +16,7 @@ The following documents describe how MicroStrain devices can be communicated wit
 ## Inertial
 
 #### 3DM-GX5
-[3DM-GX5-45 Data Communications Protocol](http://www.microstrain.com/sites/default/files/applications/files/3dm-gx5-45_dcp_manual_8500-0064_1.pdf)
+[3DM-GX5-45 Data Communications Protocol](http://www.microstrain.com/sites/default/files/applications/files/3dm-gx5-45_dcp_manual_8500-0064.pdf)
 
 #### 3DM-GQ4
 [3DM-GQ4-45 Data Communications Protocol](http://files.microstrain.com/3DM-GQ4-45+Data+Communications+Protocol.pdf)
