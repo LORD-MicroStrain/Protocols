@@ -46,6 +46,7 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Cycle Base Station Power & Radio (v2)](#cycle-base-station-power--radio-v2) | 0x0030 | ASPP v3.0
 [Node Quick Ping (v1)*](#node-quick-ping-v1) | 0x02 | ASPP v1.0
 [Node Quick Ping (v2)*](#node-quick-ping-v2) | 0x0012 | ASPP v1.6
+[Node Quick Ping (v3)*](#node-quick-ping-v3) | 0x0012 | ASPP v3.0
 [Set Node to Idle (v1)*](#set-node-to-idle-v1) | 0x0090 | ASPP v1.0
 [Set Node to Idle (v2)*](#set-node-to-idle-v2) | 0x0090 | ASPP v1.6
 
@@ -1195,6 +1196,73 @@ uint16_t nodeAddress;                                     //Node Address
 int8_t reserved1;                                         //Reserved Byte
 int8_t reserved2;                                         //Reserved Byte
 uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
+```
+
+<br>
+
+## Node Quick Ping (v3)
+``ASPP v3.0``
+
+The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x01;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x30;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x0006;                  //Payload Length
+uint16_t commandId             = 0x0012;                  //Command ID
+uint32_t nodeAddress;                                     //Node Address
+uint8_t nodeRssi               = 0x7F;                    //Node RSSI (placeholder)
+uint8_t baseRssi               = 0x7F;                    //Base RSSI (placeholder)
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Initial Received Response:
+This response comes from the Base Station indicating that the command was received and the Base Station is attempting to ping the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0012;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the operation should complete.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x31;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x0006;                  //Payload Length
+uint16_t commandId             = 0x0012;                  //Command ID Echo
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Failure Response:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x32;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x0006;                  //Payload Length
+uint16_t commandId             = 0x0012;                  //Command ID Echo
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved1;                                        //Reserved Byte
+uint8_t reserved2;                                        //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
 <br>
