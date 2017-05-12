@@ -43,7 +43,7 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Update Beacon Time (v1)](#update-beacon-time-v1) | 0xBEAB | ASPP v1.1
 [Update Beacon Time (v2)](#update-beacon-time-v2) | 0xBEAB | ASPP v3.0
 [Cycle Base Station Power & Radio (v1)](#cycle-base-station-power--radio-v1) | - | ASPP v1.0
-[Cycle Base Station Power & Radio (v2)](#cycle-base-station-power--radio-v2) | - | ASPP v3.0
+[Cycle Base Station Power & Radio (v2)](#cycle-base-station-power--radio-v2) | 0x0030 | ASPP v3.0
 [Node Quick Ping (v1)*](#node-quick-ping-v1) | 0x02 | ASPP v1.0
 [Node Quick Ping (v2)*](#node-quick-ping-v2) | 0x0012 | ASPP v1.6
 [Set Node to Idle (v1)*](#set-node-to-idle-v1) | 0x0090 | ASPP v1.0
