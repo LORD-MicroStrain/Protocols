@@ -49,6 +49,7 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Node Quick Ping (v3)*](#node-quick-ping-v3) | 0x0012 | ASPP v3.0
 [Set Node to Idle (v1)*](#set-node-to-idle-v1) | 0x0090 | ASPP v1.0
 [Set Node to Idle (v2)*](#set-node-to-idle-v2) | 0x0090 | ASPP v1.6
+[Set Node to Idle (v3)*](#set-node-to-idle-v3) | 0x0090 | ASPP v3.0
 
 *This command targets a Node, but is handled by the Base Station itself.
 
@@ -1366,6 +1367,67 @@ uint16_t checksum;                                        //Checksum of [stopFla
 **Ongoing Operation:** The Set to Idle command puts the Base Station in a mode that sends small packets as fast as possible in an attempt to communicate with the Node. The Base Station will periodically check to see if the Node has responded to a ping request. The function will continue indefinitely until either the Node responds, or the user sends any byte to the Base Station, which cancels the operation. No incoming packets will be heard while the Base Station is in this mode.
 
 **Broadcast Special Case:** When the broadcast Node address 65535 (0xFFFF) is used, the Base Station does not check for a ping response. It will continue sending the Set to Idle command until interrupted by the user (any single byte sent to the Base Station). This will attempt to set all Nodes to idle on the current frequency that the Base Station is on.
+
+<br>
+
+## Set Node to Idle (v3)
+``ASPP v3.0``
+
+The **Set to Idle** command is used to put a Node that is sampling, or sleeping, back into the Idle Mode so that it may be communicated with.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x01;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x30;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x0006;                  //Payload Length
+uint16_t commandId             = 0x0091;                  //Command ID
+uint32_t nodeAddress;                                     //Node Address
+uint8_t nodeRssi               = 0x7F;                    //Node RSSI (placeholder)
+uint8_t baseRssi               = 0x7F;                    //Base RSSI (placeholder)
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Initial Received Response:
+This response comes from the Base Station indicating that the command was received and the Base Station is attempting to set to Node to Idle.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0091;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the operation should complete (0x7F800000 = indefinite until canceled)
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Completion Response:
+The set to idle operation has completed. Check the completion status flag for success or canceled.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x31;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x0007;                  //Payload Length
+uint16_t commandId             = 0x0091;                  //Command ID Echo
+uint32_t nodeAddress;                                     //Node Address
+uint8_t statusFlag;                                       //Completion Status Flag (0 = success, 1 = canceled)
+uint8_t reserved;                                         //Reserved Byte
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Notes:
+**Ongoing Operation:** The Set to Idle command puts the Base Station in a mode that sends small packets as fast as possible in an attempt to communicate with the Node. The Base Station will periodically check to see if the Node has responded to a ping request. The function will continue indefinitely until either the Node responds, or the user sends any byte to the Base Station, which cancels the operation. No incoming packets will be heard while the Base Station is in this mode.
+
+**Broadcast Special Case:** When the broadcast Node address 4294967295(0xFFFFFFFF) is used, the Base Station does not check for a ping response. It will continue sending the Set to Idle command until interrupted by the user (any single byte sent to the Base Station). This will attempt to set all Nodes to idle on the current frequency that the Base Station is on.
 
 -------
 
