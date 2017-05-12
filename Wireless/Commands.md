@@ -991,7 +991,7 @@ uint8_t stopFlag               = 0x01;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x30;                    //App Data Type
 uint32_t baseAddress           = 0x00001234;              //Base Station Address
 uint16_t payloadLen            = 0x0003;                  //Payload Length
-uint16_t commandId             = 0x0031;                  //Command ID
+uint16_t commandId             = 0x0030;                  //Command ID
 uint8_t resetType;                                        //Reset Type (1 = hard reset, 2 = soft reset)
 uint8_t nodeRssi               = 0x7F;                    //Node RSSI (placeholder)
 uint8_t baseRssi               = 0x7F;                    //Base RSSI (placeholder)
@@ -1005,7 +1005,7 @@ uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x31;                    //App Data Type
 uint32_t baseAddress           = 0x00001234;              //Base Station Address
 uint16_t payloadLen            = 0x0003;                  //Payload Length
-uint16_t commandId             = 0x0031;                  //Command ID Echo
+uint16_t commandId             = 0x0030;                  //Command ID Echo
 uint8_t resetType;                                        //Reset Type Echo
 uint8_t nodeRssi;                                         //Node RSSI
 uint8_t baseRssi;                                         //Base Station RSSI
