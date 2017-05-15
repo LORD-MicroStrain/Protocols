@@ -13,6 +13,7 @@ Packet      | App Data Type
 [Synchronized Sampling Packet (v2)](#synchronized-sampling-packet-v2) | 0x1A
 [Synchronized Sampling Packet (v3)](#synchronized-sampling-packet-v3) | 0x1A
 [Derived Synchronized Sampling Packet (v1)](#derived-synchronized-sampling-packet-v1) | 0x01B
+[Derived Synchronized Sampling Packet (v2)](#derived-synchronized-sampling-packet-v2) | 0x01B
 [Derived Low Duty Cycle Sampling Packet (v1)](#derived-low-duty-cycle-sampling-packet-v1) | 0x015
 [Derived Low Duty Cycle Sampling Packet (v2)](#derived-low-duty-cycle-sampling-packet-v2) | 0x015
 [Asynchronous Digital-Only Packet](#asynchronous-digital-only-packet) | 0x0E
@@ -315,6 +316,37 @@ float sweep[sweepPoints];                 // A sweep of math data
 int8_t nodeRssi;                          //Node RSSI
 int8_t baseRssi;                          //Base Station RSSI
 uint16_t checksum;                        //Checksum of [stopFlag - chData]
+```
+##### Notes:
+See the [Derived Packet Details](#derived-packet-details) for more information.
+
+
+## Derived Synchronized Sampling Packet (v2)
+
+```cpp
+struct AlgorithmMeta
+{
+  uint8_t algorithmId;
+  uint16_t channelMask;
+};
+
+uint8_t startByte               = 0xAC;   //Start of Packet Byte
+uint8_t stopFlag                = 0x08;   //Delivery Stop Flag
+uint8_t appDataType             = 0x1B;   //App Data Type
+uint32_t nodeAddress;                     //Node Address
+uint16_t payloadLen;                      //Payload Length
+uint32_t modelNumber;                     //Model Number of the Node
+uint8_t sampleRate;                       //Rate at which raw data was sampled
+uint32_t calculationRate;                 //Rate at which processed data was sampled
+uint16_t tick;                            //Sweep Tick
+uint64_t timestamp;                       //UTC Timestamp in nanoseconds
+uint8_t numActiveAlgorithms;              // Number of algorithms being used
+AlgorithmMeta algorithmInfo[numActiveAlgorithms];   // Information about what comprises a math sweep
+float sweep[sweepPoints];                 // A sweep of math data
+// repeat for every sweep in the packet
+uint8_t nodeRssi;                         //Node RSSI
+uint8_t baseRssi;                         //Base Station RSSI
+uint32_t checksum;                        //CRC Checksum of all bytes
 ```
 ##### Notes:
 See the [Derived Packet Details](#derived-packet-details) for more information.
