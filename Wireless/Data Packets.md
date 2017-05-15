@@ -1,23 +1,5 @@
 # Wireless Data Packets
 
-### Data Format
-The following Data Formats can be transmitted in the data packets defined below.
-
-Value    |  Data Format    |  # Bytes  |  Details
----------|-----------------|-----------|--------------
-0x01     | uint16 (legacy) | 2 | value must be divided by 2 to get the correct value
-0x02     | float           | 4 | calibration coefficients are pre-applied to the data
-0x03     | uint16 (12-bit) | 2 | only has 12-bit resolution
-0x04     | uint32          | 4 |
-0x05     | uint16 (odd avg) | 2 | Average (mean) where the number of samples used is an odd power of 2
-0x06     | uint16 (even avg) | 2 | Average (mean) where the number of samples used is an even power of 2
-0x07     | uint16          | 2 |
-0x08     | float (no cals) | 4 | 4-byte float, with no calibration coefficients applied
-0x09     | uint24          | 3 |
-0x0A     | uint16 (18-bit) | 2 | 16-bit value from an 18-bit device, truncated, (val « 2) to get correct value
-0x0B     | int24 (20-bit)  | 3 | 24-bit signed value from a 20-bit device, if bit 19 is a 1 change all upper bits in new value to 1s
-0x0C     | int16 (20-bit)  | 2 | 16-bit signed value from a 20-bit device, (val « 4) to get correct value
-
 ### List of Packets
 
 Packet      | App Data Type
@@ -779,3 +761,21 @@ Algorithm ID    |  Algorithm    |  # Bytes  |  Details
 3               | Crest Factor | 4 (float) | The maximum acceleration during the sample window divided by the RMS acceleration of the window<br>Output: ratio
 
 The `channelMask` algorithm meta data represents the channels that went in to the calculation.
+
+### Data Format
+The following Data Formats can be transmitted in the data packets.
+
+Value    |  Data Format    |  # Bytes  |  Details
+---------|-----------------|-----------|--------------
+0x01     | uint16 (legacy) | 2 | value must be divided by 2 to get the correct value
+0x02     | float           | 4 | calibration coefficients are pre-applied to the data
+0x03     | uint16 (12-bit) | 2 | only has 12-bit resolution
+0x04     | uint32          | 4 |
+0x05     | uint16 (odd avg) | 2 | Average (mean) where the number of samples used is an odd power of 2
+0x06     | uint16 (even avg) | 2 | Average (mean) where the number of samples used is an even power of 2
+0x07     | uint16          | 2 |
+0x08     | float (no cals) | 4 | 4-byte float, with no calibration coefficients applied
+0x09     | uint24          | 3 |
+0x0A     | uint16 (18-bit) | 2 | 16-bit value from an 18-bit device, truncated, (val « 2) to get correct value
+0x0B     | int24 (20-bit)  | 3 | 24-bit signed value from a 20-bit device, if bit 19 is a 1 change all upper bits in new value to 1s
+0x0C     | int16 (20-bit)  | 2 | 16-bit signed value from a 20-bit device, (val « 4) to get correct value
