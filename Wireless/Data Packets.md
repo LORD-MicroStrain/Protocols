@@ -31,6 +31,7 @@ Packet      | App Data Type
 [Synchronized Sampling Packet (v2)](#synchronized-sampling-packet-v2) | 0x1A
 [Derived Synchronized Sampling Packet (v1)](#derived-synchronized-sampling-packet-v1) | 0x01B
 [Derived Low Duty Cycle Sampling Packet (v1)](#derived-low-duty-cycle-sampling-packet-v1) | 0x015
+[Derived Low Duty Cycle Sampling Packet (v2)](#derived-low-duty-cycle-sampling-packet-v2) | 0x015
 [Asynchronous Digital-Only Packet](#asynchronous-digital-only-packet) | 0x0E
 [Asynchronous Digital & Analog Packet](#asynchronous-digital--analog-packet) | 0x0F
 [Structural Health Packet (v1)](#structural-health-packet-v1) | 0xA0
@@ -299,25 +300,7 @@ int8_t baseRssi;                          //Base Station RSSI
 uint16_t checksum;                        //Checksum of [stopFlag - chData]
 ```
 ##### Notes:
-
-**Calculation Rate:**
-The `calculationRate` is the rate at which the calculated channels are determined. This field relative to the sample rate of the raw data defines the window of raw samples from which the calculation is made. The calculation rate is encoded as a unsigned 32 bit number with the most significant bit designating hertz, 1, or seconds, 0, and the 31 least significant bits designating the sample rate value. For example:
-```
-0x8000001C = 28 Hz
-0x0000001C = 28 Seconds
-```
-
-**Algorithm meta data:**
-The `algorithmId` represents the type of algorithm:
-
-Algorithm ID    |  Algorithm    |  # Bytes  |  Details
-----------------|---------------|-----------|--------------
-0               | Root Mean Squared (RMS) | 4 (float) | Output: Acceleration in Gs
-1               | Peak-to-Peak | 4 (float) | Maximum of the sample window subtracted by the min of the sample window<br> Output: Acceleration in Gs
-2               | Velocity | 4 (float) | The maximum velocity achieved over the sample window<br>Output: Velocity in in/s
-3               | Crest Factor | 4 (float) | The maximum acceleration during the sample window divided by the RMS acceleration of the window<br>Output: ratio
-
-The `channelMask` algorithm meta data represents the channels that went in to the calculation.
+See the [Derived Packet Details](#derived-packet-details) for more information.
 
 
 ## Derived Low Duty Cycle Sampling Packet (v1)
@@ -345,25 +328,36 @@ int8_t baseRssi;                          //Base Station RSSI
 uint16_t checksum;                        //Checksum of [stopFlag - chData]
 ```
 ##### Notes:
+See the [Derived Packet Details](#derived-packet-details) for more information.
 
-**Calculation Rate:**
-The `calculationRate` is the rate at which the calculated channels are determined. This field relative to the sample rate of the raw data defines the window of raw samples from which the calculation is made. The calculation rate is encoded as a unsigned 32 bit number with the most significant bit designating hertz, 1, or seconds, 0, and the 31 least significant bits designating the sample rate value. For example:
+## Derived Low Duty Cycle Sampling Packet (v2)
+
+```cpp
+struct AlgorithmMeta
+{
+  uint8_t algorithmId;
+  uint16_t channelMask;
+};
+
+uint8_t startByte                 = 0xAC; //Start of Packet Byte
+uint8_t stopFlag                  = 0x08; //Delivery Stop Flag
+uint8_t appDataType               = 0x15; //App Data Type
+uint32_t nodeAddress;                     //Node Address
+uint16_t payloadLen;                      //Payload Length
+uint32_t modelNumber;                     //Model Number of the Node
+uint8_t sampleRate;                       //Sample Rate
+uint32_t calculationRate;                 //Rate at which processed data was sampled
+uint16_t tick;                            //Timer Tick
+uint8_t numActiveAlgorithms;              // Number of algorithms being used
+AlgorithmMeta algorithmInfo[numActiveAlgorithms];   // Information about what comprises a math sweep
+float sweep[sweepPoints];                 // A sweep of math data
+uint8_t reserved;                         //RESERVED
+uint8_t baseRssi;                         //Base Station RSSI
+uint32_t checksum;                        //CRC Checksum of all bytes
 ```
-0x8000001C = 28 Hz
-0x0000001C = 28 Seconds
-```
+##### Notes:
+See the [Derived Packet Details](#derived-packet-details) for more information.
 
-**Algorithm meta data:**
-The `algorithmId` represents the type of algorithm:
-
-Algorithm ID    |  Algorithm    |  # Bytes  |  Details
-----------------|---------------|-----------|--------------
-0               | Root Mean Squared (RMS) | 4 (float) | Output: Acceleration in Gs
-1               | Peak-to-Peak | 4 (float) | Maximum of the sample window subtracted by the min of the sample window<br> Output: Acceleration in Gs
-2               | Velocity | 4 (float) | The maximum velocity achieved over the sample window<br>Output: Velocity in in/s
-3               | Crest Factor | 4 (float) | The maximum acceleration during the sample window divided by the RMS acceleration of the window<br>Output: ratio
-
-The `channelMask` algorithm meta data represents the channels that went in to the calculation.
 
 ## Asynchronous Digital-Only Packet
 The Asynchronous Digital-Only data packet contains time and digital state values collected when a Node was triggered by digital pulses.
@@ -761,3 +755,27 @@ int8_t reserved;                        //RESERVED
 int8_t reserved;                        //RESERVED
 uint16_t checksum;                      //Checksum of [stopFlag - data]
 ```
+
+
+# Packet Details
+
+### Derived Packet Details
+
+**Calculation Rate:**
+The `calculationRate` is the rate at which the calculated channels are determined. This field relative to the sample rate of the raw data defines the window of raw samples from which the calculation is made. The calculation rate is encoded as a unsigned 32 bit number with the most significant bit designating hertz, 1, or seconds, 0, and the 31 least significant bits designating the sample rate value. For example:
+```
+0x8000001C = 28 Hz
+0x0000001C = 28 Seconds
+```
+
+**Algorithm meta data:**
+The `algorithmId` represents the type of algorithm:
+
+Algorithm ID    |  Algorithm    |  # Bytes  |  Details
+----------------|---------------|-----------|--------------
+0               | Root Mean Squared (RMS) | 4 (float) | Output: Acceleration in Gs
+1               | Peak-to-Peak | 4 (float) | Maximum of the sample window subtracted by the min of the sample window<br> Output: Acceleration in Gs
+2               | Velocity | 4 (float) | The maximum velocity achieved over the sample window<br>Output: Velocity in in/s
+3               | Crest Factor | 4 (float) | The maximum acceleration during the sample window divided by the RMS acceleration of the window<br>Output: ratio
+
+The `channelMask` algorithm meta data represents the channels that went in to the calculation.
