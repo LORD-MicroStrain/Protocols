@@ -11,6 +11,7 @@ Packet      | App Data Type
 [Buffered Low Duty Cycle Packet (v2)](#buffered-low-duty-cycle-packet-v2) | 0x1D
 [Synchronized Sampling Packet (v1)](#synchronized-sampling-packet-v1) | 0x0A
 [Synchronized Sampling Packet (v2)](#synchronized-sampling-packet-v2) | 0x1A
+[Synchronized Sampling Packet (v3)](#synchronized-sampling-packet-v3) | 0x1A
 [Derived Synchronized Sampling Packet (v1)](#derived-synchronized-sampling-packet-v1) | 0x01B
 [Derived Low Duty Cycle Sampling Packet (v1)](#derived-low-duty-cycle-sampling-packet-v1) | 0x015
 [Derived Low Duty Cycle Sampling Packet (v2)](#derived-low-duty-cycle-sampling-packet-v2) | 0x015
@@ -225,7 +226,7 @@ The `sampleModeAndDataType` byte uses the first 4 (Most Significant) bits as the
  * 0x01 - Burst Mode
  * 0x02 - Continuous Mode
 
-**Sample Mode:**
+**Data Format:**
 
 The `sampleModeAndDataType` byte uses the last 4 (Least Significant) bits as the [Data Format](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#data-format).
 
@@ -253,6 +254,44 @@ Channel data should be parsed in the following manner:
 - Sweep 2, First active channel
 - Sweep 2, Next active channel (Repeat for each active channel)
 - Repeat for each Sweep in the packet
+
+
+## Synchronized Sampling Packet (v3)
+
+```cpp
+uint8_t startByte               = 0xAC;   //Start of Packet Byte
+uint8_t stopFlag                = 0x08;   //Delivery Stop Flag
+uint8_t appDataType             = 0x1A;   //App Data Type
+uint32_t nodeAddress;                     //Node Address
+uint16_t payloadLen;                      //Payload Length
+uint32_t modelNumber;                     //Model Number of the Node
+uint16_t channelMask;                     //Active Channel Mask
+uint8_t sampleRate;                       //Sample Rate
+uint8_t dataFormat;                       //Data Format
+uint16_t tick;                            //Sweep Tick
+uint64_t timestamp;                       //UTC Timestamp (in nanoseconds)
+float | uint16_t | uint24_t | int16_t | int24_t sweep[]; //Channel Data (per active channel, per sweep)
+//Repeat Channel Data bytes for each active channel, and for each sweep
+uint8_t nodeRssi;                         //Node RSSI
+uint8_t baseRssi;                         //Base Station RSSI
+uint32_t checksum;                        //CRC Checksum of all bytes
+```
+
+##### Notes:
+
+**Data Format:**
+
+The `sampleModeAndDataType` byte uses the last 4 (Least Significant) bits as the [Data Format](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#data-format).
+
+**Timestamp / Tick:**
+Although each packet may contain more than one sweep per channel, there is only one timestamp and tick acquired per packet. Therefore the tick and timestamp values must be incremented manually for each sweep in the packet. This can be done via the following:
+
+* Using the sample rate of the node, determine your increment value:
+  * If sample rate is 32 Hz, the increment is 0.03125. (1 / 32)
+  * If sample rate is 1 per 2 seconds, the increment is 2.
+  * Multiply the increment by 1,000,000,000 to convert to nanoseconds.
+* For each sweep in the packet, add the calculated value to the original timestamp.
+* For each sweep, increment the tick by 1.
 
 
 ## Derived Synchronized Sampling Packet (v1)
