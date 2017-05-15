@@ -297,7 +297,7 @@ int8_t nodeRssi;                          //Node RSSI
 int8_t baseRssi;                          //Base Station RSSI
 uint16_t checksum;                        //Checksum of [stopFlag - chData]
 ```
-#####Notes:
+##### Notes:
 
 **Calculation Rate:**
 The `calculationRate` is the rate at which the calculated channels are determined. This field relative to the sample rate of the raw data defines the window of raw samples from which the calculation is made. The calculation rate is encoded as a unsigned 32 bit number with the most significant bit designating hertz, 1, or seconds, 0, and the 31 least significant bits designating the sample rate value. For example:
