@@ -85,7 +85,7 @@ int8_t baseRssi;                          //Base Station RSSI
 uint16_t checksum;                        //Checksum of [stopFlag - chData]
 ```
 
-#####Notes:
+##### Notes:
 
 **Data Format:**
 
@@ -151,7 +151,7 @@ int8_t baseRssi;                            //Base Station RSSI
 uint16_t checksum;                          //Checksum of [stopFlag - chData]
 ```
 
-#####Notes:
+##### Notes:
 
 **Data Format:**
 
@@ -178,7 +178,7 @@ int8_t baseRssi;                            //Base Station RSSI
 uint16_t checksum;                          //Checksum of [stopFlag - chData]
 ```
 
-#####Notes:
+##### Notes:
 **Sample Mode:**
 
  * 0x01 - Burst Mode
@@ -233,7 +233,7 @@ int8_t baseRssi;                          //Base Station RSSI
 uint16_t checksum;                        //Checksum of [stopFlag - chData]
 ```
 
-#####Notes:
+##### Notes:
 **Sample Mode:**
 
 The `sampleModeAndDataType` byte uses the first 4 (Most Significant) bits as the Sample Mode:
@@ -339,7 +339,7 @@ int8_t baseRssi;                           //Base Station RSSI
 uint16_t checksum;                         //Checksum of [stopFlag - digitalChannelData_EvtX]
 ```
 
-#####Notes:
+##### Notes:
 **Digital Channel Mask:** The Digital Channel Mask represents the digital channels that are actively being monitored by the Node.
 
 **Event Tick:** The Event Tick represents a counter for each event. Although multiple events may be in the same packet, only one Event Tick will be found per packet. The tick for each event can be found by incrementing the Event Tick for each event that is contained in that packet.
@@ -378,7 +378,7 @@ int8_t baseRssi;                                     //Base Station RSSI
 uint16_t checksum;                                   //Checksum of [stopFlag - analogChannelData_EvtX]
 ```
 
-#####Notes:
+##### Notes:
 **Digital Channel Mask:** The Digital Channel Mask represents the digital channels that are actively being monitored by the Node.
 
 **Data Format:** The Data Format determines the format of **Analog** data that is transmitted in the packet.
@@ -420,7 +420,7 @@ int8_t baseRssi;                                     //Base Station RSSI
 uint16_t checksum;                                   //Checksum of [stopFlag - binData]
 ```
 
-#####Notes:
+##### Notes:
 
 **Bins**
 
@@ -454,7 +454,7 @@ int8_t baseRssi;                                     //Base Station RSSI
 uint16_t checksum;                                   //Checksum of [stopFlag - binData]
 ```
 
-#####Notes:
+##### Notes:
 
 **Bins**
 
@@ -528,7 +528,7 @@ int8_t baseRssi;                             //Base Station RSSI
 uint16_t checksum;                           //Checksum of [stopFlag - infoXVal]
 ```
 
-#####Notes:
+##### Notes:
 **Diagnostic Packet Interval:**
 The interval of which the Diagnostic Packet is transmitted, in seconds.
 
