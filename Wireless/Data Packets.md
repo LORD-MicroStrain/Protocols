@@ -94,7 +94,7 @@ The `appIdAndDataType` byte uses the last 4 (Least Significant) bits as the [Dat
 
 ```cpp
 uint8_t startByte                 = 0xAC; //Start of Packet Byte
-uint8_t stopFlag                  = 0x07; //Delivery Stop Flag
+uint8_t stopFlag                  = 0x08; //Delivery Stop Flag
 uint8_t appDataType               = 0x14; //App Data Type
 uint32_t nodeAddress;                     //Node Address
 uint16_t payloadLen;                      //Payload Length
