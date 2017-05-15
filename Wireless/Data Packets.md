@@ -29,6 +29,7 @@ Packet      | App Data Type
 [Buffered Low Duty Cycle Packet (v2)](#buffered-low-duty-cycle-packet-v2) | 0x1D
 [Synchronized Sampling Packet (v1)](#synchronized-sampling-packet-v1) | 0x0A
 [Synchronized Sampling Packet (v2)](#synchronized-sampling-packet-v2) | 0x1A
+[Derived Synchronized Sampling Packet (v1)](#derived-synchronized-sampling-packet-v1) | 0x01B
 [Asynchronous Digital-Only Packet](#asynchronous-digital-only-packet) | 0x0E
 [Asynchronous Digital & Analog Packet](#asynchronous-digital--analog-packet) | 0x0F
 [Structural Health Packet (v1)](#structural-health-packet-v1) | 0xA0
@@ -269,6 +270,53 @@ Channel data should be parsed in the following manner:
 - Sweep 2, Next active channel (Repeat for each active channel)
 - Repeat for each Sweep in the packet
 
+
+## Derived Synchronized Sampling Packet (v1)
+
+```cpp
+struct AlgorithmMeta
+{
+  uint8_t algorithmId;
+  uint16_t channelMask;
+};
+
+uint8_t startByte               = 0xAA;   //Start of Packet Byte
+uint8_t stopFlag                = 0x07;   //Delivery Stop Flag
+uint8_t appDataType             = 0x1B;   //App Data Type
+uint16_t nodeAddress;                     //Node Address
+uint8_t payloadLen;                       //Payload Length
+uint8_t sampleRate;                       //Rate at which raw data was sampled
+uint32_t calculationRate;                 //Rate at which processed data was sampled
+uint16_t tick;                            //Sweep Tick
+uint64_t timestamp;                       //UTC Timestamp in nanoseconds
+uint8_t numActiveAlgorithms;              // Number of algorithms being used
+AlgorithmMeta algorithmInfo[numActiveAlgorithms];   // Information about what comprises a math sweep
+float sweep[sweepPoints];                 // A sweep of math data
+// repeat for every sweep in the packet
+int8_t nodeRssi;                          //Node RSSI
+int8_t baseRssi;                          //Base Station RSSI
+uint16_t checksum;                        //Checksum of [stopFlag - chData]
+```
+#####Notes:
+
+**Calculation Rate:**
+The `calculationRate` is the rate at which the calculated channels are determined. This field relative to the sample rate of the raw data defines the window of raw samples from which the calculation is made. The calculation rate is encoded as a unsigned 32 bit number with the most significant bit designating hertz, 1, or seconds, 0, and the 31 least significant bits designating the sample rate value. For example:
+```
+0x8000001C = 28 Hz
+0x0000001C = 28 Seconds
+```
+
+**Algorithm meta data:**
+The `algorithmId` represents the type of algorithm:
+
+Algorithm ID    |  Algorithm    |  # Bytes  |  Details
+----------------|---------------|-----------|--------------
+0               | Root Mean Squared (RMS) | 4 (float) | Output: Acceleration in Gs
+1               | Peak-to-Peak | 4 (float) | Maximum of the sample window subtracted by the min of the sample window<br> Output: Acceleration in Gs
+2               | Velocity | 4 (float) | The maximum velocity achieved over the sample window<br>Output: Velocity in in/s
+3               | Crest Factor | 4 (float) | The maximum acceleration during the sample window divided by the RMS acceleration of the window<br>Output: ratio
+
+The `channelMask` algorithm meta data represents the channels that went in to the calculation.
 
 ## Asynchronous Digital-Only Packet
 The Asynchronous Digital-Only data packet contains time and digital state values collected when a Node was triggered by digital pulses.
