@@ -24,6 +24,7 @@ Packet      | App Data Type
 -------------|--------------
 [Low Duty Cycle Packet (v1)](#low-duty-cycle-ldc-packet-v1) | 0x04
 [Low Duty Cycle Packet (v2)](#low-duty-cycle-ldc-packet-v2) | 0x14
+[Low Duty Cycle Packet (v3)](#low-duty-cycle-ldc-packet-v3) | 0x14
 [Buffered Low Duty Cycle Packet (v1)](#buffered-low-duty-cycle-packet-v1) | 0x0D
 [Buffered Low Duty Cycle Packet (v2)](#buffered-low-duty-cycle-packet-v2) | 0x1D
 [Synchronized Sampling Packet (v1)](#synchronized-sampling-packet-v1) | 0x0A
@@ -88,6 +89,26 @@ uint16_t checksum;                        //Checksum of [stopFlag - chData]
 **Data Format:**
 
 The `appIdAndDataType` byte uses the last 4 (Least Significant) bits as the [Data Format](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#data-format).
+
+## Low Duty Cycle (LDC) Packet (v3)
+
+```cpp
+uint8_t startByte                 = 0xAC; //Start of Packet Byte
+uint8_t stopFlag                  = 0x07; //Delivery Stop Flag
+uint8_t appDataType               = 0x14; //App Data Type
+uint32_t nodeAddress;                     //Node Address
+uint16_t payloadLen;                      //Payload Length
+uint32_t modelNumber;                     //Model Number of the Node
+uint16_t channelMask;                     //Active Channel Mask
+uint8_t sampleRate;                       //Sample Rate
+uint8_t dataFormat;                       //Data Format
+uint16_t tick;                            //Timer Tick
+float | uint24_t | uint16_t | int24_t | int16_t data[]; //Channel Data (per active channel)
+//Repeat Channel Data bytes for each active channel
+uint8_t reserved;                         //RESERVED
+uint8_t baseRssi;                         //Base Station RSSI
+uint32_t checksum;                        //CRC Checksum of all bytes
+```
 
 ## Buffered Low Duty Cycle Packet (v1)
 ```cpp
