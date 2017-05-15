@@ -279,10 +279,6 @@ uint32_t checksum;                        //CRC Checksum of all bytes
 
 ##### Notes:
 
-**Data Format:**
-
-The `sampleModeAndDataType` byte uses the last 4 (Least Significant) bits as the [Data Format](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#data-format).
-
 **Timestamp / Tick:**
 Although each packet may contain more than one sweep per channel, there is only one timestamp and tick acquired per packet. Therefore the tick and timestamp values must be incremented manually for each sweep in the packet. This can be done via the following:
 
