@@ -31,7 +31,8 @@ Packet      | App Data Type
 [Node Discovery Packet (v2)](#node-discovery-packet-v2) | 0x17
 [Node Discovery Packet (v3)](#node-discovery-packet-v3) | 0x18
 [Node Discovery Packet (v4)](#node-discovery-packet-v4) | 0x16
-[Beacon Echo Packet](#beacon-echo-packet) | 0x10
+[Beacon Echo Packet (v1)](#beacon-echo-packet-v1) | 0x10
+[Beacon Echo Packet (v2)](#beacon-echo-packet-v2) | 0x10
 [RF Sweep Packet (v1)](#rf-sweep-packet-v1) | 0x31
 [RF Sweep Packet (v2)](#rf-sweep-packet-v2) | 0x31
 
@@ -875,7 +876,7 @@ uint16_t checksum;                 //Checksum of [stopFlag - model]
 **firmwareVersion** - The firmware version of the Node. Byte 1 is the Major part, while Bytes 2-4 (as a uint32_t) together represent the Minor part.
 
 
-## Beacon Echo Packet
+## Beacon Echo Packet (v1)
 For BaseStation's with Firmware v3.32+, writing a `2` to EEPROM 40 will enable any beacon packets that are sent from the BaseStation to be echoed over the port.
 
 ```cpp
@@ -889,6 +890,23 @@ uint32_t timestampSec;                  //Beacon's UTC Timestamp (seconds)
 int8_t reserved;                        //RESERVED
 int8_t reserved;                        //RESERVED
 uint16_t checksum;                      //Checksum of [stopFlag - reserved]
+```
+**timestampSec** - The timestamp (seconds since Unix Epoch) of the beacon.
+
+## Beacon Echo Packet (v2)
+For BaseStation's with Firmware v3.32+, writing a `2` to EEPROM 40 will enable any beacon packets that are sent from the BaseStation to be echoed over the port.
+
+```cpp
+uint8_t startByte           = 0xAC;       //Start of Packet Byte
+uint8_t stopFlag            = 0x08;       //Delivery Stop Flag
+uint8_t appDataType         = 0x10;       //App Data Type
+uint32_t address            = 0x00000000; //Address
+uint16_t payloadLen         = 0x0006;     //Payload Length
+uint16_t cmd                = 0xBEAC;     //Command
+uint32_t timestampSec;                    //Beacon's UTC Timestamp (seconds)
+uint8_t reserved;                         //RESERVED
+uint8_t reserved;                         //RESERVED
+uint32_t checksum;                        //CRC Checksum of all bytes
 ```
 **timestampSec** - The timestamp (seconds since Unix Epoch) of the beacon.
 
