@@ -21,8 +21,10 @@ Packet      | App Data Type
 [Structural Health Packet (v1)](#structural-health-packet-v1) | 0xA0
 [Structural Health Packet (v2)](#structural-health-packet-v2) | 0xA0
 [Structural Health Packet (v3)](#structural-health-packet-v3) | 0xA0
-[Raw Angle Strain Packet (Specific Angle Mode)](#raw-angle-strain-packet-specific-angle-mode) | 0xA3
-[Raw Angle Strain Packet (Distributed Angle Mode)](#raw-angle-strain-packet-distributed-angle-mode) | 0xA3
+[Raw Angle Strain Packet (Specific Angle Mode) (v1)](#raw-angle-strain-packet-specific-angle-mode-v1) | 0xA3
+[Raw Angle Strain Packet (Specific Angle Mode) (v2)](#raw-angle-strain-packet-specific-angle-mode-v2) | 0xA3
+[Raw Angle Strain Packet (Distributed Angle Mode) (v1)](#raw-angle-strain-packet-distributed-angle-mode-v1) | 0xA3
+[Raw Angle Strain Packet (Distributed Angle Mode) (v2)](#raw-angle-strain-packet-distributed-angle-mode-v2) | 0xA3
 [Diagnostic Packet](#diagnostic-packet) | 0x11
 [Node Discovery Packet (v1)](#node-discovery-packet-v1) | 0x00
 [Node Discovery Packet (v2)](#node-discovery-packet-v2) | 0x17
@@ -594,7 +596,7 @@ where `numOtherBytesInPayload = 23` and `bytesPerBin = 4`
 The persistent tick is a count of the number of "Histogram Sweeps" that have occurred (groups of Histogram packets). This value is persistent in that it doesn't get reset when the Node cycles power. It will, however, get reset when the Clear Histogram command is performed.
 
 
-## Raw Angle Strain Packet (Specific Angle Mode)
+## Raw Angle Strain Packet (Specific Angle Mode) (v1)
 The Raw Angle Strain Packet (Specific Angle Mode) contains strain data at specific angles.
 
 ```cpp
@@ -615,7 +617,29 @@ int8_t baseRssi;                                     //Base Station RSSI
 uint16_t checksum;                                   //Checksum of [stopFlag - angleStrainData]
 ```
 
-## Raw Angle Strain Packet (Distributed Angle Mode)
+## Raw Angle Strain Packet (Specific Angle Mode) (v2)
+The Raw Angle Strain Packet (Specific Angle Mode) contains strain data at specific angles.
+
+```cpp
+uint8_t startByte           = 0xAC;                  //Start of Packet Byte
+uint8_t stopFlag            = 0x08;                  //Delivery Stop Flag
+uint8_t appDataType         = 0xA3;                  //App Data Type
+uint32_t nodeAddress;                                //Node Address
+uint16_t payloadLen;                                 //Payload Length
+uint8_t appId               = 0x00;                  //App ID
+uint32_t modelNumber;                                //Model Number of Node
+uint8_t sampleRate;                                  //Sample Rate
+uint16_t tick;                                       //Timer Tick
+uint8_t numAngles;                                   //Number of Angles
+float angle;                                         //Angle (in Degrees)
+float angleStrainData;                               //Angle Strain Data
+//Repeat angle and angleStrainData for the total number of angles
+uint8_t reserved;                                    //RESERVED
+uint8_t baseRssi;                                    //Base Station RSSI
+uint32_t checksum;                                   //CRC Checksum of all bytes
+```
+
+## Raw Angle Strain Packet (Distributed Angle Mode) (v1)
 The Raw Angle Strain Packet (Distributed Angle Mode) contains strain data for a range of angles.
 
 ```cpp
@@ -635,6 +659,29 @@ float angleStrainData[numAngles];                    //Angle Strain Data
 int8_t reserved;                                     //RESERVED
 int8_t baseRssi;                                     //Base Station RSSI
 uint16_t checksum;                                   //Checksum of [stopFlag - angleStrainData]
+```
+
+## Raw Angle Strain Packet (Distributed Angle Mode) (v2)
+The Raw Angle Strain Packet (Distributed Angle Mode) contains strain data for a range of angles.
+
+```cpp
+uint8_t startByte           = 0xAC;                  //Start of Packet Byte
+uint8_t stopFlag            = 0x08;                  //Delivery Stop Flag
+uint8_t appDataType         = 0xA3;                  //App Data Type
+uint32_t nodeAddress;                                //Node Address
+uint16_t payloadLen;                                 //Payload Length
+uint8_t appId               = 0x01;                  //App ID
+uint32_t modelNumber;                                //Model Number of Node
+uint8_t sampleRate;                                  //Sample Rate
+uint16_t tick;                                       //Timer Tick
+float angleLowerBound;                               //The lower bound angle (in Degrees)
+float angleUpperBound;                               //The upper bound angle (in Degrees)
+uint8_t numAngles;                                   //The number of angles
+float angleStrainData[numAngles];                    //Angle Strain Data
+//Repeat angleStrainData for the total number of angles
+uint8_t reserved;                                    //RESERVED
+uint8_t baseRssi;                                    //Base Station RSSI
+uint32_t checksum;                                   //CRC Checksum of all bytes
 ```
 
 
