@@ -584,7 +584,10 @@ uint32_t checksum;                                   //CRC Checksum of all bytes
 
 **Bins**
 
-This packet contains a variable length of bins. The number of bins can be determined by the payload length - # of other bytes in the payload.
+This packet contains a variable length of bins. The number of bins can be determined by the following:
+`numBins = (payloadLen - numOtherBytesInPayload) / bytesPerBin)`
+
+where `numOtherBytesInPayload = 23` and `bytesPerBin = 4`
 
 **Persistent Tick**
 
