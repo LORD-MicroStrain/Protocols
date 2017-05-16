@@ -20,6 +20,7 @@ Packet      | App Data Type
 [Asynchronous Digital & Analog Packet](#asynchronous-digital--analog-packet) | 0x0F
 [Structural Health Packet (v1)](#structural-health-packet-v1) | 0xA0
 [Structural Health Packet (v2)](#structural-health-packet-v2) | 0xA0
+[Structural Health Packet (v3)](#structural-health-packet-v3) | 0xA0
 [Raw Angle Strain Packet (Specific Angle Mode)](#raw-angle-strain-packet-specific-angle-mode) | 0xA3
 [Raw Angle Strain Packet (Distributed Angle Mode)](#raw-angle-strain-packet-distributed-angle-mode) | 0xA3
 [Diagnostic Packet](#diagnostic-packet) | 0x11
@@ -554,6 +555,40 @@ This packet always contains 21 bins of Histogram data.
 
 The persistent tick is a count of the number of "Histogram Sweeps" that have occurred (groups of Histogram packets). This value is persistent in that it doesn't get reset when the Node cycles power. It will, however, get reset when the Clear Histogram command is performed.
 
+
+## Structural Health Packet (v3)
+The Structural Health Packet contains structural health data.
+
+```cpp
+uint8_t startByte           = 0xAC;                  //Start of Packet Byte
+uint8_t stopFlag            = 0x08;                  //Delivery Stop Flag
+uint8_t appDataType         = 0xA0;                  //App Data Type
+uint32_t nodeAddress;                                //Node Address
+uint16_t payloadLen;                                 //Payload Length
+uint8_t appId               = 0x00;                  //App ID
+uint32_t modelNumber;                                //Model Number of the Node
+uint8_t transmitRate;                                //Transmit Rate of the packet
+uint8_t sampleRate;                                  //Sample/Processing Rate of the data
+uint32_t persistentTick;                             //Count of Histogram Sweeps
+float angle;                                         //Angle (in Degrees)
+uint16_t binStart;                                   //The start of bin 1 (in microstrain)
+uint16_t binSize;                                    //Size of each Bin
+float damage;                                        //Damage percentage (0 = new, 100 = dead)
+uint32_t binData[21];                                //Binned data
+uint8_t nodeRssi;                                    //Node RSSI
+uint8_t baseRssi;                                    //Base Station RSSI
+uint32_t checksum;                                   //CRC Checksum of all bytes
+```
+
+##### Notes:
+
+**Bins**
+
+This packet always contains 21 bins of Histogram data.
+
+**Persistent Tick**
+
+The persistent tick is a count of the number of "Histogram Sweeps" that have occurred (groups of Histogram packets). This value is persistent in that it doesn't get reset when the Node cycles power. It will, however, get reset when the Clear Histogram command is performed.
 
 
 ## Raw Angle Strain Packet (Specific Angle Mode)
