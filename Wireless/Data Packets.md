@@ -627,7 +627,6 @@ uint8_t appDataType         = 0xA3;                  //App Data Type
 uint32_t nodeAddress;                                //Node Address
 uint16_t payloadLen;                                 //Payload Length
 uint8_t appId               = 0x00;                  //App ID
-uint32_t modelNumber;                                //Model Number of Node
 uint8_t sampleRate;                                  //Sample Rate
 uint16_t tick;                                       //Timer Tick
 uint8_t numAngles;                                   //Number of Angles
@@ -671,7 +670,6 @@ uint8_t appDataType         = 0xA3;                  //App Data Type
 uint32_t nodeAddress;                                //Node Address
 uint16_t payloadLen;                                 //Payload Length
 uint8_t appId               = 0x01;                  //App ID
-uint32_t modelNumber;                                //Model Number of Node
 uint8_t sampleRate;                                  //Sample Rate
 uint16_t tick;                                       //Timer Tick
 float angleLowerBound;                               //The lower bound angle (in Degrees)
