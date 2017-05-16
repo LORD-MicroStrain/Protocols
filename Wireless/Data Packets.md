@@ -25,13 +25,15 @@ Packet      | App Data Type
 [Raw Angle Strain Packet (Specific Angle Mode) (v2)](#raw-angle-strain-packet-specific-angle-mode-v2) | 0xA3
 [Raw Angle Strain Packet (Distributed Angle Mode) (v1)](#raw-angle-strain-packet-distributed-angle-mode-v1) | 0xA3
 [Raw Angle Strain Packet (Distributed Angle Mode) (v2)](#raw-angle-strain-packet-distributed-angle-mode-v2) | 0xA3
-[Diagnostic Packet](#diagnostic-packet) | 0x11
+[Diagnostic Packet (v1)](#diagnostic-packet-v1) | 0x11
+[Diagnostic Packet (v2)](#diagnostic-packet-v2) | 0x11
 [Node Discovery Packet (v1)](#node-discovery-packet-v1) | 0x00
 [Node Discovery Packet (v2)](#node-discovery-packet-v2) | 0x17
 [Node Discovery Packet (v3)](#node-discovery-packet-v3) | 0x18
 [Node Discovery Packet (v4)](#node-discovery-packet-v4) | 0x16
 [Beacon Echo Packet](#beacon-echo-packet) | 0x10
-[RF Sweep Packet](#rf-sweep-packet) | 0x31
+[RF Sweep Packet (v1)](#rf-sweep-packet-v1) | 0x31
+[RF Sweep Packet (v2)](#rf-sweep-packet-v2) | 0x31
 
 ## Low Duty Cycle (LDC) Packet (v1)
 
@@ -683,7 +685,7 @@ uint32_t checksum;                                   //CRC Checksum of all bytes
 ```
 
 
-## Diagnostic Packet
+## Diagnostic Packet (v1)
 ```cpp
 uint8_t startByte           = 0xAA;          //Start of Packet Byte
 uint8_t stopFlag            = 0x07;          //Delivery Stop Flag
@@ -699,6 +701,27 @@ uint8_t | uint16_t | uint32_t info1Val;      //Info Item 1 Value
 int8_t nodeRssi;                             //Node RSSI
 int8_t baseRssi;                             //Base Station RSSI
 uint16_t checksum;                           //Checksum of [stopFlag - infoXVal]
+```
+
+##### Notes:
+See the [Diagnostic Packet (v2)](#diagnostic-packet-v2) notes.
+
+## Diagnostic Packet (v2)
+```cpp
+uint8_t startByte           = 0xAC;          //Start of Packet Byte
+uint8_t stopFlag            = 0x08;          //Delivery Stop Flag
+uint8_t appDataType         = 0x11;          //App Data Type
+uint32_t nodeAddress;                        //Node Address
+uint16_t payloadLen;                         //Payload Length
+uint16_t packetInterval;                     //Packet Interval
+uint16_t tick;                               //Tick
+uint8_t info1Len;                            //Info Item 1 Length
+uint8_t info1Id;                             //Info Item 1 ID
+uint8_t | uint16_t | uint32_t info1Val;      //Info Item 1 Value
+//Repeat Info Item Length, ID, and Value for all the Info Items in the packet
+uint8_t nodeRssi;                            //Node RSSI
+uint8_t baseRssi;                            //Base Station RSSI
+uint32_t checksum;                           //CRC Checksum of all bytes
 ```
 
 ##### Notes:
@@ -869,7 +892,7 @@ uint16_t checksum;                      //Checksum of [stopFlag - reserved]
 ```
 **timestampSec** - The timestamp (seconds since Unix Epoch) of the beacon.
 
-## RF Sweep Packet
+## RF Sweep Packet (v1)
 Contains radio frequency information. This is sent when the BaseStation is in RF Sweep Mode.
 
 ```cpp
@@ -888,6 +911,24 @@ int8_t reserved;                        //RESERVED
 uint16_t checksum;                      //Checksum of [stopFlag - data]
 ```
 
+## RF Sweep Packet (v2)
+Contains radio frequency information. This is sent when the BaseStation is in RF Sweep Mode.
+
+```cpp
+uint8_t startByte           = 0xAC;       //Start of Packet Byte
+uint8_t stopFlag            = 0x08;       //Delivery Stop Flag
+uint8_t appDataType         = 0x31;       //App Data Type
+uint32_t address            = 0x00001234; //Address
+uint16_t payloadLen;                      //Payload Length
+uint8_t id                  = 0;          //ID, reserved for future use
+uint32_t minFreq;                         //Minimum Sweep Frequency in kHz (2400000 = 2.4GHz)
+uint32_t maxFreq;                         //Maximum Sweep Frequency in kHz (2400000 = 2.4GHz)
+uint32_t interval;                        //The Sweep interval in kHz.
+uint8_t data[];                           //The rssi data values for each frequency (in negative dBm)
+uint8_t reserved;                         //RESERVED
+uint8_t reserved;                         //RESERVED
+uint32_t checksum;                        //CRC Checksum of all bytes
+```
 
 # Packet Details
 
