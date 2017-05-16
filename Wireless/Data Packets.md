@@ -571,10 +571,10 @@ uint8_t transmitRate;                                //Transmit Rate of the pack
 uint8_t sampleRate;                                  //Sample/Processing Rate of the data
 uint32_t persistentTick;                             //Count of Histogram Sweeps
 float angle;                                         //Angle (in Degrees)
+float damage;                                        //Damage percentage (0 = new, 100 = dead)
 uint16_t binStart;                                   //The start of bin 1 (in microstrain)
 uint16_t binSize;                                    //Size of each Bin
-float damage;                                        //Damage percentage (0 = new, 100 = dead)
-uint32_t binData[21];                                //Binned data
+uint32_t binData[];                                  //Binned data
 uint8_t nodeRssi;                                    //Node RSSI
 uint8_t baseRssi;                                    //Base Station RSSI
 uint32_t checksum;                                   //CRC Checksum of all bytes
@@ -584,7 +584,7 @@ uint32_t checksum;                                   //CRC Checksum of all bytes
 
 **Bins**
 
-This packet always contains 21 bins of Histogram data.
+This packet contains a variable length of bins. The number of bins can be determined by the payload length - # of other bytes in the payload.
 
 **Persistent Tick**
 
