@@ -22,7 +22,7 @@ ASPP v1.0      | FW v1.0                    |  FW v1.0
 Command      | Command ID    |  Base Station ASPP Version required
 -------------|---------------|--------------------
 [Start RF Sweep Mode (v1)](#start-rf-sweep-mode-v1) | 0x00ED | ASPP v1.3
-[Start RF Sweep Mode (v2)](#start-rf-sweep-mode-v2) | 0x00ED | ASPP v3.0
+[Start RF Sweep Mode (v1 - ASPP3)](#start-rf-sweep-mode-v1-aspp3) | 0x00ED | ASPP v3.0
 [Ping Base Station (v1)](#ping-base-station-v1) | 0x01 | ASPP v1.0
 [Ping Base Station (v2)](#ping-base-station-v2) | 0x0001 | ASPP v1.1
 [Ping Base Station (v3)](#ping-base-station-v3) | 0x0001 | ASPP v3.0
@@ -1065,7 +1065,7 @@ The data packets will relect such changes.
 
 <br>
 
-## Start RF Sweep Mode (v2)
+## Start RF Sweep Mode (v1 - ASPP3)
 ``ASPP v3.0``
 
 The **Start RF Sweep Mode** command puts the Base Station into a mode where radio frequencies can be scanned for traffic.
