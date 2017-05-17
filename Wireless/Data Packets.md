@@ -31,6 +31,8 @@ Packet      | App Data Type
 [Node Discovery Packet (v2)](#node-discovery-packet-v2) | 0x17
 [Node Discovery Packet (v3)](#node-discovery-packet-v3) | 0x18
 [Node Discovery Packet (v4)](#node-discovery-packet-v4) | 0x16
+[Node Discovery Packet (v5)](#node-discovery-packet-v5) | 0x1C
+[Node Discovery Packet (v5) (ASPP3)](#node-discovery-packet-v5-aspp3) | 0x1C
 [Beacon Echo Packet (v1)](#beacon-echo-packet-v1) | 0x10
 [Beacon Echo Packet (v2)](#beacon-echo-packet-v2) | 0x10
 [RF Sweep Packet (v1)](#rf-sweep-packet-v1) | 0x31
@@ -812,7 +814,7 @@ uint16_t firmwareVersion;          //The (legacy) Firmware Version of the Node
 uint16_t defaultMode;              //The Default Mode of the Node
 int8_t reserved;                   //RESERVED
 int8_t baseRssi;                   //Base Station RSSI
-uint16_t checksum;                 //Checksum of [stopFlag - model]
+uint16_t checksum;                 //Checksum of [stopFlag - defaultMode]
 ```
 **modelNumber** - The main model of the Node (ex. 6305 = G-Link).
 
@@ -839,7 +841,7 @@ uint16_t firmwareVersion2;         //The Firmware Version of the Node (part 2)
 uint16_t defaultMode;              //The Default Mode of the Node
 int8_t reserved;                   //RESERVED
 int8_t baseRssi;                   //Base Station RSSI
-uint16_t checksum;                 //Checksum of [stopFlag - model]
+uint16_t checksum;                 //Checksum of [stopFlag - defaultMode]
 ```
 **modelNumber** - The main model of the Node (ex. 6305 = G-Link).
 
@@ -867,7 +869,7 @@ uint16_t defaultMode;              //The Default Mode of the Node
 uint32_t bitResult;                //Built In Test result
 int8_t reserved;                   //RESERVED
 int8_t baseRssi;                   //Base Station RSSI
-uint16_t checksum;                 //Checksum of [stopFlag - model]
+uint16_t checksum;                 //Checksum of [stopFlag - bitResult]
 ```
 **modelNumber** - The main model of the Node (ex. 6305 = G-Link).
 
@@ -875,6 +877,73 @@ uint16_t checksum;                 //Checksum of [stopFlag - model]
 
 **firmwareVersion** - The firmware version of the Node. Byte 1 is the Major part, while Bytes 2-4 (as a uint32_t) together represent the Minor part.
 
+
+## Node Discovery Packet (v5)
+On power up, the Node will transmit two identification packets. The packets are sent out on all radio frequencies, allowing any Base Station within range to receive the identification packets, regardless of the Base Station’s current frequency assignment. The Base Station immediately passes these packets to the host serial port.
+
+```cpp
+uint8_t startByte       = 0xAA;    //Start of Packet Byte
+uint8_t stopFlag        = 0x07;    //Delivery Stop Flag
+uint8_t appDataType     = 0x1C;    //App Data Type
+uint16_t nodeAddress;              //Node Address
+uint8_t payloadLen      = 0x1A;    //Payload Length
+uint8_t version         = 0x05;    //Node Discovery Version
+uint8_t frequency;                 //Radio Frequency the Node is on
+uint16_t panId;                    //The PAN ID the Node is on
+uint16_t modelNumber;              //The Model Number of the Node
+uint16_t modelOption;              //The Model Option of the Node
+uint32_t serial;                   //The Serial Number of the Node
+uint16_t firmwareVersion1;         //The Firmware Version of the Node (part 1)
+uint16_t firmwareVersion2;         //The Firmware Version of the Node (part 2)
+uint16_t asppVersionLxrs;          //The ASPP version used when in LXRS Mode.
+uint16_t asppVersionLxrsPlus;      //The ASPP version used when in LXRS+ Mode.
+uint16_t defaultMode;              //The Default Mode of the Node
+uint32_t bitResult;                //Built In Test result
+int8_t reserved;                   //RESERVED
+int8_t baseRssi;                   //Base Station RSSI
+uint16_t checksum;                 //Checksum of [stopFlag - bitResult]
+```
+**modelNumber** - The main model of the Node (ex. 6305 = G-Link).
+
+**modelOption** - The specific option of the model. Combine this with the modelNumber to accurately identify the Node (ex. 6305-2000 = G-Link 2G, 6305-3000 = G-Link 10G).
+
+**firmwareVersion** - The firmware version of the Node. Byte 1 is the Major part, while Bytes 2-4 (as a uint32_t) together represent the Minor part.
+
+**asppVersion** - The `asppVersionLxrs` and `asppVersionLxrsPlus` bytes represent the ASPP protocol versions available to the Node when in the specific LXRS or LXRS+ mode. the MSB is the Major part, and the LSB is the Minor part.
+
+
+## Node Discovery Packet (v5) (ASPP3)
+On power up, the Node will transmit two identification packets. The packets are sent out on all radio frequencies, allowing any Base Station within range to receive the identification packets, regardless of the Base Station’s current frequency assignment. The Base Station immediately passes these packets to the host serial port.
+
+```cpp
+uint8_t startByte       = 0xAC;    //Start of Packet Byte
+uint8_t stopFlag        = 0x08;    //Delivery Stop Flag
+uint8_t appDataType     = 0x1C;    //App Data Type
+uint32_t nodeAddress;              //Node Address
+uint16_t payloadLen     = 0x1A;    //Payload Length
+uint8_t version         = 0x05;    //Node Discovery Version
+uint8_t frequency;                 //Radio Frequency the Node is on
+uint16_t panId;                    //The PAN ID the Node is on
+uint16_t modelNumber;              //The Model Number of the Node
+uint16_t modelOption;              //The Model Option of the Node
+uint32_t serial;                   //The Serial Number of the Node
+uint16_t firmwareVersion1;         //The Firmware Version of the Node (part 1)
+uint16_t firmwareVersion2;         //The Firmware Version of the Node (part 2)
+uint16_t asppVersionLxrs;          //The ASPP version used when in LXRS Mode.
+uint16_t asppVersionLxrsPlus;      //The ASPP version used when in LXRS+ Mode.
+uint16_t defaultMode;              //The Default Mode of the Node
+uint32_t bitResult;                //Built In Test result
+uint8_t reserved;                  //RESERVED
+uint8_t baseRssi;                  //Base Station RSSI
+uint32_t checksum;                 //CRC Checksum of all bytes
+```
+**modelNumber** - The main model of the Node (ex. 6305 = G-Link).
+
+**modelOption** - The specific option of the model. Combine this with the modelNumber to accurately identify the Node (ex. 6305-2000 = G-Link 2G, 6305-3000 = G-Link 10G).
+
+**firmwareVersion** - The firmware version of the Node. Byte 1 is the Major part, while Bytes 2-4 (as a uint32_t) together represent the Minor part.
+
+**asppVersion** - The `asppVersionLxrs` and `asppVersionLxrsPlus` bytes represent the ASPP protocol versions available to the Node when in the specific LXRS or LXRS+ mode. the MSB is the Major part, and the LSB is the Minor part.
 
 ## Beacon Echo Packet (v1)
 For BaseStation's with Firmware v3.32+, writing a `2` to EEPROM 40 will enable any beacon packets that are sent from the BaseStation to be echoed over the port.
