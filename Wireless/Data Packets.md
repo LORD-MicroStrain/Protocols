@@ -6,27 +6,27 @@ Packet      | App Data Type
 -------------|--------------
 [Low Duty Cycle Packet (v1)](#low-duty-cycle-ldc-packet-v1) | 0x04
 [Low Duty Cycle Packet (v2)](#low-duty-cycle-ldc-packet-v2) | 0x14
-[Low Duty Cycle Packet (v3)](#low-duty-cycle-ldc-packet-v3) | 0x14
+[Low Duty Cycle Packet (v2) (ASPP3)](#low-duty-cycle-ldc-packet-v2-aspp3) | 0x14
 [Buffered Low Duty Cycle Packet (v1)](#buffered-low-duty-cycle-packet-v1) | 0x0D
 [Buffered Low Duty Cycle Packet (v2)](#buffered-low-duty-cycle-packet-v2) | 0x1D
 [Synchronized Sampling Packet (v1)](#synchronized-sampling-packet-v1) | 0x0A
 [Synchronized Sampling Packet (v2)](#synchronized-sampling-packet-v2) | 0x1A
-[Synchronized Sampling Packet (v3)](#synchronized-sampling-packet-v3) | 0x1A
+[Synchronized Sampling Packet (v2) (ASPP3)](#synchronized-sampling-packet-v2-aspp3) | 0x1A
 [Derived Synchronized Sampling Packet (v1)](#derived-synchronized-sampling-packet-v1) | 0x01B
-[Derived Synchronized Sampling Packet (v2)](#derived-synchronized-sampling-packet-v2) | 0x01B
+[Derived Synchronized Sampling Packet (v1) (ASPP3)](#derived-synchronized-sampling-packet-v1-aspp3) | 0x01B
 [Derived Low Duty Cycle Sampling Packet (v1)](#derived-low-duty-cycle-sampling-packet-v1) | 0x015
-[Derived Low Duty Cycle Sampling Packet (v2)](#derived-low-duty-cycle-sampling-packet-v2) | 0x015
+[Derived Low Duty Cycle Sampling Packet (v1) (ASPP3)](#derived-low-duty-cycle-sampling-packet-v1-aspp3) | 0x015
 [Asynchronous Digital-Only Packet](#asynchronous-digital-only-packet) | 0x0E
 [Asynchronous Digital & Analog Packet](#asynchronous-digital--analog-packet) | 0x0F
 [Structural Health Packet (v1)](#structural-health-packet-v1) | 0xA0
 [Structural Health Packet (v2)](#structural-health-packet-v2) | 0xA0
-[Structural Health Packet (v3)](#structural-health-packet-v3) | 0xA0
+[Structural Health Packet (v2) (ASPP3)](#structural-health-packet-v2-aspp3) | 0xA0
 [Raw Angle Strain Packet (Specific Angle Mode) (v1)](#raw-angle-strain-packet-specific-angle-mode-v1) | 0xA3
-[Raw Angle Strain Packet (Specific Angle Mode) (v2)](#raw-angle-strain-packet-specific-angle-mode-v2) | 0xA3
+[Raw Angle Strain Packet (Specific Angle Mode) (v1) (ASPP3)](#raw-angle-strain-packet-specific-angle-mode-v1-aspp3) | 0xA3
 [Raw Angle Strain Packet (Distributed Angle Mode) (v1)](#raw-angle-strain-packet-distributed-angle-mode-v1) | 0xA3
-[Raw Angle Strain Packet (Distributed Angle Mode) (v2)](#raw-angle-strain-packet-distributed-angle-mode-v2) | 0xA3
+[Raw Angle Strain Packet (Distributed Angle Mode) (v1) (ASPP3)](#raw-angle-strain-packet-distributed-angle-mode-v1-aspp3) | 0xA3
 [Diagnostic Packet (v1)](#diagnostic-packet-v1) | 0x11
-[Diagnostic Packet (v2)](#diagnostic-packet-v2) | 0x11
+[Diagnostic Packet (v1) (ASPP3)](#diagnostic-packet-v1-aspp3) | 0x11
 [Node Discovery Packet (v1)](#node-discovery-packet-v1) | 0x00
 [Node Discovery Packet (v2)](#node-discovery-packet-v2) | 0x17
 [Node Discovery Packet (v3)](#node-discovery-packet-v3) | 0x18
@@ -34,9 +34,9 @@ Packet      | App Data Type
 [Node Discovery Packet (v5)](#node-discovery-packet-v5) | 0x1C
 [Node Discovery Packet (v5) (ASPP3)](#node-discovery-packet-v5-aspp3) | 0x1C
 [Beacon Echo Packet (v1)](#beacon-echo-packet-v1) | 0x10
-[Beacon Echo Packet (v2)](#beacon-echo-packet-v2) | 0x10
+[Beacon Echo Packet (v1) (ASPP3)](#beacon-echo-packet-v1-aspp3) | 0x10
 [RF Sweep Packet (v1)](#rf-sweep-packet-v1) | 0x31
-[RF Sweep Packet (v2)](#rf-sweep-packet-v2) | 0x31
+[RF Sweep Packet (v1) (ASPP3)](#rf-sweep-packet-v1-aspp3) | 0x31
 
 ## Low Duty Cycle (LDC) Packet (v1)
 
@@ -85,7 +85,7 @@ uint16_t checksum;                        //Checksum of [stopFlag - chData]
 
 The `appIdAndDataType` byte uses the last 4 (Least Significant) bits as the [Data Format](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#data-format).
 
-## Low Duty Cycle (LDC) Packet (v3)
+## Low Duty Cycle (LDC) Packet (v2) (ASPP3)
 
 ```cpp
 uint8_t startByte                 = 0xAC; //Start of Packet Byte
@@ -265,7 +265,7 @@ Channel data should be parsed in the following manner:
 - Repeat for each Sweep in the packet
 
 
-## Synchronized Sampling Packet (v3)
+## Synchronized Sampling Packet (v2) (ASPP3)
 
 ```cpp
 uint8_t startByte               = 0xAC;   //Start of Packet Byte
@@ -329,7 +329,7 @@ uint16_t checksum;                        //Checksum of [stopFlag - chData]
 See the [Derived Packet Details](#derived-packet-details) for more information.
 
 
-## Derived Synchronized Sampling Packet (v2)
+## Derived Synchronized Sampling Packet (v1) (ASPP3)
 
 ```cpp
 struct AlgorithmMeta
@@ -387,7 +387,7 @@ uint16_t checksum;                        //Checksum of [stopFlag - chData]
 ##### Notes:
 See the [Derived Packet Details](#derived-packet-details) for more information.
 
-## Derived Low Duty Cycle Sampling Packet (v2)
+## Derived Low Duty Cycle Sampling Packet (v1) (ASPP3)
 
 ```cpp
 struct AlgorithmMeta
@@ -563,7 +563,7 @@ This packet always contains 21 bins of Histogram data.
 The persistent tick is a count of the number of "Histogram Sweeps" that have occurred (groups of Histogram packets). This value is persistent in that it doesn't get reset when the Node cycles power. It will, however, get reset when the Clear Histogram command is performed.
 
 
-## Structural Health Packet (v3)
+## Structural Health Packet (v2) (ASPP3)
 The Structural Health Packet contains structural health data.
 
 ```cpp
@@ -622,7 +622,7 @@ int8_t baseRssi;                                     //Base Station RSSI
 uint16_t checksum;                                   //Checksum of [stopFlag - angleStrainData]
 ```
 
-## Raw Angle Strain Packet (Specific Angle Mode) (v2)
+## Raw Angle Strain Packet (Specific Angle Mode) (v1) (ASPP3)
 The Raw Angle Strain Packet (Specific Angle Mode) contains strain data at specific angles.
 
 ```cpp
@@ -665,7 +665,7 @@ int8_t baseRssi;                                     //Base Station RSSI
 uint16_t checksum;                                   //Checksum of [stopFlag - angleStrainData]
 ```
 
-## Raw Angle Strain Packet (Distributed Angle Mode) (v2)
+## Raw Angle Strain Packet (Distributed Angle Mode) (v1) (ASPP3)
 The Raw Angle Strain Packet (Distributed Angle Mode) contains strain data for a range of angles.
 
 ```cpp
@@ -707,9 +707,9 @@ uint16_t checksum;                           //Checksum of [stopFlag - infoXVal]
 ```
 
 ##### Notes:
-See the [Diagnostic Packet (v2)](#diagnostic-packet-v2) notes.
+See the [Diagnostic Packet (v1) (ASPP3)](#diagnostic-packet-v1-aspp3) notes.
 
-## Diagnostic Packet (v2)
+## Diagnostic Packet (v1) (ASPP3)
 ```cpp
 uint8_t startByte           = 0xAC;          //Start of Packet Byte
 uint8_t stopFlag            = 0x08;          //Delivery Stop Flag
@@ -962,7 +962,7 @@ uint16_t checksum;                      //Checksum of [stopFlag - reserved]
 ```
 **timestampSec** - The timestamp (seconds since Unix Epoch) of the beacon.
 
-## Beacon Echo Packet (v2)
+## Beacon Echo Packet (v1) (ASPP3)
 For BaseStation's with Firmware v3.32+, writing a `2` to EEPROM 40 will enable any beacon packets that are sent from the BaseStation to be echoed over the port.
 
 ```cpp
@@ -998,7 +998,7 @@ int8_t reserved;                        //RESERVED
 uint16_t checksum;                      //Checksum of [stopFlag - data]
 ```
 
-## RF Sweep Packet (v2)
+## RF Sweep Packet (v1) (ASPP3)
 Contains radio frequency information. This is sent when the BaseStation is in RF Sweep Mode.
 
 ```cpp
