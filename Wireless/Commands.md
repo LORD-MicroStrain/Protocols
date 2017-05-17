@@ -2,6 +2,8 @@
 
 Note that some commands are device specific.
 
+#### Legacy FW version to ASPP version lookup table
+
 New devices/firmware support `Eeprom 124`, which identifies the ASPP version (msb.lsb) that the device supports.
 The firmware version of the device was originally used to determine the ASPP version. The following lookup table is provided for legacy purposes:
 
@@ -25,31 +27,31 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Start RF Sweep Mode (v1, ASPP3)](#start-rf-sweep-mode-v1-aspp3) | 0x00ED | ASPP v3.0
 [Ping Base Station (v1)](#ping-base-station-v1) | 0x01 | ASPP v1.0
 [Ping Base Station (v2)](#ping-base-station-v2) | 0x0001 | ASPP v1.1
-[Ping Base Station (v3)](#ping-base-station-v3) | 0x0001 | ASPP v3.0
+[Ping Base Station (v2, ASPP3)](#ping-base-station-v2-aspp3) | 0x0001 | ASPP v3.0
 [Read Base Station EEPROM (v1)](#read-base-station-eeprom-v1) | 0x73 | ASPP v1.0
 [Read Base Station EEPROM (v2)](#read-base-station-eeprom-v2) | 0x0073 | ASPP v1.1
-[Read Base Station EEPROM (v3)](#read-base-station-eeprom-v3) | 0x0073 | ASPP v3.0
+[Read Base Station EEPROM (v2, ASPP3)](#read-base-station-eeprom-v2-aspp3) | 0x0073 | ASPP v3.0
 [Write Base Station EEPROM (v1)](#write-base-station-eeprom-v1) | 0x78 | ASPP v1.0
 [Write Base Station EEPROM (v2)](#write-base-station-eeprom-v2) | 0x0078 | ASPP v1.1
-[Write Base Station EEPROM (v3)](#write-base-station-eeprom-v3) | 0x0078 | ASPP v3.0
+[Write Base Station EEPROM (v2, ASPP3)](#write-base-station-eeprom-v2-aspp3) | 0x0078 | ASPP v3.0
 [Enable Beacon (v1)](#enable-beacon-v1) | 0xBEAC | ASPP v1.0
 [Enable Beacon (v2)](#enable-beacon-v2) | 0xBEAC | ASPP v1.1
-[Enable Beacon (v3)](#enable-beacon-v3) | 0xBEAC | ASPP v3.0
+[Enable Beacon (v2, ASPP3)](#enable-beacon-v2-aspp3) | 0xBEAC | ASPP v3.0
 [Disable Beacon (v1)](#disable-beacon-v1) | 0xBEAC | ASPP v1.0
 [Disable Beacon (v2)](#disable-beacon-v2) | 0xBEAC | ASPP v1.1
-[Disable Beacon (v3)](#disable-beacon-v3) | 0xBEAC | ASPP v3.0
+[Disable Beacon (v2, ASPP3)](#disable-beacon-v2-aspp3) | 0xBEAC | ASPP v3.0
 [Beacon Status (v1)](#beacon-status-v1) | 0xBEAD | ASPP v1.1
-[Beacon Status (v2)](#beacon-status-v2) | 0xBEAD | ASPP v3.0
+[Beacon Status (v1, ASPP3)](#beacon-status-v1-aspp3) | 0xBEAD | ASPP v3.0
 [Update Beacon Time (v1)](#update-beacon-time-v1) | 0xBEAB | ASPP v1.1
-[Update Beacon Time (v2)](#update-beacon-time-v2) | 0xBEAB | ASPP v3.0
+[Update Beacon Time (v1, ASPP3)](#update-beacon-time-v1-aspp3) | 0xBEAB | ASPP v3.0
 [Cycle Base Station Power & Radio (v1)](#cycle-base-station-power--radio-v1) | - | ASPP v1.0
 [Cycle Base Station Power & Radio (v2)](#cycle-base-station-power--radio-v2) | 0x0030 | ASPP v3.0
 [Node Quick Ping (v1)*](#node-quick-ping-v1) | 0x02 | ASPP v1.0
 [Node Quick Ping (v2)*](#node-quick-ping-v2) | 0x0012 | ASPP v1.6
-[Node Quick Ping (v3)*](#node-quick-ping-v3) | 0x0012 | ASPP v3.0
+[Node Quick Ping (v2, ASPP3)*](#node-quick-ping-v2-aspp3) | 0x0012 | ASPP v3.0
 [Set Node to Idle (v1)*](#set-node-to-idle-v1) | 0x0090 | ASPP v1.0
 [Set Node to Idle (v2)*](#set-node-to-idle-v2) | 0x0090 | ASPP v1.6
-[Set Node to Idle (v3)*](#set-node-to-idle-v3) | 0x0090 | ASPP v3.0
+[Set Node to Idle (v2, ASPP3)*](#set-node-to-idle-v2-aspp3) | 0x0090 | ASPP v3.0
 
 *This command targets a Node, but is handled by the Base Station itself.
 
@@ -58,41 +60,41 @@ Command      | Command ID    |  Base Station ASPP Version required
 Command      | Command ID    |  Node ASPP Version required
 -------------|---------------|--------------------
 [Detailed Ping (v1)](#detailed-ping-v1) | 0x0002 | ASPP v1.0
-[Detailed Ping (v2)](#detailed-ping-v2) | 0x0002 | ASPP v3.0
+[Detailed Ping (v1, ASPP3)](#detailed-ping-v1-aspp3) | 0x0002 | ASPP v3.0
 [Initiate Sleep Mode (v1)](#initiate-sleep-mode-v1) | 0x32 | ASPP v1.0
-[Initiate Sleep Mode (v2)](#initiate-sleep-mode-v2) | 0x0032 | ASPP v3.0
+[Initiate Sleep Mode (v1, ASPP3)](#initiate-sleep-mode-v1-aspp3) | 0x0032 | ASPP v3.0
 [Read Node EEPROM (v1)](#read-node-eeprom-v1) | 0x0003 | ASPP v1.0
 [Read Node EEPROM (v2)](#read-node-eeprom-v2) | 0x0007 | ASPP v1.1
-[Read Node EEPROM (v3)](#read-node-eeprom-v3) | 0x0007 | ASPP v3.0
+[Read Node EEPROM (v2, ASPP3)](#read-node-eeprom-v2-aspp3) | 0x0007 | ASPP v3.0
 [Write Node EEPROM (v1)](#write-node-eeprom-v1) | 0x0004 | ASPP v1.0
 [Write Node EEPROM (v2)](#write-node-eeprom-v2) | 0x0008 | ASPP v1.1
-[Write Node EEPROM (v3)](#write-node-eeprom-v3) | 0x0008 | ASPP v3.0
+[Write Node EEPROM (v2, ASPP3)](#write-node-eeprom-v2-aspp3) | 0x0008 | ASPP v3.0
 [Initiate Synchronized Sampling (v1)](#initiate-synchronized-sampling-v1) | 0x003B | ASPP v1.0
-[Initiate Synchronized Sampling (v2)](#initiate-synchronized-sampling-v2) | 0x003B | ASPP v3.0
+[Initiate Synchronized Sampling (v1, ASPP3)](#initiate-synchronized-sampling-v2) | 0x003B | ASPP v3.0
 [Initiate Low Duty Cycle (v1)](#initiate-low-duty-cycle-v1) | 0x0038 | ASPP v1.0
 [Initiate Low Duty Cycle (v2)](#initiate-low-duty-cycle-v2) | 0x0039 | ASPP v1.5
-[Initiate Low Duty Cycle (v3)](#initiate-low-duty-cycle-v3) | 0x0039 | ASPP v3.0
+[Initiate Low Duty Cycle (v2, ASPP3)](#initiate-low-duty-cycle-v2-aspp3) | 0x0039 | ASPP v3.0
 [(Legacy) Initiate Real-Time Streaming](#legacy-initiate-real-time-streaming) | 0x38 | ASPP v1.0
 [(Legacy) Arm for Datalogging](#legacy-arm-node-for-datalogging) | 0x000D | ASPP v1.0
 [(Legacy) Trigger Armed Datalogging](#legacy-trigger-armed-datalogging) | 0x000E | ASPP v1.0
 [Get Logged Data (v1)](#get-logged-data-v1) | 0x0041 | ASPP v1.4
-[Get Logged Data (v2)](#get-logged-data-v2) | 0x0041 | ASPP v3.0
+[Get Logged Data (v1, ASPP3)](#get-logged-data-v1-aspp3) | 0x0041 | ASPP v3.0
 [(Legacy) Page Download](#legacy-page-download) | 0x05 | ASPP v1.0
 [Log Session Info (v1)](#log-session-info-v1) | 0x0040 | ASPP v1.4
-[Log Session Info (v2)](#log-session-info-v2) | 0x0040 | ASPP v3.0
+[Log Session Info (v1, ASPP3)](#log-session-info-v1-aspp3) | 0x0040 | ASPP v3.0
 [Erase Logged Data (v1)](#erase-logged-data-v1) | 0x06 | ASPP v1.0
 [Erase Logged Data (v2)](#erase-logged-data-v2) | 0x0042 | ASPP v1.4
-[Erase Logged Data (v3)](#erase-logged-data-v3) | 0x0042 | ASPP v3.0
+[Erase Logged Data (v2, ASPP3)](#erase-logged-data-v2-aspp3) | 0x0042 | ASPP v3.0
 [Auto-Balance Channel (v1)](#auto-balance-channel-v1) | 0x62 | ASPP v1.0
 [Auto-Balance Channel (v2)](#auto-balance-channel-v2) | 0x0065 | ASPP v1.2
-[Auto-Balance Channel (v3)](#auto-balance-channel-v3) | 0x0065 | ASPP v3.0
+[Auto-Balance Channel (v2, ASPP3)](#auto-balance-channel-v2-aspp3) | 0x0065 | ASPP v3.0
 [Auto-Calibrate (v1)](#auto-calibrate-v1) | 0x0064 | ASPP v1.2
-[Auto-Calibrate (v2)](#auto-calibrate-v2) | 0x0064 | ASPP v3.0
+[Auto-Calibrate (v1, ASPP3)](#auto-calibrate-v1-aspp3) | 0x0064 | ASPP v3.0
 [Get Diagnostic Info (v1)](#get-diagnostic-info-v1) | 0x0009 | ASPP v1.5
-[Get Diagnostic Info (v2)](#get-diagnostic-info-v2) | 0x0009 | ASPP v3.0
+[Get Diagnostic Info (v1, ASPP3)](#get-diagnostic-info-v1-aspp3) | 0x0009 | ASPP v3.0
 [Read Single Sensor](#read-single-sensor) | 0x03 | ASPP v1.0
 [Cycle Power & Radio (v1)](#cycle-power--radio-v1) | - | ASPP v1.0
-[Cycle Power & Radio (v2)](#cycle-power--radio-v2) | 0x0031 | ASPP v3.0
+[Cycle Power & Radio (v1, ASPP3)](#cycle-power--radio-v1-aspp3) | 0x0031 | ASPP v3.0
 
 
 ## Ping Base Station (v1)
@@ -149,7 +151,7 @@ None.
 
 <br>
 
-## Ping Base Station (v3)
+## Ping Base Station (v2, ASPP3)
 ``ASPP v3.0``
 
 The **Ping Base Station** command is used to ensure that the host computer and the Base Station are properly communicating.
@@ -270,7 +272,7 @@ Code         | Description
 
 <br>
 
-## Read Base Station EEPROM (v3)
+## Read Base Station EEPROM (v2, ASPP3)
 ``ASPP v3.0``
 
 The **Read Base Station EEPROM** command is used to read the value of a specific memory address from the Base Station's EEPROM.  
@@ -420,7 +422,7 @@ Code         | Description
 <br>
 
 
-## Write Base Station EEPROM (v3)
+## Write Base Station EEPROM (v2, ASPP3)
 ``ASPP v3.0``
 
 The **Write Base Station EEPROM** command is used to write a value to a specific memory address on the Base Station's EEPROM.
@@ -562,7 +564,7 @@ Code         | Description
 
 <br>
 
-## Enable Beacon (v3)
+## Enable Beacon (v2, ASPP3)
 ``ASPP v3.0``
 
 The **Enable Beacon** command is used to turn on the beacon on the Base Station.<br>
@@ -697,7 +699,7 @@ Notice that the **Disable Beacon** command packet is the same as the Enable Beac
 
 <br>
 
-## Disable Beacon (v3)
+## Disable Beacon (v2, ASPP3)
 ``ASPP v3.0``
 
 The **Enable Beacon** command is used to turn on the beacon on the Base Station.<br>
@@ -815,7 +817,7 @@ Code         | Description
 
 <br>
 
-## Beacon Status (v2)
+## Beacon Status (v1, ASPP3)
 ``ASPP v3.0``
 
 The **Beacon Status** command is used to get information about the Beacon on the Base Station.
@@ -924,7 +926,7 @@ uint16_t checksum;                       //Checksum of [stopFlag - errorCode]
 
 <br>
 
-## Update Beacon Time (v2)
+## Update Beacon Time (v1, ASPP3)
 ``ASPP v3.0``
 
 The **Update Beacon Time** command is used to update the time that is used by the beacon without re-enabling the beacon. This can be useful when relying on a PPS for time synchronization and not the internal clock. In most scenarios, the **Enable Beacon** command should be used to set the beacon time while enabling the beacon.
@@ -1201,7 +1203,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 
 <br>
 
-## Node Quick Ping (v3)
+## Node Quick Ping (v2, ASPP3)
 ``ASPP v3.0``
 
 The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
@@ -1370,7 +1372,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 
 <br>
 
-## Set Node to Idle (v3)
+## Set Node to Idle (v2, ASPP3)
 ``ASPP v3.0``
 
 The **Set to Idle** command is used to put a Node that is sampling, or sleeping, back into the Idle Mode so that it may be communicated with.
@@ -1471,7 +1473,7 @@ No Response.
 
 <br>
 
-## Detailed Ping (v2)
+## Detailed Ping (v1, ASPP3)
 ``ASPP v3.0``
 
 The **Detailed Ping** command is used to check the communication between the Base Station and the Node, and gives more information (like node RSSI) than the Quick Ping command. This is useful for range tests.
@@ -1533,7 +1535,7 @@ No Response.
 
 <br>
 
-## Initiate Sleep Mode (v2)
+## Initiate Sleep Mode (v1, ASPP3)
 ``ASPP v3.0``
 
 The **Initiate Sleep Mode** command is used to put the Node in a low power state. When the Node is in this low power Sleep Mode, it will not hear any commands except for the Set to Idle command, which will wake the node and put it back into its normal, idle state. The Node should be put into Sleep Mode when you no longer needs to communicate with the node, but want to keep it powered on and preserve battery life.
@@ -1676,7 +1678,7 @@ Code         | Description
 
 <br>
 
-## Read Node EEPROM (v3)
+## Read Node EEPROM (v2, ASPP3)
 ``ASPP v3.0``
 
 The **Read Node EEPROM** command is used to read the value of a specific memory address from the Node's EEPROM.
@@ -1848,7 +1850,7 @@ Code         | Description
 
 <br>
 
-## Write Node EEPROM (v3)
+## Write Node EEPROM (v2, ASPP3)
 ``ASPP v3.0``
 
 The **Write Node EEPROM** command is used to write a value to a specific memory address on the Node's EEPROM.
@@ -2285,7 +2287,7 @@ No Response.
 
 <br>
 
-## Initiate Low Duty Cycle (v3)
+## Initiate Low Duty Cycle (v2, ASPP3)
 ``ASPP v3.0``
 
 The **Initiate Low Duty Cycle (LDC)** command is used to put the Node in LDC (Non-Sync) sampling mode.
@@ -2368,7 +2370,7 @@ No Response.
 <br>
 
 
-## Initiate Synchronized Sampling (v2)
+## Initiate Synchronized Sampling (v1, ASPP3)
 ``ASPP v3.0``
 
 The **Initiate Synchronized Sampling command** is used to put the Node into Synchronized Sampling mode. Once in this mode, the node must receive a beacon from the Base Station to begin sampling and transmitting data packets.
@@ -2520,7 +2522,7 @@ Code   | Description
 
 <br>
 
-## Auto-Balance Channel (v3)
+## Auto-Balance Channel (v2, ASPP3)
 ``ASPP v3.0``
 
 The **Auto-Balance Channel** command is used to auto-balance a particular channel on the Node. This command is only applicable to the differential channels on certain Nodes.
@@ -2654,7 +2656,7 @@ Code   | Description
 
 <br>
 
-## Auto-Calibrate (v2)
+## Auto-Calibrate (v1, ASPP3)
 ``ASPP v3.0``
 
 The **Auto-Calibrate** command is used to auto-calibrate a Node. This command is only applicable to specific Nodes.
@@ -2854,7 +2856,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 
 <br>
 
-## Log Session Info (v2)
+## Log Session Info (v1, ASPP3)
 ``ASPP v3.0``
 
 The **Log Session Info** command retrieves datalogging information about the Node.
@@ -2953,7 +2955,7 @@ uint16_t checksum;                                        //Checksum of [stopFla
 
 <br>
 
-## Erase Logged Data (v3)
+## Erase Logged Data (v2, ASPP3)
 ``ASPP v3.0``
 
 The **Erase Logged Data** command is used to erase all sampled data stored on the Node's memory. This cannot be undone.
@@ -3055,7 +3057,7 @@ See [Get Logged Data (v2) for logged data format details](https://github.com/LOR
 
 <br>
 
-## Get Logged Data (v2)
+## Get Logged Data (v1, ASPP3)
 ``ASPP v3.0``
 
 The **Get Logged Data** command is used to download sampled data stored on the Node's memory.
@@ -3278,7 +3280,7 @@ For more information on the payload of this packet, see the documentation for th
 
 <br>
 
-## Get Diagnostic Info (v2)
+## Get Diagnostic Info (v1, ASPP3)
 ``ASPP v3.0``
 
 The **Get Diagnostic Info** command is used to get diagnostic information about the Wireless Node. Note that a Node can also be configured to send a [Diagnostic data packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet) at a specific interval as well. The information in the data packet is the same as in the response for this command.
@@ -3329,7 +3331,7 @@ To cycle the radio on the Node, use the `Write EEPROM` command and write a `2` t
 
 <br>
 
-## Cycle Power & Radio (v2)
+## Cycle Power & Radio (v1, ASPP3)
 ``ASPP v3.0``
 
 ##### Command:
