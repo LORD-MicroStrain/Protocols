@@ -164,8 +164,8 @@ uint8_t appDataType       = 0x30;        //App Data Type
 uint32_t baseAddress      = 0x00001234;  //Base Station Address
 uint16_t payloadLen       = 0x0002;      //Payload Length
 uint16_t commandId        = 0x0001;      //Command ID
-uint8_t nodeRssi          = 0x7F;        //Node RSSI (placeholder)
-uint8_t baseRssi          = 0x7F;        //Base RSSI (placeholder)
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
 uint32_t checksum;                       //CRC Checksum of all bytes
 ```
 
@@ -288,8 +288,8 @@ uint32_t baseAddress      = 0x00001234;  //Base Station Address
 uint16_t payloadLen       = 0x0004;      //Payload Length
 uint16_t commandId        = 0x0073;      //Command ID
 uint16_t eepromAddress;                  //EEPROM Address to Read
-uint8_t nodeRssi          = 0x7F;        //Node RSSI (placeholder)
-uint8_t baseRssi          = 0x7F;        //Base RSSI (placeholder)
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
 uint32_t checksum;                       //CRC Checksum of all bytes
 ```
 
@@ -439,8 +439,8 @@ uint16_t payloadLen       = 0x0006;      //Payload Length
 uint16_t commandId        = 0x0078;      //Command ID
 uint16_t eepromAddress;                  //EEPROM Address to Write to
 uint16_t value;                          //Value to Write to EEPROM
-uint8_t nodeRssi          = 0x7F;        //Node RSSI (placeholder)
-uint8_t baseRssi          = 0x7F;        //Base RSSI (placeholder)
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
 uint32_t checksum;                       //CRC Checksum of all bytes
 ```
 
@@ -579,8 +579,8 @@ uint32_t baseAddress      = 0x00001234;  //Base Station Address
 uint16_t payloadLen       = 0x0006;      //Payload Length
 uint16_t commandId        = 0xBEAC;      //Command ID
 uint32_t timestamp;                      //Timestamp to give to the Beacon
-uint8_t nodeRssi          = 0x7F;        //Node RSSI (placeholder)
-uint8_t baseRssi          = 0x7F;        //Base RSSI (placeholder)
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
 uint32_t checksum;                       //CRC Checksum of all bytes
 ```
 
@@ -714,8 +714,8 @@ uint32_t baseAddress      = 0x00001234;  //Base Station Address
 uint16_t payloadLen       = 0x0006;      //Payload Length
 uint16_t commandId        = 0xBEAC;      //Command ID
 uint32_t disableBeacon    = 0xFFFFFFFF;  //Value to Disable the Beacon
-uint8_t nodeRssi          = 0x7F;        //Node RSSI (placeholder)
-uint8_t baseRssi          = 0x7F;        //Base RSSI (placeholder)
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
 uint32_t checksum;                       //CRC Checksum of all bytes
 ```
 
@@ -830,8 +830,8 @@ uint8_t appDataType       = 0x30;        //App Data Type
 uint32_t baseAddress      = 0x00001234;  //Base Station Address
 uint16_t payloadLen       = 0x0002;      //Payload Length
 uint16_t commandId        = 0xBEAD;      //Command ID
-uint8_t nodeRssi          = 0x7F;        //Node RSSI (placeholder)
-uint8_t baseRssi          = 0x7F;        //Base RSSI (placeholder)
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
 uint32_t checksum;                       //CRC Checksum of all bytes
 ```
 
@@ -940,8 +940,8 @@ uint32_t baseAddress      = 0x00001234;  //Base Station Address
 uint16_t payloadLen       = 0x0006;      //Payload Length
 uint16_t commandId        = 0xBEAB;      //Command ID
 uint32_t timestamp;                      //Timestamp to give to the Beacon
-uint8_t nodeRssi          = 0x7F;        //Node RSSI (placeholder)
-uint8_t baseRssi          = 0x7F;        //Base RSSI (placeholder)
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
 uint32_t checksum;                       //CRC Checksum of all bytes
 ```
 
@@ -997,8 +997,8 @@ uint32_t baseAddress           = 0x00001234;              //Base Station Address
 uint16_t payloadLen            = 0x0003;                  //Payload Length
 uint16_t commandId             = 0x0030;                  //Command ID
 uint8_t resetType;                                        //Reset Type (1 = hard reset, 2 = soft reset)
-uint8_t nodeRssi               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRssi               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -1086,8 +1086,8 @@ uint16_t options;                        //Options (Used internally)
 uint32_t minFreq;                        //Minimum Sweep Frequency in kHz (2400000 = 2.4GHz)
 uint32_t maxFreq;                        //Maximum Sweep Frequency in kHz (2400000 = 2.4GHz)
 uint32_t interval;                       //The Sweep interval in kHz.
-uint8_t nodeRssi          = 0x7F;        //Node RSSI (placeholder)
-uint8_t baseRssi          = 0x7F;        //Base RSSI (placeholder)
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
+uint8_t RESERVED          = 0x7F;        //Reserved Byte
 uint32_t checksum;                       //CRC Checksum of all bytes
 ```
 
@@ -1217,8 +1217,8 @@ uint32_t baseAddress           = 0x00001234;              //Base Station Address
 uint16_t payloadLen            = 0x0006;                  //Payload Length
 uint16_t commandId             = 0x0012;                  //Command ID
 uint32_t nodeAddress;                                     //Node Address
-uint8_t nodeRssi               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRssi               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -1386,8 +1386,8 @@ uint32_t baseAddress           = 0x00001234;              //Base Station Address
 uint16_t payloadLen            = 0x0006;                  //Payload Length
 uint16_t commandId             = 0x0091;                  //Command ID
 uint32_t nodeAddress;                                     //Node Address
-uint8_t nodeRssi               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRssi               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -1486,8 +1486,8 @@ uint8_t appDataType            = 0x00;                    //App Data Type
 uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen            = 0x0002;                  //Payload Length
 uint16_t commandId             = 0x0002;                  //Command ID
-uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -1548,8 +1548,8 @@ uint8_t appDataType            = 0x00;                    //App Data Type
 uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen            = 0x0002;                  //Payload Length
 uint16_t commandId             = 0x0032;                  //Command ID
-uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -1694,8 +1694,8 @@ uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen            = 0x0004;                  //Payload Length
 uint16_t commandId             = 0x0007;                  //Command ID
 uint16_t eepromAddress;                                   //EEPROM Address to Read
-uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -1867,8 +1867,8 @@ uint16_t payloadLen            = 0x0006;                  //Payload Length
 uint16_t commandId             = 0x0008;                  //Command ID
 uint16_t eepromAddress;                                   //EEPROM Address to Write to
 uint16_t value;                                           //Value to Write to EEPROM
-uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -2303,8 +2303,8 @@ uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen            = 0x000A;                  //Payload Length
 uint16_t commandId             = 0x0039;                  //Command ID
 uint64_t timestamp;                                       //Current Timestamp (nanoseconds since Unix Epoch)
-uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -2385,8 +2385,8 @@ uint8_t appDataType            = 0x00;                    //App Data Type
 uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen            = 0x0002;                  //Payload Length
 uint16_t commandId             = 0x003B;                  //Command ID
-uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -2537,8 +2537,8 @@ uint16_t payloadLen            = 0x0007;                  //Payload Length
 uint16_t commandId             = 0x0065;                  //Command ID
 uint8_t channelNumber;                                    //Channel Number to balance
 float targetPercentage;                                   //Target Balance Percentage
-uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -2670,8 +2670,8 @@ uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen;                                      //Payload Length
 uint16_t commandId             = 0x0064;                  //Command ID
 //Specific Command Bytes (varies per device/firmware)
-uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -2869,8 +2869,8 @@ uint8_t appDataType            = 0x00;                    //App Data Type
 uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen            = 0x0002;                  //Payload Length
 uint16_t commandId             = 0x0040;                  //Command ID
-uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -2968,8 +2968,8 @@ uint8_t appDataType            = 0x00;                    //App Data Type
 uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen            = 0x0002;                  //Payload Length
 uint16_t commandId             = 0x0042;                  //Command ID
-uint8_t nodeRSSI               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRSSI               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -3071,8 +3071,8 @@ uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen            = 0x0006;                  //Payload Length
 uint16_t commandId             = 0x0041;                  //Command ID
 uint32_t address;                                         //Flash Address to read
-uint8_t nodeRssi               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRssi               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -3293,8 +3293,8 @@ uint8_t appDataType            = 0x00;                    //App Data Type
 uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen            = 0x0002;                  //Payload Length
 uint16_t commandId             = 0x0009;                  //Command ID
-uint8_t nodeRssi               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRssi               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -3343,8 +3343,8 @@ uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen            = 0x0003;                  //Payload Length
 uint16_t commandId             = 0x0031;                  //Command ID
 uint8_t resetType;                                        //Reset Type (1 = hard reset, 2 = soft reset)
-uint8_t nodeRssi               = 0x7F;                    //Node RSSI (placeholder)
-uint8_t baseRssi               = 0x7F;                    //Base RSSI (placeholder)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
