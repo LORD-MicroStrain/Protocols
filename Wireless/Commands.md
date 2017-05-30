@@ -66,11 +66,12 @@ Command      | Command ID    |  Node ASPP Version required
 [Read Node EEPROM (v1)](#read-node-eeprom-v1) | 0x0003 | ASPP v1.0
 [Read Node EEPROM (v2)](#read-node-eeprom-v2) | 0x0007 | ASPP v1.1
 [Read Node EEPROM (v2, ASPP3)](#read-node-eeprom-v2-aspp3) | 0x0007 | ASPP v3.0
+[Batch Node EEPROM Read (v1, ASPP3)](#batch-node-eeprom-read-v1-aspp3) | 0x000A | ASPP v3.0
 [Write Node EEPROM (v1)](#write-node-eeprom-v1) | 0x0004 | ASPP v1.0
 [Write Node EEPROM (v2)](#write-node-eeprom-v2) | 0x0008 | ASPP v1.1
 [Write Node EEPROM (v2, ASPP3)](#write-node-eeprom-v2-aspp3) | 0x0008 | ASPP v3.0
 [Initiate Synchronized Sampling (v1)](#initiate-synchronized-sampling-v1) | 0x003B | ASPP v1.0
-[Initiate Synchronized Sampling (v1, ASPP3)](#initiate-synchronized-sampling-v2) | 0x003B | ASPP v3.0
+[Initiate Synchronized Sampling (v1, ASPP3)](#initiate-synchronized-sampling-v1-aspp3) | 0x003B | ASPP v3.0
 [Initiate Low Duty Cycle (v1)](#initiate-low-duty-cycle-v1) | 0x0038 | ASPP v1.0
 [Initiate Low Duty Cycle (v2)](#initiate-low-duty-cycle-v2) | 0x0039 | ASPP v1.5
 [Initiate Low Duty Cycle (v2, ASPP3)](#initiate-low-duty-cycle-v2-aspp3) | 0x0039 | ASPP v3.0
@@ -1735,6 +1736,45 @@ Code         | Description
 -------------|--------------
 1            | Unknown EEPROM Address
 4            | Hardware Error
+
+<br>
+
+## Batch Node EEPROM Read (v1, ASPP3)
+``ASPP v3.0``
+
+The **Batch Node EEPROM Read** command is used to read a group of ordered EEPROM locations from the Node, starting with the address specified in the command. The Node will response will ordered eeprom address and value pairs from the specified address until the packet is full or the Node has no larger addressed eeproms. Eeproms that are not supported by the Node will not be sent in the response.
+
+See the Node EEPROM Map for specific memory address details.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x04;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0004;                  //Payload Length
+uint16_t commandId             = 0x000A;                  //Command ID
+uint16_t startAddress;                                    //EEPROM Address to start reading at
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen;                                      //Payload Length
+uint16_t commandId             = 0x000A;                  //Command ID Echo
+uint16_t eepromAddress;                                   //EEPROM Address read
+uint16_t eepromValue;                                     //EEPROM value for the given address
+//repeat eepromAddress and eepromValue until packet is filled or there are no higher eeprom addresses
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
 
 <br>
 
