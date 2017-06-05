@@ -52,6 +52,8 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Set Node to Idle (v1)*](#set-node-to-idle-v1) | 0x0090 | ASPP v1.0
 [Set Node to Idle (v2)*](#set-node-to-idle-v2) | 0x0090 | ASPP v1.6
 [Set Node to Idle (v2, ASPP3)*](#set-node-to-idle-v2-aspp3) | 0x0090 | ASPP v3.0
+[Change Node Communication Protocol(v1)*](#change-node-communication-protocol-v1) | 0x000D | ASPP v1.7
+[Change Node Communication Protocol(v1, ASPP3)*](#change-node-communication-protocol-v1-aspp3) | 0x000D | ASPP v3.0
 
 *This command targets a Node, but is handled by the Base Station itself.
 
@@ -1431,6 +1433,76 @@ uint32_t checksum;                                        //CRC Checksum of all 
 **Ongoing Operation:** The Set to Idle command puts the Base Station in a mode that sends small packets as fast as possible in an attempt to communicate with the Node. The Base Station will periodically check to see if the Node has responded to a ping request. The function will continue indefinitely until either the Node responds, or the user sends any byte to the Base Station, which cancels the operation. No incoming packets will be heard while the Base Station is in this mode.
 
 **Broadcast Special Case:** When the broadcast Node address 4294967295(0xFFFFFFFF) is used, the Base Station does not check for a ping response. It will continue sending the Set to Idle command until interrupted by the user (any single byte sent to the Base Station). This will attempt to set all Nodes to idle on the current frequency that the Base Station is on.
+
+<br>
+
+## Change Node Communication Protocol (v1)
+``ASPP v1.7``
+
+The **Change Node Communication Protocol** command is used to change the communication protocol of a Node. This command is handled by the BaseStation. The BaseStation will switch the Node to the specified protocol, switch itself over to the specified protocol, and attempt to ping the Node. If the ping attempts are successful, the Node will stay in that protocol mode. If the ping attempts fail, the Node will be reverted to the original protocol it was configured for before this command was used. In either case, the BaseStation will change back to its original communication protocol.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x0E;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x30;                    //App Data Type
+uint16_t baseAddress           = 0x1234;                  //Base Station Address
+uint8_t payloadLen             = 0x06;                    //Payload Length
+uint16_t commandId             = 0x000D;                  //Command ID
+uint16_t nodeAddress;                                     //Node Address
+uint16_t mode;                                            //Protocol mode (0 - LXRS, 1 - LXRS+)
+uint16_t checksum;                                        //Checksum of [stopFlag - mode]
+```
+
+##### Initial Received Response:
+This response comes from the Base Station indicating that the command was received and the Base Station is attempting to switch the Node's communication protocol and verify communication.
+
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint16_t baseAddress           = 0x1234;                  //Base Station Address
+uint8_t payloadLen             = 0x0B;                    //Payload Length
+uint16_t commandId             = 0x000D;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the operation should complete.
+uint16_t nodeAddress;                                     //Node Address
+uint16_t mode;                                            //Protocol mode Echo
+int8_t reserved;                                          //Reserved Byte
+int8_t reserved;                                          //Reserved Byte
+uint16_t checksum;                                        //Checksum of [stopFlag - mode]
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x31;                    //App Data Type
+uint16_t baseAddress           = 0x1234;                  //Base Station Address
+uint8_t payloadLen             = 0x06;                    //Payload Length
+uint16_t commandId             = 0x000D;                  //Command ID Echo
+uint16_t nodeAddress;                                     //Node Address
+uint16_t mode;                                            //Protocol mode Echo
+int8_t reserved;                                          //Reserved Byte
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
+```
+
+##### Failure Response:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x32;                    //App Data Type
+uint16_t baseAddress;                                     //Base Station Address
+uint8_t payloadLen             = 0x04;                    //Payload Length
+uint16_t commandId             = 0x000D;                  //Command ID Echo
+uint16_t nodeAddress;                                     //Node Address
+uint16_t mode;                                            //Protocol mode Echo
+uint16_t errorCode;                                       //1 - invalid mode specified, 2- failed to ping Node after switching modes
+int8_t reserved1;                                         //Reserved Byte
+int8_t reserved2;                                         //Reserved Byte
+uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
+```
 
 -------
 
