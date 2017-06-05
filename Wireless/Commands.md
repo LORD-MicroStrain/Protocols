@@ -1493,8 +1493,8 @@ uint16_t checksum;                                        //Checksum of [stopFla
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x32;                    //App Data Type
-uint16_t baseAddress;                                     //Base Station Address
-uint8_t payloadLen             = 0x04;                    //Payload Length
+uint16_t baseAddress           = 0x1234;                  //Base Station Address
+uint8_t payloadLen             = 0x08;                    //Payload Length
 uint16_t commandId             = 0x000D;                  //Command ID Echo
 uint16_t nodeAddress;                                     //Node Address
 uint16_t mode;                                            //Protocol mode Echo
@@ -1502,6 +1502,78 @@ uint16_t errorCode;                                       //1 - invalid mode spe
 int8_t reserved1;                                         //Reserved Byte
 int8_t reserved2;                                         //Reserved Byte
 uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
+```
+
+<br>
+
+## Change Node Communication Protocol (v1, ASPP3)
+``ASPP v3.0``
+
+The **Change Node Communication Protocol** command is used to change the communication protocol of a Node. This command is handled by the BaseStation. The BaseStation will switch the Node to the specified protocol, switch itself over to the specified protocol, and attempt to ping the Node. If the ping attempts are successful, the Node will stay in that protocol mode. If the ping attempts fail, the Node will be reverted to the original protocol it was configured for before this command was used. In either case, the BaseStation will change back to its original communication protocol.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x01;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x30;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x0008;                  //Payload Length
+uint16_t commandId             = 0x000D;                  //Command ID
+uint32_t nodeAddress;                                     //Node Address
+uint16_t mode;                                            //Protocol mode (0 - LXRS, 1 - LXRS+)
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Initial Received Response:
+This response comes from the Base Station indicating that the command was received and the Base Station is attempting to switch the Node's communication protocol and verify communication.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000D;                  //Payload Length
+uint16_t commandId             = 0x000D;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the operation should complete.
+uint32_t nodeAddress;                                     //Node Address
+uint16_t mode;                                            //Protocol mode Echo
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x31;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x0008;                  //Payload Length
+uint16_t commandId             = 0x000D;                  //Command ID Echo
+uint32_t nodeAddress;                                     //Node Address
+uint16_t mode;                                            //Protocol mode Echo
+uint8_t reserved;                                         //Reserved Byte
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Failure Response:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x32;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000A;                  //Payload Length
+uint16_t commandId             = 0x000D;                  //Command ID Echo
+uint32_t nodeAddress;                                     //Node Address
+uint16_t mode;                                            //Protocol mode Echo
+uint16_t errorCode;                                       //1 - invalid mode specified, 2- failed to ping Node after switching modes
+uint8_t reserved1;                                        //Reserved Byte
+uint8_t reserved2;                                        //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
 -------
