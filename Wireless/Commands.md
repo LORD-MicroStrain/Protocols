@@ -60,8 +60,8 @@ Command      | Command ID    |  Base Station ASPP Version required
 
 Command      | Command ID    |  Node ASPP Version required
 -------------|---------------|--------------------
-[Detailed Ping (v1)](#detailed-ping-v1) | 0x0002 | ASPP v1.0
-[Detailed Ping (v1, ASPP3)](#detailed-ping-v1-aspp3) | 0x0002 | ASPP v3.0
+[Ping (v1)](#ping-v1) | 0x0002 | ASPP v1.0
+[Ping (v1, ASPP3)](#ping-v1-aspp3) | 0x0002 | ASPP v3.0
 [Initiate Sleep Mode (v1)](#initiate-sleep-mode-v1) | 0x32 | ASPP v1.0
 [Initiate Sleep Mode (v1, ASPP3)](#initiate-sleep-mode-v1-aspp3) | 0x0032 | ASPP v3.0
 [Read Node EEPROM (v1)](#read-node-eeprom-v1) | 0x0003 | ASPP v1.0
@@ -1579,10 +1579,10 @@ uint32_t checksum;                                        //CRC Checksum of all 
 
 -------
 
-## Detailed Ping (v1)
+## Ping (v1)
 ``ASPP v1.0``
 
-The **Detailed Ping** command is used to check the communication between the Base Station and the Node, and gives more information (like node RSSI) than the Quick Ping command. This is useful for range tests.
+The **Ping** command is used to check the communication between the Base Station and the Node, and gives more information (like node RSSI) than the Quick Ping command. This is useful for range tests.
 
 ##### Command:
 ```cpp
@@ -1619,10 +1619,10 @@ No Response.
 
 <br>
 
-## Detailed Ping (v1, ASPP3)
+## Ping (v1, ASPP3)
 ``ASPP v3.0``
 
-The **Detailed Ping** command is used to check the communication between the Base Station and the Node, and gives more information (like node RSSI) than the Quick Ping command. This is useful for range tests.
+The **Ping** command is used to check the communication between the Base Station and the Node, and gives more information (like node RSSI) than the Quick Ping command. This is useful for range tests.
 
 ##### Command:
 ```cpp
