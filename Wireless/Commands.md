@@ -46,9 +46,8 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Update Beacon Time (v1, ASPP3)](#update-beacon-time-v1-aspp3) | 0xBEAB | ASPP v3.0
 [Cycle Base Station Power & Radio (v1)](#cycle-base-station-power--radio-v1) | - | ASPP v1.0
 [Cycle Base Station Power & Radio (v2)](#cycle-base-station-power--radio-v2) | 0x0030 | ASPP v3.0
-[Node Quick Ping (v1)*](#node-quick-ping-v1) | 0x02 | ASPP v1.0
-[Node Quick Ping (v2)*](#node-quick-ping-v2) | 0x0012 | ASPP v1.6
-[Node Quick Ping (v2, ASPP3)*](#node-quick-ping-v2-aspp3) | 0x0012 | ASPP v3.0
+[(Legacy) Node Quick Ping (v1)*](#legacy-node-quick-ping-v1) | 0x02 | ASPP v1.0
+[(Legacy) Node Quick Ping (v2)*](#legacy-node-quick-ping-v2) | 0x0012 | ASPP v1.6
 [Set Node to Idle (v1)*](#set-node-to-idle-v1) | 0x0090 | ASPP v1.0
 [Set Node to Idle (v2)*](#set-node-to-idle-v2) | 0x0090 | ASPP v1.6
 [Set Node to Idle (v2, ASPP3)*](#set-node-to-idle-v2-aspp3) | 0x0090 | ASPP v3.0
@@ -1118,7 +1117,7 @@ The data packets will relect such changes.
 
 <br>
 
-## Node Quick Ping (v1)
+## (Legacy) Node Quick Ping (v1)
 ``ASPP v1.0``
 
 The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
@@ -1141,7 +1140,7 @@ uint8_t failId                 = 0x21;                    //Failure ID
 
 <br>
 
-## Node Quick Ping (v2)
+## (Legacy) Node Quick Ping (v2)
 ``ASPP v1.6``
 
 The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
