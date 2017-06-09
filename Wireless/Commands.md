@@ -1120,6 +1120,8 @@ The data packets will relect such changes.
 ## (Legacy) Node Quick Ping (v1)
 ``ASPP v1.0``
 
+``Legacy Command - This command is no longer supported by our latest products``
+
 The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
 
 ##### Command:
@@ -1142,6 +1144,8 @@ uint8_t failId                 = 0x21;                    //Failure ID
 
 ## (Legacy) Node Quick Ping (v2)
 ``ASPP v1.6``
+
+``Legacy Command - This command is no longer supported by our latest products``
 
 The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
 
