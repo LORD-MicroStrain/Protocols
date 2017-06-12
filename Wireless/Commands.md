@@ -51,8 +51,8 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Set Node to Idle (v1)*](#set-node-to-idle-v1) | 0x0090 | ASPP v1.0
 [Set Node to Idle (v2)*](#set-node-to-idle-v2) | 0x0090 | ASPP v1.6
 [Set Node to Idle (v2, ASPP3)*](#set-node-to-idle-v2-aspp3) | 0x0090 | ASPP v3.0
-[Change Node Communication Protocol(v1)*](#change-node-communication-protocol-v1) | 0x000D | ASPP v1.7
-[Change Node Communication Protocol(v1, ASPP3)*](#change-node-communication-protocol-v1-aspp3) | 0x000D | ASPP v3.0
+[Test Node Communication Protocol(v1)*](#test-node-communication-protocol-v1) | 0x000D | ASPP v1.7
+[Test Node Communication Protocol(v1, ASPP3)*](#test-node-communication-protocol-v1-aspp3) | 0x000D | ASPP v3.0
 
 *This command targets a Node, but is handled by the Base Station itself.
 
@@ -1172,7 +1172,7 @@ uint16_t baseAddress;                                     //Base Station Address
 uint8_t payloadLen             = 0x09;                    //Payload Length
 uint16_t commandId             = 0x0012;                  //Command ID Echo
 uint8_t status;                                           //Status byte
-float timeUntilComplete;                                  //The estimated time until the operation should complete.
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
 uint16_t nodeAddress;                                     //Node Address
 int8_t reserved;                                          //Reserved Byte
 int8_t reserved;                                          //Reserved Byte
@@ -1205,73 +1205,6 @@ uint16_t nodeAddress;                                     //Node Address
 int8_t reserved1;                                         //Reserved Byte
 int8_t reserved2;                                         //Reserved Byte
 uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
-```
-
-<br>
-
-## Node Quick Ping (v2, ASPP3)
-``ASPP v3.0``
-
-The **Quick Ping** command is used to check the communication between the Base Station and the Node. This command has a direct success/fail response, so it can immediately tell you whether communication was successful. Other commands,do not have a fail response, requiring you to use a timeout to determine a failure.
-
-##### Command:
-```cpp
-uint8_t startByte              = 0xAC;                    //Start of Packet Byte
-uint8_t stopFlag               = 0x01;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x30;                    //App Data Type
-uint32_t baseAddress           = 0x00001234;              //Base Station Address
-uint16_t payloadLen            = 0x0006;                  //Payload Length
-uint16_t commandId             = 0x0012;                  //Command ID
-uint32_t nodeAddress;                                     //Node Address
-uint8_t RESERVED               = 0x7F;                    //Reserved Byte
-uint8_t RESERVED               = 0x7F;                    //Reserved Byte
-uint32_t checksum;                                        //CRC Checksum of all bytes
-```
-
-##### Initial Received Response:
-This response comes from the Base Station indicating that the command was received and the Base Station is attempting to ping the Node.
-
-```cpp
-uint8_t startByte              = 0xAC;                    //Start of Packet Byte
-uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x34;                    //App Data Type
-uint32_t baseAddress           = 0x00001234;              //Base Station Address
-uint16_t payloadLen            = 0x000B;                  //Payload Length
-uint16_t commandId             = 0x0012;                  //Command ID Echo
-uint8_t status;                                           //Status byte
-float timeUntilComplete;                                  //The estimated time until the operation should complete.
-uint32_t nodeAddress;                                     //Node Address
-uint8_t reserved;                                         //Reserved Byte
-uint8_t reserved;                                         //Reserved Byte
-uint32_t checksum;                                        //CRC Checksum of all bytes
-```
-
-##### Success Response:
-```cpp
-uint8_t startByte              = 0xAC;                    //Start of Packet Byte
-uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x31;                    //App Data Type
-uint32_t baseAddress           = 0x00001234;              //Base Station Address
-uint16_t payloadLen            = 0x0006;                  //Payload Length
-uint16_t commandId             = 0x0012;                  //Command ID Echo
-uint32_t nodeAddress;                                     //Node Address
-uint8_t reserved;                                         //Reserved Byte
-uint8_t baseRssi;                                         //Base Station RSSI
-uint32_t checksum;                                        //CRC Checksum of all bytes
-```
-
-##### Failure Response:
-```cpp
-uint8_t startByte              = 0xAC;                    //Start of Packet Byte
-uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x32;                    //App Data Type
-uint32_t baseAddress           = 0x00001234;              //Base Station Address
-uint16_t payloadLen            = 0x0006;                  //Payload Length
-uint16_t commandId             = 0x0012;                  //Command ID Echo
-uint32_t nodeAddress;                                     //Node Address
-uint8_t reserved1;                                        //Reserved Byte
-uint8_t reserved2;                                        //Reserved Byte
-uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
 <br>
@@ -1397,7 +1330,7 @@ uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
-##### Initial Received Response:
+##### Base Station Received Response:
 This response comes from the Base Station indicating that the command was received and the Base Station is attempting to set to Node to Idle.
 
 ```cpp
@@ -1439,10 +1372,10 @@ uint32_t checksum;                                        //CRC Checksum of all 
 
 <br>
 
-## Change Node Communication Protocol (v1)
+## Test Node Communication Protocol (v1)
 ``ASPP v1.7``
 
-The **Change Node Communication Protocol** command is used to change the communication protocol of a Node. This command is handled by the BaseStation. The BaseStation will switch the Node to the specified protocol, switch itself over to the specified protocol, and attempt to ping the Node. If the ping attempts are successful, the Node will stay in that protocol mode. If the ping attempts fail, the Node will be reverted to the original protocol it was configured for before this command was used. In either case, the BaseStation will change back to its original communication protocol.
+The **Test Node Communication Protocol** command is used to test changing the communication protocol of a Node. This is useful, as it is possible to switch a Node from LXRS mode to LXRS+ mode, and then no longer be able to communicate with it due to the reduced range. The BaseStation will switch the Node to the specified protocol, switch itself over to the specified protocol, and attempt to ping the Node. After the command completes, the BaseStation and Node will be changed back to the original communication protocol.
 
 ##### Command:
 ```cpp
@@ -1457,8 +1390,8 @@ uint16_t mode;                                            //Protocol mode (0 - L
 uint16_t checksum;                                        //Checksum of [stopFlag - mode]
 ```
 
-##### Initial Received Response:
-This response comes from the Base Station indicating that the command was received and the Base Station is attempting to switch the Node's communication protocol and verify communication.
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and the Base Station is testing communication with the Node.
 
 ```cpp
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
@@ -1468,7 +1401,7 @@ uint16_t baseAddress           = 0x1234;                  //Base Station Address
 uint8_t payloadLen             = 0x09;                    //Payload Length
 uint16_t commandId             = 0x000D;                  //Command ID Echo
 uint8_t status;                                           //Status byte
-float timeUntilComplete;                                  //The estimated time until the operation should complete.
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
 uint16_t nodeAddress;                                     //Node Address
 int8_t reserved;                                          //Reserved Byte
 int8_t reserved;                                          //Reserved Byte
@@ -1476,6 +1409,8 @@ uint16_t checksum;                                        //Checksum of [stopFla
 ```
 
 ##### Success Response:
+This response indicates the Node successfully responded to pings on the new communication protocol.
+
 ```cpp
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
@@ -1491,6 +1426,8 @@ uint16_t checksum;                                        //Checksum of [stopFla
 ```
 
 ##### Failure Response:
+This response indicates the Node failed to respond to pings on the new communication protocol.
+
 ```cpp
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
@@ -1508,10 +1445,10 @@ uint16_t checksum;                                        //Checksum of [stopFla
 
 <br>
 
-## Change Node Communication Protocol (v1, ASPP3)
+## Test Node Communication Protocol (v1, ASPP3)
 ``ASPP v3.0``
 
-The **Change Node Communication Protocol** command is used to change the communication protocol of a Node. This command is handled by the BaseStation. The BaseStation will switch the Node to the specified protocol, switch itself over to the specified protocol, and attempt to ping the Node. If the ping attempts are successful, the Node will stay in that protocol mode. If the ping attempts fail, the Node will be reverted to the original protocol it was configured for before this command was used. In either case, the BaseStation will change back to its original communication protocol.
+The **Test Node Communication Protocol** command is used to test changing the communication protocol of a Node. This is useful, as it is possible to switch a Node from LXRS mode to LXRS+ mode, and then no longer be able to communicate with it due to the reduced range. The BaseStation will switch the Node to the specified protocol, switch itself over to the specified protocol, and attempt to ping the Node. After the command completes, the BaseStation and Node will be changed back to the original communication protocol.
 
 ##### Command:
 ```cpp
@@ -1528,8 +1465,8 @@ uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
-##### Initial Received Response:
-This response comes from the Base Station indicating that the command was received and the Base Station is attempting to switch the Node's communication protocol and verify communication.
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and the Base Station is testing communication with the Node.
 
 ```cpp
 uint8_t startByte              = 0xAC;                    //Start of Packet Byte
@@ -1539,7 +1476,7 @@ uint32_t baseAddress           = 0x00001234;              //Base Station Address
 uint16_t payloadLen            = 0x000B;                  //Payload Length
 uint16_t commandId             = 0x000D;                  //Command ID Echo
 uint8_t status;                                           //Status byte
-float timeUntilComplete;                                  //The estimated time until the operation should complete.
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
 uint32_t nodeAddress;                                     //Node Address
 uint8_t reserved;                                         //Reserved Byte
 uint8_t reserved;                                         //Reserved Byte
@@ -1547,6 +1484,8 @@ uint32_t checksum;                                        //CRC Checksum of all 
 ```
 
 ##### Success Response:
+This response indicates the Node successfully responded to pings on the new communication protocol.
+
 ```cpp
 uint8_t startByte              = 0xAC;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
@@ -1562,6 +1501,8 @@ uint32_t checksum;                                        //CRC Checksum of all 
 ```
 
 ##### Failure Response:
+This response indicates the Node failed to respond to pings on the new communication protocol.
+
 ```cpp
 uint8_t startByte              = 0xAC;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
@@ -1622,7 +1563,7 @@ No Response.
 ## Ping (v1, ASPP3)
 ``ASPP v3.0``
 
-The **Ping** command is used to check the communication between the Base Station and the Node, and gives more information (like node RSSI) than the Quick Ping command. This is useful for range tests.
+The **Ping** command is used to check the communication between the Base Station and the Node.
 
 ##### Command:
 ```cpp
@@ -1634,6 +1575,24 @@ uint16_t payloadLen            = 0x0002;                  //Payload Length
 uint16_t commandId             = 0x0002;                  //Command ID
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -1696,6 +1655,24 @@ uint16_t payloadLen            = 0x0002;                  //Payload Length
 uint16_t commandId             = 0x0032;                  //Command ID
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -1845,6 +1822,24 @@ uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
 ##### Success Response:
 ```cpp
 uint8_t startByte              = 0xAC;                    //Start of Packet Byte
@@ -1902,6 +1897,24 @@ uint16_t commandId             = 0x000A;                  //Command ID
 uint16_t startAddress;                                    //EEPROM Address to start reading at
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -2054,6 +2067,24 @@ uint16_t eepromAddress;                                   //EEPROM Address to Wr
 uint16_t value;                                           //Value to Write to EEPROM
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -2493,6 +2524,24 @@ uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
 ##### Success Response:
 ```cpp
 uint8_t startByte              = 0xAC;                    //Start of Packet Byte
@@ -2572,6 +2621,24 @@ uint16_t payloadLen            = 0x0002;                  //Payload Length
 uint16_t commandId             = 0x003B;                  //Command ID
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -2727,6 +2794,24 @@ uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
 ##### Success Response:
 ```cpp
 uint8_t startByte              = 0xAC;                    //Start of Packet Byte
@@ -2860,6 +2945,24 @@ uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
 ##### Node Received Response:
 
 The Node sends this packet when it initially received the AutoCal command, before any calibration is performed, to notify the user that calibration is being performed.
@@ -2872,7 +2975,7 @@ uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen            = 0x0007;                  //Payload Length
 uint16_t commandId             = 0x0064;                  //Command ID Echo
 uint8_t status;                                           //Status Code
-float timeUntilComplete;                                  //Time Until Completion
+float timeUntilComplete;                                  //The estimated time for the calibration to complete.
 uint8_t nodeRssi;                                         //Node RSSI
 uint8_t baseRssi;                                         //Base Station RSSI
 uint32_t checksum;                                        //CRC Checksum of all bytes
@@ -3059,6 +3162,24 @@ uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
 ##### Success Response:
 
 ```cpp
@@ -3109,7 +3230,7 @@ uint16_t commandId             = 0x0042;                  //Command ID
 uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
-##### Completion Response:
+##### Success Response:
 
 ```cpp
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
@@ -3158,7 +3279,25 @@ uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
-##### Completion Response:
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Success Response:
 
 ```cpp
 uint8_t startByte              = 0xAC;                    //Start of Packet Byte
@@ -3258,6 +3397,24 @@ uint16_t commandId             = 0x0041;                  //Command ID
 uint32_t address;                                         //Flash Address to read
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
@@ -3483,6 +3640,24 @@ uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
 ##### Success Response:
 ```cpp
 uint8_t startByte              = 0xAC;                    //Start of Packet Byte
@@ -3530,6 +3705,24 @@ uint16_t commandId             = 0x0031;                  //Command ID
 uint8_t resetType;                                        //Reset Type (1 = hard reset, 2 = soft reset)
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Base Station Received Response:
+This response comes from the Base Station indicating that the command was received and sent to the Node.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
