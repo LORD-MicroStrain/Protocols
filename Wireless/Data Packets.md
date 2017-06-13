@@ -886,8 +886,9 @@ uint8_t startByte       = 0xAA;    //Start of Packet Byte
 uint8_t stopFlag        = 0x07;    //Delivery Stop Flag
 uint8_t appDataType     = 0x1C;    //App Data Type
 uint16_t nodeAddress;              //Node Address
-uint8_t payloadLen      = 0x1A;    //Payload Length
+uint8_t payloadLen      = 0x1B;    //Payload Length
 uint8_t version         = 0x05;    //Node Discovery Version
+uint8_t commProtocol;              //Communication Protocol the Node is using
 uint8_t frequency;                 //Radio Frequency the Node is on
 uint16_t panId;                    //The PAN ID the Node is on
 uint16_t modelNumber;              //The Model Number of the Node
@@ -895,8 +896,8 @@ uint16_t modelOption;              //The Model Option of the Node
 uint32_t serial;                   //The Serial Number of the Node
 uint16_t firmwareVersion1;         //The Firmware Version of the Node (part 1)
 uint16_t firmwareVersion2;         //The Firmware Version of the Node (part 2)
-uint16_t asppVersionLxrs;          //The ASPP version used when in LXRS Mode.
-uint16_t asppVersionLxrsPlus;      //The ASPP version used when in LXRS+ Mode.
+uint16_t asppVersionLxrs;          //The ASPP version used when in LXRS Mode
+uint16_t asppVersionLxrsPlus;      //The ASPP version used when in LXRS+ Mode
 uint16_t defaultMode;              //The Default Mode of the Node
 uint32_t bitResult;                //Built In Test result
 int8_t reserved;                   //RESERVED
@@ -920,8 +921,9 @@ uint8_t startByte       = 0xAC;    //Start of Packet Byte
 uint8_t stopFlag        = 0x08;    //Delivery Stop Flag
 uint8_t appDataType     = 0x1C;    //App Data Type
 uint32_t nodeAddress;              //Node Address
-uint16_t payloadLen     = 0x1A;    //Payload Length
+uint16_t payloadLen     = 0x001B;  //Payload Length
 uint8_t version         = 0x05;    //Node Discovery Version
+uint8_t commProtocol;              //Communication Protocol the Node is using
 uint8_t frequency;                 //Radio Frequency the Node is on
 uint16_t panId;                    //The PAN ID the Node is on
 uint16_t modelNumber;              //The Model Number of the Node
