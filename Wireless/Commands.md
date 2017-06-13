@@ -1433,11 +1433,11 @@ uint8_t startByte              = 0xAA;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x32;                    //App Data Type
 uint16_t baseAddress           = 0x1234;                  //Base Station Address
-uint8_t payloadLen             = 0x08;                    //Payload Length
+uint8_t payloadLen             = 0x07;                    //Payload Length
 uint16_t commandId             = 0x0013;                  //Command ID Echo
 uint16_t nodeAddress;                                     //Node Address
 uint16_t mode;                                            //Protocol mode Echo
-uint16_t errorCode;                                       //1 - invalid mode specified, 2- failed to ping Node after switching modes
+uint8_t errorCode;                                        //1 - invalid mode specified, 2- failed to ping Node after switching modes
 int8_t reserved1;                                         //Reserved Byte
 int8_t reserved2;                                         //Reserved Byte
 uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
@@ -1508,11 +1508,11 @@ uint8_t startByte              = 0xAC;                    //Start of Packet Byte
 uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x32;                    //App Data Type
 uint32_t baseAddress           = 0x00001234;              //Base Station Address
-uint16_t payloadLen            = 0x000A;                  //Payload Length
+uint16_t payloadLen            = 0x0009;                  //Payload Length
 uint16_t commandId             = 0x0013;                  //Command ID Echo
 uint32_t nodeAddress;                                     //Node Address
 uint16_t mode;                                            //Protocol mode Echo
-uint16_t errorCode;                                       //1 - invalid mode specified, 2- failed to ping Node after switching modes
+uint8_t errorCode;                                        //1 - invalid mode specified, 2- failed to ping Node after switching modes
 uint8_t reserved1;                                        //Reserved Byte
 uint8_t reserved2;                                        //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
