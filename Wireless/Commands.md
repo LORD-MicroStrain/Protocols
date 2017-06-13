@@ -51,8 +51,8 @@ Command      | Command ID    |  Base Station ASPP Version required
 [Set Node to Idle (v1)*](#set-node-to-idle-v1) | 0x0090 | ASPP v1.0
 [Set Node to Idle (v2)*](#set-node-to-idle-v2) | 0x0090 | ASPP v1.6
 [Set Node to Idle (v2, ASPP3)*](#set-node-to-idle-v2-aspp3) | 0x0090 | ASPP v3.0
-[Test Node Communication Protocol(v1)*](#test-node-communication-protocol-v1) | 0x000D | ASPP v1.7
-[Test Node Communication Protocol(v1, ASPP3)*](#test-node-communication-protocol-v1-aspp3) | 0x000D | ASPP v3.0
+[Test Node Communication Protocol(v1)*](#test-node-communication-protocol-v1) | 0x0013 | ASPP v1.7
+[Test Node Communication Protocol(v1, ASPP3)*](#test-node-communication-protocol-v1-aspp3) | 0x0013 | ASPP v3.0
 
 *This command targets a Node, but is handled by the Base Station itself.
 
@@ -1384,7 +1384,7 @@ uint8_t stopFlag               = 0x0E;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x30;                    //App Data Type
 uint16_t baseAddress           = 0x1234;                  //Base Station Address
 uint8_t payloadLen             = 0x06;                    //Payload Length
-uint16_t commandId             = 0x000D;                  //Command ID
+uint16_t commandId             = 0x0013;                  //Command ID
 uint16_t nodeAddress;                                     //Node Address
 uint16_t mode;                                            //Protocol mode (0 - LXRS, 1 - LXRS+)
 uint16_t checksum;                                        //Checksum of [stopFlag - mode]
@@ -1399,7 +1399,7 @@ uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x34;                    //App Data Type
 uint16_t baseAddress           = 0x1234;                  //Base Station Address
 uint8_t payloadLen             = 0x09;                    //Payload Length
-uint16_t commandId             = 0x000D;                  //Command ID Echo
+uint16_t commandId             = 0x0013;                  //Command ID Echo
 uint8_t status;                                           //Status byte
 float timeUntilComplete;                                  //The estimated time until the next response is expected.
 uint16_t nodeAddress;                                     //Node Address
@@ -1417,7 +1417,7 @@ uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x31;                    //App Data Type
 uint16_t baseAddress           = 0x1234;                  //Base Station Address
 uint8_t payloadLen             = 0x06;                    //Payload Length
-uint16_t commandId             = 0x000D;                  //Command ID Echo
+uint16_t commandId             = 0x0013;                  //Command ID Echo
 uint16_t nodeAddress;                                     //Node Address
 uint16_t mode;                                            //Protocol mode Echo
 int8_t reserved;                                          //Reserved Byte
@@ -1434,7 +1434,7 @@ uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x32;                    //App Data Type
 uint16_t baseAddress           = 0x1234;                  //Base Station Address
 uint8_t payloadLen             = 0x08;                    //Payload Length
-uint16_t commandId             = 0x000D;                  //Command ID Echo
+uint16_t commandId             = 0x0013;                  //Command ID Echo
 uint16_t nodeAddress;                                     //Node Address
 uint16_t mode;                                            //Protocol mode Echo
 uint16_t errorCode;                                       //1 - invalid mode specified, 2- failed to ping Node after switching modes
@@ -1457,7 +1457,7 @@ uint8_t stopFlag               = 0x01;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x30;                    //App Data Type
 uint32_t baseAddress           = 0x00001234;              //Base Station Address
 uint16_t payloadLen            = 0x0008;                  //Payload Length
-uint16_t commandId             = 0x000D;                  //Command ID
+uint16_t commandId             = 0x0013;                  //Command ID
 uint32_t nodeAddress;                                     //Node Address
 uint16_t mode;                                            //Protocol mode (0 - LXRS, 1 - LXRS+)
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
@@ -1474,7 +1474,7 @@ uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x34;                    //App Data Type
 uint32_t baseAddress           = 0x00001234;              //Base Station Address
 uint16_t payloadLen            = 0x000B;                  //Payload Length
-uint16_t commandId             = 0x000D;                  //Command ID Echo
+uint16_t commandId             = 0x0013;                  //Command ID Echo
 uint8_t status;                                           //Status byte
 float timeUntilComplete;                                  //The estimated time until the next response is expected.
 uint32_t nodeAddress;                                     //Node Address
@@ -1492,7 +1492,7 @@ uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x31;                    //App Data Type
 uint32_t baseAddress           = 0x00001234;              //Base Station Address
 uint16_t payloadLen            = 0x0008;                  //Payload Length
-uint16_t commandId             = 0x000D;                  //Command ID Echo
+uint16_t commandId             = 0x0013;                  //Command ID Echo
 uint32_t nodeAddress;                                     //Node Address
 uint16_t mode;                                            //Protocol mode Echo
 uint8_t reserved;                                         //Reserved Byte
@@ -1509,7 +1509,7 @@ uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x32;                    //App Data Type
 uint32_t baseAddress           = 0x00001234;              //Base Station Address
 uint16_t payloadLen            = 0x000A;                  //Payload Length
-uint16_t commandId             = 0x000D;                  //Command ID Echo
+uint16_t commandId             = 0x0013;                  //Command ID Echo
 uint32_t nodeAddress;                                     //Node Address
 uint16_t mode;                                            //Protocol mode Echo
 uint16_t errorCode;                                       //1 - invalid mode specified, 2- failed to ping Node after switching modes
