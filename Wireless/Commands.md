@@ -1437,11 +1437,20 @@ uint8_t payloadLen             = 0x07;                    //Payload Length
 uint16_t commandId             = 0x0013;                  //Command ID Echo
 uint16_t nodeAddress;                                     //Node Address
 uint16_t mode;                                            //Protocol mode Echo
-uint8_t errorCode;                                        //1 - invalid mode specified, 2- failed to ping Node after switching modes
+uint8_t errorCode;                                        //Error Code
 int8_t reserved1;                                         //Reserved Byte
 int8_t reserved2;                                         //Reserved Byte
 uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
 ```
+
+**Error Codes:**
+
+Code         | Description
+-------------|--------------
+1            | Invalid Mode Specified
+2            | Invalid duration specified by BaseStation (< 0 or > 5)
+3            | No response received after sending switch mode node command
+4            | Failed to ping Node after switching modes
 
 <br>
 
@@ -1512,11 +1521,20 @@ uint16_t payloadLen            = 0x0009;                  //Payload Length
 uint16_t commandId             = 0x0013;                  //Command ID Echo
 uint32_t nodeAddress;                                     //Node Address
 uint16_t mode;                                            //Protocol mode Echo
-uint8_t errorCode;                                        //1 - invalid mode specified, 2- failed to ping Node after switching modes
+uint8_t errorCode;                                        //Error Code
 uint8_t reserved1;                                        //Reserved Byte
 uint8_t reserved2;                                        //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
+
+**Error Codes:**
+
+Code         | Description
+-------------|--------------
+1            | Invalid Mode Specified
+2            | Invalid duration specified by BaseStation (< 0 or > 5)
+3            | No response received after sending switch mode node command
+4            | Failed to ping Node after switching modes
 
 -------
 
