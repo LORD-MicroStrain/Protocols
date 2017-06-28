@@ -948,7 +948,8 @@ uint32_t checksum;                 //CRC Checksum of all bytes
 **asppVersion** - The `asppVersionLxrs` and `asppVersionLxrsPlus` bytes represent the ASPP protocol versions available to the Node when in the specific LXRS or LXRS+ mode. the MSB is the Major part, and the LSB is the Minor part.
 
 ## Beacon Echo Packet (v1)
-For BaseStation's with Firmware v3.32+, writing a `2` to EEPROM 40 will enable any beacon packets that are sent from the BaseStation to be echoed over the port.
+
+`Note: See EEPROM 40 on the BaseStation for enabling this packet.`
 
 ```cpp
 uint8_t startByte           = 0xAA;     //Start of Packet Byte
@@ -956,7 +957,7 @@ uint8_t stopFlag            = 0x07;     //Delivery Stop Flag
 uint8_t appDataType         = 0x10;     //App Data Type
 uint16_t address            = 0x0000;   //Address
 uint8_t payloadLen          = 0x06;     //Payload Length
-uint16_t cmd                = 0xBEAC;   //Command
+uint16_t beaconType;                    //Beacon Type
 uint32_t timestampSec;                  //Beacon's UTC Timestamp (seconds)
 int8_t reserved;                        //RESERVED
 int8_t reserved;                        //RESERVED
@@ -964,8 +965,17 @@ uint16_t checksum;                      //Checksum of [stopFlag - reserved]
 ```
 **timestampSec** - The timestamp (seconds since Unix Epoch) of the beacon.
 
+**beaconType**
+
+Value    |  Type
+---------|-----------------
+0x00 or 0xBEAC  | Beacon echo from the current BaseStation
+0x01            | Conflict beacon from another BaseStation on the same frequency
+
 ## Beacon Echo Packet (v1) (ASPP3)
 For BaseStation's with Firmware v3.32+, writing a `2` to EEPROM 40 will enable any beacon packets that are sent from the BaseStation to be echoed over the port.
+
+`Note: See EEPROM 40 on the BaseStation for enabling this packet.`
 
 ```cpp
 uint8_t startByte           = 0xAC;       //Start of Packet Byte
@@ -973,13 +983,20 @@ uint8_t stopFlag            = 0x08;       //Delivery Stop Flag
 uint8_t appDataType         = 0x10;       //App Data Type
 uint32_t address            = 0x00000000; //Address
 uint16_t payloadLen         = 0x0006;     //Payload Length
-uint16_t cmd                = 0xBEAC;     //Command
+uint16_t beaconType;                      //Beacon Type
 uint32_t timestampSec;                    //Beacon's UTC Timestamp (seconds)
 uint8_t reserved;                         //RESERVED
 uint8_t reserved;                         //RESERVED
 uint32_t checksum;                        //CRC Checksum of all bytes
 ```
 **timestampSec** - The timestamp (seconds since Unix Epoch) of the beacon.
+
+**beaconType**
+
+Value    |  Type
+---------|-----------------
+0x00 or 0xBEAC  | Beacon echo from the current BaseStation
+0x01            | Conflict beacon from another BaseStation on the same frequency
 
 ## RF Sweep Packet (v1)
 Contains radio frequency information. This is sent when the BaseStation is in RF Sweep Mode.
