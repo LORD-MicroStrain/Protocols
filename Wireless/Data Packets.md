@@ -573,7 +573,6 @@ uint8_t appDataType         = 0xA0;                  //App Data Type
 uint32_t nodeAddress;                                //Node Address
 uint16_t payloadLen;                                 //Payload Length
 uint8_t appId               = 0x00;                  //App ID
-uint32_t modelNumber;                                //Model Number of the Node
 uint8_t transmitRate;                                //Transmit Rate of the packet
 uint8_t sampleRate;                                  //Sample/Processing Rate of the data
 uint32_t persistentTick;                             //Count of Histogram Sweeps
