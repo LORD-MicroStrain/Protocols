@@ -3427,7 +3427,7 @@ uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
 uint8_t appDataType            = 0x34;                    //App Data Type
 uint32_t baseAddress           = 0x00001234;              //Base Station Address
 uint16_t payloadLen            = 0x000B;                  //Payload Length
-uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint16_t commandId             = 0x0041;                  //Command ID Echo
 uint8_t status;                                           //Status byte
 float timeUntilComplete;                                  //The estimated time until the next response is expected.
 uint32_t nodeAddress;                                     //Node Address
