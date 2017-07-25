@@ -81,7 +81,7 @@ Command      | Command ID    |  Node ASPP Version required
 [(Legacy) Trigger Armed Datalogging](#legacy-trigger-armed-datalogging) | 0x000E | ASPP v1.0
 [Get Logged Data (v1)](#get-logged-data-v1) | 0x0041 | ASPP v1.4
 [Get Logged Data (v1, ASPP3)](#get-logged-data-v1-aspp3) | 0x0041 | ASPP v3.0
-[(Legacy) Page Download](#legacy-page-download) | 0x05 | ASPP v1.0
+[Page Download](#page-download) | 0x05 | ASPP v1.0
 [Log Session Info (v1)](#log-session-info-v1) | 0x0040 | ASPP v1.4
 [Log Session Info (v1, ASPP3)](#log-session-info-v1-aspp3) | 0x0040 | ASPP v3.0
 [Erase Logged Data (v1)](#erase-logged-data-v1) | 0x06 | ASPP v1.0
@@ -2230,10 +2230,8 @@ No Response.
 
 <br>
 
-## (Legacy) Page Download
+## Page Download
 ``ASPP v1.0``
-
-``Legacy Command - This command is no longer supported by our latest products``
 
 The **Page Download** command is used to retrieve a logged data session from the Node. Note that it can also be used to read large chunks of EEPROM values as well.
 
