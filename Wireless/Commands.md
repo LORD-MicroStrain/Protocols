@@ -3064,6 +3064,37 @@ Code   | Description
 
 ---
 
+##### SHM-Link-201 Shunt Cal Specifics
+
+**Command Bytes:** None
+
+**Completion Info Bytes:**
+
+```cpp
+uint8_t ch1Error;                                         //Channel 1 Error Code
+float ch1Slope;                                           //Channel 1 Slope
+float ch1Offset;                                          //Channel 1 Offset
+uint8_t ch2Error;                                         //Channel 2 Error Code
+float ch2Slope;                                           //Channel 2 Slope
+float ch2Offset;                                          //Channel 2 Offset
+uint8_t ch3Error;                                         //Channel 3 Error Code
+float ch3Slope;                                           //Channel 3 Slope
+float ch3Offset;                                          //Channel 3 Offset
+float temperature;                                        //Temperature (Celsius) at time of cal
+```
+
+**Channel Error Codes:**
+
+Code   | Description
+-------|--------------
+0      | No Error
+1      | Sensor not plugged in
+2      | Sensor shorted
+3      | Invalid Sensor input
+
+
+---
+
 ##### Shunt Cal Specifics (V-Link-200)
 
 **Command Bytes:**
