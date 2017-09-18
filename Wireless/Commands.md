@@ -3088,9 +3088,13 @@ float temperature;                                        //Temperature (Celsius
 Code   | Description
 -------|--------------
 0      | No Error
-1      | Sensor not plugged in
-2      | Sensor shorted
-3      | Invalid Sensor input
+4      | The baseline data may have railed high.
+5      | The baseline data may have railed low.
+6      | The shunted data may have railed high.
+7      | The shunted data may have railed low.
+8      | There was an unexpected slope to the data.
+9      | No shunt was detected in the data.
+10     | A timeout has occurred.
 
 
 ---
