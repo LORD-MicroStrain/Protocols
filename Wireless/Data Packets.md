@@ -320,7 +320,13 @@ uint64_t timestamp;                       //UTC Timestamp in nanoseconds
 uint8_t numActiveAlgorithms;              // Number of algorithms being used
 AlgorithmMeta algorithmInfo[numActiveAlgorithms];   // Information about what comprises a math sweep
 float sweep[sweepPoints];                 // A sweep of math data
-// repeat for every sweep in the packet
+   //Algorithm[0] - Active Channel 1
+   //Algorithm[0] - Active Channel 2
+   //...
+   //Algorithm[1] - Active Channel 1
+   //Algorithm[1] - Active Channel 2
+   //...
+// repeat sweep[sweepPoints] for every sweep in the packet
 int8_t nodeRssi;                          //Node RSSI
 int8_t baseRssi;                          //Base Station RSSI
 uint16_t checksum;                        //Checksum of [stopFlag - chData]
@@ -351,7 +357,13 @@ uint64_t timestamp;                       //UTC Timestamp in nanoseconds
 uint8_t numActiveAlgorithms;              // Number of algorithms being used
 AlgorithmMeta algorithmInfo[numActiveAlgorithms];   // Information about what comprises a math sweep
 float sweep[sweepPoints];                 // A sweep of math data
-// repeat for every sweep in the packet
+   //Algorithm[0] - Active Channel 1
+   //Algorithm[0] - Active Channel 2
+   //...
+   //Algorithm[1] - Active Channel 1
+   //Algorithm[1] - Active Channel 2
+   //...
+// repeat sweep[sweepPoints] for every sweep in the packet
 uint8_t nodeRssi;                         //Node RSSI
 uint8_t baseRssi;                         //Base Station RSSI
 uint32_t checksum;                        //CRC Checksum of all bytes
@@ -380,6 +392,12 @@ uint16_t tick;                            //Timer Tick
 uint8_t numActiveAlgorithms;              // Number of algorithms being used
 AlgorithmMeta algorithmInfo[numActiveAlgorithms];   // Information about what comprises a math sweep
 float sweep[sweepPoints];                 // A sweep of math data
+   //Algorithm[0] - Active Channel 1
+   //Algorithm[0] - Active Channel 2
+   //...
+   //Algorithm[1] - Active Channel 1
+   //Algorithm[1] - Active Channel 2
+   //...
 int8_t reserved;                          //RESERVED
 int8_t baseRssi;                          //Base Station RSSI
 uint16_t checksum;                        //Checksum of [stopFlag - chData]
@@ -408,6 +426,12 @@ uint16_t tick;                            //Timer Tick
 uint8_t numActiveAlgorithms;              // Number of algorithms being used
 AlgorithmMeta algorithmInfo[numActiveAlgorithms];   // Information about what comprises a math sweep
 float sweep[sweepPoints];                 // A sweep of math data
+   //Algorithm[0] - Active Channel 1
+   //Algorithm[0] - Active Channel 2
+   //...
+   //Algorithm[1] - Active Channel 1
+   //Algorithm[1] - Active Channel 2
+   //...
 uint8_t reserved;                         //RESERVED
 uint8_t baseRssi;                         //Base Station RSSI
 uint32_t checksum;                        //CRC Checksum of all bytes
