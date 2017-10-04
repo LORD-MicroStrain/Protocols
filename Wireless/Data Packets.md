@@ -1079,6 +1079,7 @@ Algorithm ID    |  Algorithm    |  # Bytes  |  Details
 1               | Peak-to-Peak | 4 (float) | Maximum of the sample window subtracted by the min of the sample window<br> Output: Acceleration in Gs
 2               | Velocity | 4 (float) | The maximum velocity achieved over the sample window<br>Output: Velocity in in/s
 3               | Crest Factor | 4 (float) | The maximum acceleration during the sample window divided by the RMS acceleration of the window<br>Output: ratio
+4               | Mean | 4 (float) | The mean (average) of the data in the sample window<br>Output: average
 
 The `channelMask` algorithm meta data represents the channels that went in to the calculation.
 
