@@ -978,7 +978,7 @@ uint32_t checksum;                 //CRC Checksum of all bytes
 uint8_t startByte           = 0xAA;     //Start of Packet Byte
 uint8_t stopFlag            = 0x07;     //Delivery Stop Flag
 uint8_t appDataType         = 0x10;     //App Data Type
-uint16_t address            = 0x0000;   //Address
+uint16_t address;                       //Address
 uint8_t payloadLen          = 0x06;     //Payload Length
 uint16_t beaconType;                    //Beacon Type
 uint32_t timestampSec;                  //Beacon's UTC Timestamp (seconds)
@@ -1004,7 +1004,7 @@ For BaseStation's with Firmware v3.32+, writing a `2` to EEPROM 40 will enable a
 uint8_t startByte           = 0xAC;       //Start of Packet Byte
 uint8_t stopFlag            = 0x08;       //Delivery Stop Flag
 uint8_t appDataType         = 0x10;       //App Data Type
-uint32_t address            = 0x00000000; //Address
+uint32_t address;                         //Address
 uint16_t payloadLen         = 0x0006;     //Payload Length
 uint16_t beaconType;                      //Beacon Type
 uint32_t timestampSec;                    //Beacon's UTC Timestamp (seconds)
