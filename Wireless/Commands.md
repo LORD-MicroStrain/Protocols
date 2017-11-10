@@ -4,7 +4,7 @@ Note that some commands are device specific.
 
 #### Legacy FW version to ASPP version lookup table
 
-New devices/firmware support `Eeprom 124`, which identifies the ASPP version (msb.lsb) that the device supports.
+New devices/firmware support `Eeprom 124`, which identifies the ASPP version (msb.lsb) that the device supports for the LXRS communication protocol. `Eeprom 124` identifies the ASPP version for the LXRS+ communication protocol.
 The firmware version of the device was originally used to determine the ASPP version. The following lookup table is provided for legacy purposes:
 
 ASPP Version  |  Base Station FW version  |  Node FW version
