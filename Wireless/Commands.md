@@ -63,7 +63,8 @@ Command      | Command ID    |  Node ASPP Version required
 [Ping (v1)](#ping-v1) | 0x0002 | ASPP v1.0
 [Ping (v1, ASPP3)](#ping-v1-aspp3) | 0x0002 | ASPP v3.0
 [Initiate Sleep Mode (v1)](#initiate-sleep-mode-v1) | 0x32 | ASPP v1.0
-[Initiate Sleep Mode (v1, ASPP3)](#initiate-sleep-mode-v1-aspp3) | 0x0032 | ASPP v3.0
+[Initiate Sleep Mode (v2)](#initiate-sleep-mode-v2) | 0x0032 | ASPP v1.8
+[Initiate Sleep Mode (v2, ASPP3)](#initiate-sleep-mode-v2-aspp3) | 0x0032 | ASPP v3.0
 [Read Node EEPROM (v1)](#read-node-eeprom-v1) | 0x0003 | ASPP v1.0
 [Read Node EEPROM (v2)](#read-node-eeprom-v2) | 0x0007 | ASPP v1.1
 [Read Node EEPROM (v2, ASPP3)](#read-node-eeprom-v2-aspp3) | 0x0007 | ASPP v3.0
@@ -1658,7 +1659,41 @@ No Response.
 
 <br>
 
-## Initiate Sleep Mode (v1, ASPP3)
+## Initiate Sleep Mode (v2)
+``ASPP v1.8``
+
+The **Initiate Sleep Mode** command is used to put the Node in a low power state. When the Node is in this low power Sleep Mode, it will not hear any commands except for the Set to Idle command, which will wake the node and put it back into its normal, idle state. The Node should be put into Sleep Mode when you no longer needs to communicate with the node, but want to keep it powered on and preserve battery life.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0032;                  //Command ID
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+```
+
+##### Success Response:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x02;                    //Payload Length
+uint16_t commandId             = 0x0032;                  //Command ID Echo
+int8_t notUsed;                                           //RESERVED
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
+```
+
+##### Failure Response:
+No Response.
+
+<br>
+
+## Initiate Sleep Mode (v2, ASPP3)
 ``ASPP v3.0``
 
 The **Initiate Sleep Mode** command is used to put the Node in a low power state. When the Node is in this low power Sleep Mode, it will not hear any commands except for the Set to Idle command, which will wake the node and put it back into its normal, idle state. The Node should be put into Sleep Mode when you no longer needs to communicate with the node, but want to keep it powered on and preserve battery life.
