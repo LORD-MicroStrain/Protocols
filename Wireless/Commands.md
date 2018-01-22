@@ -104,7 +104,7 @@ Command      | Command ID    |  Node ASPP Version required
 
 
 ### Base Station Received Response
-When sending Node Commmands, a Base Station that supports ASPP 1.8+ (LXRS), or ASPP 3.0+ (LXRS+), will respond with a `Base Station Received Response` packet that indicates the command was received and sent to the Node. This response packet allows you to adjust your timeout and fail earlier, in the case that a Node is out of range, or in a mode that can't be communicated with (sampling, sleeping).
+When sending Node Commands, a Base Station that supports ASPP 1.8+ (LXRS), or ASPP 3.0+ (LXRS+), will respond with a `Base Station Received Response` packet that indicates the command was received and sent to the Node. This response packet allows you to adjust your timeout and fail earlier, in the case that a Node is out of range, or in a mode that can't be communicated with (sampling, sleeping).
 
 Base Stations with older protocols may respond with a single `0xAA` byte to indicate the command was received and sent to the Node.
 
