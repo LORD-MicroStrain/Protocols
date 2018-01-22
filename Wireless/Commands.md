@@ -100,7 +100,9 @@ Command      | Command ID    |  Node ASPP Version required
 [Cycle Power & Radio (v1, ASPP3)](#cycle-power--radio-v1-aspp3) | 0x0031 | ASPP v3.0
 
 ### Base Station Received Response
-Base Stations that support ASPP 1.8+ (LXRS), or ASPP 3.0+ (LXRS+), will respond with a `Base Station Received Response` packet that indicates the command was received and sent to the Node. This response packet allows you to adjust your timeout and fail earlier, in the case that a Node is out of range, or in a mode that can't be communicated with (sampling, sleeping).
+When sending Node Commmands, a Base Station that supports ASPP 1.8+ (LXRS), or ASPP 3.0+ (LXRS+), will respond with a `Base Station Received Response` packet that indicates the command was received and sent to the Node. This response packet allows you to adjust your timeout and fail earlier, in the case that a Node is out of range, or in a mode that can't be communicated with (sampling, sleeping).
+
+Base Stations with older protocols may respond with a single `0xAA` byte to indicate the command was received and sent to the Node.
 
 ##### ASPP 1.8+ Base Station Received Response
 ```cpp
@@ -1591,11 +1593,8 @@ uint16_t commandId             = 0x0002;                  //Command ID
 uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
-##### Initial Response:
-An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
-```cpp
-uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
-```
+##### Base Station Received Response
+See [Base Station Received Response documentation](#base-station-received-response)
 
 ##### Success Response:
 ```cpp
@@ -1633,23 +1632,8 @@ uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
-##### Base Station Received Response:
-This response comes from the Base Station indicating that the command was received and sent to the Node.
-
-```cpp
-uint8_t startByte              = 0xAC;                    //Start of Packet Byte
-uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x34;                    //App Data Type
-uint32_t baseAddress           = 0x00001234;              //Base Station Address
-uint16_t payloadLen            = 0x000B;                  //Payload Length
-uint16_t commandId             = 0x0002;                  //Command ID Echo
-uint8_t status;                                           //Status byte
-float timeUntilComplete;                                  //The estimated time until the next response is expected.
-uint32_t nodeAddress;                                     //Node Address
-uint8_t reserved;                                         //Reserved Byte
-uint8_t reserved;                                         //Reserved Byte
-uint32_t checksum;                                        //CRC Checksum of all bytes
-```
+##### Base Station Received Response
+See [Base Station Received Response documentation](#base-station-received-response)
 
 ##### Success Response:
 ```cpp
@@ -1711,6 +1695,9 @@ uint16_t commandId             = 0x0032;                  //Command ID
 uint16_t checksum;                                        //Checksum of [stopFlag - commandId]
 ```
 
+##### Base Station Received Response
+See [Base Station Received Response documentation](#base-station-received-response)
+
 ##### Success Response:
 ```cpp
 uint8_t startByte              = 0xAA;                    //Start of Packet Byte
@@ -1747,23 +1734,8 @@ uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
-##### Base Station Received Response:
-This response comes from the Base Station indicating that the command was received and sent to the Node.
-
-```cpp
-uint8_t startByte              = 0xAC;                    //Start of Packet Byte
-uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x34;                    //App Data Type
-uint32_t baseAddress           = 0x00001234;              //Base Station Address
-uint16_t payloadLen            = 0x000B;                  //Payload Length
-uint16_t commandId             = 0x0002;                  //Command ID Echo
-uint8_t status;                                           //Status byte
-float timeUntilComplete;                                  //The estimated time until the next response is expected.
-uint32_t nodeAddress;                                     //Node Address
-uint8_t reserved;                                         //Reserved Byte
-uint8_t reserved;                                         //Reserved Byte
-uint32_t checksum;                                        //CRC Checksum of all bytes
-```
+##### Base Station Received Response
+See [Base Station Received Response documentation](#base-station-received-response)
 
 ##### Success Response:
 ```cpp
@@ -1802,11 +1774,8 @@ uint16_t eepromAddress;                                   //EEPROM Address to Re
 uint16_t checksum;                                        //Checksum of [stopFlag - eepromAddress]
 ```
 
-##### Initial Response:
-An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
-```cpp
-uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
-```
+##### Base Station Received Response
+See [Base Station Received Response documentation](#base-station-received-response)
 
 ##### Success Response:
 ```cpp
@@ -1845,11 +1814,8 @@ uint16_t eepromAddress;                                   //EEPROM Address to Re
 uint16_t checksum;                                        //Checksum of [stopFlag - eepromAddress]
 ```
 
-##### Initial Response:
-An initial response comes directly from the Base Station to acknowledge that the command was received by the Base Station and sent to the Node.
-```cpp
-uint8_t packetSentAck          = 0xAA;                    //Package Sent Acknowledgement
-```
+##### Base Station Received Response
+See [Base Station Received Response documentation](#base-station-received-response)
 
 ##### Success Response:
 ```cpp
@@ -1911,23 +1877,8 @@ uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
-##### Base Station Received Response:
-This response comes from the Base Station indicating that the command was received and sent to the Node.
-
-```cpp
-uint8_t startByte              = 0xAC;                    //Start of Packet Byte
-uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x34;                    //App Data Type
-uint32_t baseAddress           = 0x00001234;              //Base Station Address
-uint16_t payloadLen            = 0x000B;                  //Payload Length
-uint16_t commandId             = 0x0002;                  //Command ID Echo
-uint8_t status;                                           //Status byte
-float timeUntilComplete;                                  //The estimated time until the next response is expected.
-uint32_t nodeAddress;                                     //Node Address
-uint8_t reserved;                                         //Reserved Byte
-uint8_t reserved;                                         //Reserved Byte
-uint32_t checksum;                                        //CRC Checksum of all bytes
-```
+##### Base Station Received Response
+See [Base Station Received Response documentation](#base-station-received-response)
 
 ##### Success Response:
 ```cpp
@@ -1989,23 +1940,8 @@ uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
 ```
 
-##### Base Station Received Response:
-This response comes from the Base Station indicating that the command was received and sent to the Node.
-
-```cpp
-uint8_t startByte              = 0xAC;                    //Start of Packet Byte
-uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
-uint8_t appDataType            = 0x34;                    //App Data Type
-uint32_t baseAddress           = 0x00001234;              //Base Station Address
-uint16_t payloadLen            = 0x000B;                  //Payload Length
-uint16_t commandId             = 0x0002;                  //Command ID Echo
-uint8_t status;                                           //Status byte
-float timeUntilComplete;                                  //The estimated time until the next response is expected.
-uint32_t nodeAddress;                                     //Node Address
-uint8_t reserved;                                         //Reserved Byte
-uint8_t reserved;                                         //Reserved Byte
-uint32_t checksum;                                        //CRC Checksum of all bytes
-```
+##### Base Station Received Response
+See [Base Station Received Response documentation](#base-station-received-response)
 
 ##### Success Response:
 ```cpp
