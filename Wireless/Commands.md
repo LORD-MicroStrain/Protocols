@@ -99,6 +99,42 @@ Command      | Command ID    |  Node ASPP Version required
 [Cycle Power & Radio (v1)](#cycle-power--radio-v1) | - | ASPP v1.0
 [Cycle Power & Radio (v1, ASPP3)](#cycle-power--radio-v1-aspp3) | 0x0031 | ASPP v3.0
 
+### Base Station Received Response
+Base Stations that support ASPP 1.8+ (LXRS), or ASPP 3.0+ (LXRS+), will respond with a `Base Station Received Response` packet that indicates the command was received and sent to the Node. This response packet allows you to adjust your timeout and fail earlier, in the case that a Node is out of range, or in a mode that can't be communicated with (sampling, sleeping).
+
+##### ASPP 1.8+ Base Station Received Response
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint16_t baseAddress           = 0x1234;                  //Base Station Address
+uint8_t payloadLen             = 0x09;                    //Payload Length
+uint16_t commandId;                                       //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //Estimated time (in seconds) until the next response is expected
+uint16_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
+uint16_t checksum;                                        //Checksum of [stopFlag - nodeAddress]
+```
+
+##### ASPP 3.0+ Base Station Received Response
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x34;                    //App Data Type
+uint32_t baseAddress           = 0x00001234;              //Base Station Address
+uint16_t payloadLen            = 0x000B;                  //Payload Length
+uint16_t commandId             = 0x0002;                  //Command ID Echo
+uint8_t status;                                           //Status byte
+float timeUntilComplete;                                  //The estimated time until the next response is expected.
+uint32_t nodeAddress;                                     //Node Address
+uint8_t reserved;                                         //Reserved Byte
+uint8_t reserved;                                         //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
 
 ## Ping Base Station (v1)
 ``ASPP v1.0``
