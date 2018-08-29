@@ -782,7 +782,8 @@ ID  | Description   | Data Values | # Bytes | Type | Unit
 0x08 | External Power | 0=Not Connected, 1=External Power Connected | 1 | uint8 | -
 0x09 | Internal Temperature | - | 1 | int8 | Celsius
 0x0A | LXRS Synchronization Info | Synchronization Attempts <br> Synchronization Failures <br> Seconds since last synchronization | 4 <br> 4 <br> 4 | uint32 <br> uint32 <br> uint32 | counts <br> counts <br> seconds
-0x0B | Internal Temperature | value must be divided by 100 | 1 | int16 | Celsius
+0x0B | Internal Temperature | value must be divided by 100 | 2 | int16 | Celsius
+0x0C | % Datalogging Memory Full | value must be divided by 100 | 2 | uint16 | % Full 
 
 * **(0x00) Current State** - The current state that the device is in when the Diagnostic packet was sent.
 * **(0x01) Run Time** - The # of seconds the Node has been in each state.
@@ -801,6 +802,7 @@ ID  | Description   | Data Values | # Bytes | Type | Unit
 * **(0x09) Internal Temperature** - The internal temperature in degrees Celsius.
 * **(0x0A) LXRS Synchronization Info** - Information on Lossless Sync Sampling 
 * **(0x0B) Internal Temperature** - Updated version of the previous Internal Temperature (0x09), in degrees Celsius.
+* **(0x0C) % Datalogging Memory Full** - The % of datalogging memory that is used.
 
 *Full Example:*
 If the Info Item Length byte is 0x0B, the next 11 bytes make up the Info Item ID and Value. If the next byte is 0x01, then we know the Info Item Value is signifying Transmit Info which is made up of Total Transmissions, Total Retransmissions, and Total Dropped Packets. From the table we know to parse the next 4 bytes as a uint32 representing the Total Transmissions, the next 4 bytes as a uint32 representing the Total Retransmissions, and the last 2 bytes as a uint16 representing the Total Dropped Packets.
