@@ -772,7 +772,7 @@ The Info Item ID represents the type of information that is given in the next In
 ID  | Description   | Data Values | # Bytes | Type | Unit
 ----|---------------|----------------|----------|-------|------
 0x00 | Current State | 0=Idle, 1=Sleep, 2=Sampling, 3=Sampling, but lost Beacon, 4=Inactive (activity detect is enabled) | 1 | uint8 | -
-0x01 | Run Time | Idle <br> Sleep <br> Sampling <br> Sampling, but lost Beacon <br> Inactive | 4 <br> 4 <br> 4 <br> 4 <br> 4 | uint32 <br> uint32 <br> uint32 <br> uint32 <br> uint32 | seconds <br> seconds <br> seconds <br> seconds <br seconds
+0x01 | Run Time | Idle <br> Sleep <br> Sampling <br> Sampling, but lost Beacon <br> Inactive | 4 <br> 4 <br> 4 <br> 4 <br> 4 | uint32 <br> uint32 <br> uint32 <br> uint32 <br> uint32 | seconds <br> seconds <br> seconds <br> seconds <br> seconds
 0x02 | Reset Counter | - | 2 | uint16 | counts
 0x03 | Low Battery Indicator | 0=good, 1=low, 2=critical | 1 | uint8 | -
 0x04 | Sample Info | Sweep index <br> Bad sweep count | 4 <br> 4 | uint32 <br> uint32 | counts <br> counts
