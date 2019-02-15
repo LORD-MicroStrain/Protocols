@@ -2963,9 +2963,9 @@ Code   | Description
 
 ---
 
-##### Shunt Cal Specifics (V-Link-200)
+##### Shunt Cal Specifics (V-Link-200, SG-Link-200, Torque-Link)
 
-**Command Bytes:**
+**Command Bytes (V-Link-200):**
 
 ```cpp
 uint8_t channelNumber;                                    //The channel to calibrate (1 = ch1)
@@ -2975,6 +2975,19 @@ uint8_t numActiveGauges;                                  //The number of active
 uint16_t gaugeResistance;                                 //The gauge resistance to use in the autocal operation
 uint16_t shuntResistance;                                 //The shunt resistance to use in the autocal operation
 float gaugeFactor;                                        //The gauge factor to use in the autocal operation
+```
+
+**Command Bytes (SG-Link-200, Torque-Link - firmware v12.42247 or above):**
+
+```cpp
+uint8_t channelNumber;                                    //The channel to calibrate (1 = ch1)
+uint8_t hardwareGain;                                     //The Hardware Gain to use in the autocal operation
+uint16_t hardwareOffset;                                  //The Hardware Offset to use in the autocal operation
+uint8_t numActiveGauges;                                  //The number of active gauges to use in the autocal operation
+uint16_t gaugeResistance;                                 //The gauge resistance to use in the autocal operation
+uint16_t shuntResistance;                                 //The shunt resistance to use in the autocal operation
+float gaugeFactor;                                        //The gauge factor to use in the autocal operation
+uint16_t excitationVoltage;                               //The excitation voltage to use in the autocal operation
 ```
 
 **Completion Info Bytes:**
@@ -2992,7 +3005,7 @@ float shuntMin;                     //The minimum of the shunted data sampled du
 float shuntMax;                     //The maximum of the shunted data sampled during the shunt calibration.
 ```
 
-**Channel Error Flags:**
+**Channel Error Codes:**
 
 Code   | Description
 -------|--------------
