@@ -3477,7 +3477,7 @@ uint16_t sessionIndex;   // index of the session the data following the header b
 ## Get Diagnostic Info (v1)
 ``ASPP v1.5``
 
-The **Get Diagnostic Info** command is used to get diagnostic information about the Wireless Node. Note that a Node can also be configured to send a [Diagnostic data packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet) at a specific interval as well. The information in the data packet is the same as in the response for this command.
+The **Get Diagnostic Info** command is used to get diagnostic information about the Wireless Node. Note that a Node can also be configured to send a [Diagnostic data packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet-v1-aspp3) at a specific interval as well. The information in the data packet is the same as in the response for this command.
 
 ##### Command:
 ```cpp
@@ -3513,14 +3513,14 @@ uint16_t checksum;                                        //Checksum of [stopFla
 ##### Failure Response:
 none
 
-For more information on the payload of this packet, see the documentation for the [Diagnostic Data Packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet).
+For more information on the payload of this packet, see the documentation for the [Diagnostic Data Packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet-v1-aspp3).
 
 <br>
 
 ## Get Diagnostic Info (v1, ASPP3)
 ``ASPP v3.0``
 
-The **Get Diagnostic Info** command is used to get diagnostic information about the Wireless Node. Note that a Node can also be configured to send a [Diagnostic data packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet) at a specific interval as well. The information in the data packet is the same as in the response for this command.
+The **Get Diagnostic Info** command is used to get diagnostic information about the Wireless Node. Note that a Node can also be configured to send a [Diagnostic data packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet-v1-aspp3) at a specific interval as well. The information in the data packet is the same as in the response for this command.
 
 ##### Command:
 ```cpp
@@ -3558,7 +3558,7 @@ uint32_t checksum;                                        //CRC Checksum of all 
 ##### Failure Response:
 none
 
-For more information on the payload of this packet, see the documentation for the [Diagnostic Data Packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet).
+For more information on the payload of this packet, see the documentation for the [Diagnostic Data Packet](https://github.com/LORD-MicroStrain/Protocols/blob/master/Wireless/Data%20Packets.md#diagnostic-packet-v1-aspp3).
 
 <br>
 
