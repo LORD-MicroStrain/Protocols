@@ -3627,7 +3627,7 @@ uint8_t appDataType            = 0x00;                    //App Data Type
 uint16_t nodeAddress;                                     //Node Address
 uint8_t payloadLen;                                       //Payload Length
 uint16_t commandId             = 0xDA7A;                  //Command ID
-uint16_t channelMask;									                            //Channel Mask
+uint16_t channelMask;                                     //Channel Mask
 uint16_t checksum;                                        //Checksum of [stopFlag - channelMask]
 ```
 
@@ -3663,8 +3663,8 @@ uint8_t appDataType            = 0x22;                    //App Data Type
 uint16_t nodeAddress;                                     //Node Address
 uint8_t payloadLen;                                       //Payload Length
 uint16_t commandId             = 0xDA7A;                  //Command ID Echo
-uint16_t channelMask;									  //Channel Mask
-float chData[];     									  //Channel Data (1 calibrated point for each channel mask entry)
+uint16_t channelMask;                                     //Channel Mask
+float chData[];                                           //Channel Data (1 calibrated point for each channel mask entry)
 int8_t nodeRssi;                                          //Node RSSI
 int8_t baseRssi;                                          //Base Station RSSI
 uint16_t checksum;                                        //Checksum of [stopFlag - chData]
@@ -3692,7 +3692,7 @@ uint8_t appDataType            = 0x00;                    //App Data Type
 uint32_t nodeAddress;                                     //Node Address
 uint16_t payloadLen;                                      //Payload Length
 uint16_t commandId             = 0xDA7A;                  //Command ID
-uint16_t channelMask;									                            //Channel Mask
+uint16_t channelMask;                                     //Channel Mask
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint8_t RESERVED               = 0x7F;                    //Reserved Byte
 uint32_t checksum;                                        //CRC Checksum of all bytes
@@ -3730,8 +3730,8 @@ uint8_t appDataType            = 0x22;                    //App Data Type
 uint16_t nodeAddress;                                     //Node Address
 uint16_t payloadLen;                                      //Payload Length
 uint16_t commandId             = 0xDA7A;                  //Command ID Echo
-uint16_t channelMask;									                            //Channel Mask
-float chData[];     									                             //Channel Data (1 calibrated point for each channel mask entry)
+uint16_t channelMask;                                     //Channel Mask
+float chData[];                                           //Channel Data (1 calibrated point for each channel mask entry)
 uint8_t nodeRssi;                                         //Node RSSI
 uint8_t baseRssi;                                         //Base Station RSSI
 uint32_t checksum;                                        //CRC checksum of all bytes
