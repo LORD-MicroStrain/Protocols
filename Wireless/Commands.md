@@ -98,6 +98,8 @@ Command      | Command ID    |  Node ASPP Version required
 [Read Single Sensor](#read-single-sensor) | 0x03 | ASPP v1.0
 [Cycle Power & Radio (v1)](#cycle-power--radio-v1) | - | ASPP v1.0
 [Cycle Power & Radio (v1, ASPP3)](#cycle-power--radio-v1-aspp3) | 0x0031 | ASPP v3.0
+[Poll (v1)](#poll-v1) | 0xDA7A | ASPP v1.8
+[Poll (v1, ASPP3)](#poll-v1-aspp3) | 0xDA7A | ASPP v3.1
 
 
 -----
@@ -3608,3 +3610,133 @@ uint32_t checksum;                                        //CRC Checksum of all 
 ##### Failure Response:
 none
 
+<br>
+
+## Poll (v1)
+``ASPP v1.8``
+
+The **Poll** command is used to sample a single data set from a Node. This command takes the sensor warm-up delay into account, and averages multiple samples into the resulting data.
+Note: the **channelMask** parameter represents the channels you would like to poll. If the channel mask includes channels that are not supported by the Node, they will be ignored. The response packet will contain the channel mask that was actually sampled.
+Note: this command will take, at minimum, 1 second to complete, to account for sensor warm-up. If the warm-up delay configuration on the Node is longer than 1 second, it will take at least that duration to complete.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x05;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen;                                       //Payload Length
+uint16_t commandId             = 0xDA7A;                  //Command ID
+uint16_t channelMask;									                            //Channel Mask
+uint16_t checksum;                                        //Checksum of [stopFlag - channelMask]
+```
+
+##### Base Station Received Response
+See [Base Station Received Response documentation](#base-station-received-response)
+
+##### Node Received Response:
+
+The Node sends this packet when it initially received the Poll command, before any sampling is performed.
+
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x20;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen             = 0x07;                    //Payload Length
+uint16_t commandId             = 0xDA7A;                  //Command ID Echo
+uint8_t status                 = 0x00;                    //Status Code
+float timeUntilComplete;                                  //Time Until Completion
+int8_t nodeRssi;                                          //Node RSSI
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - timeUntilComplete]
+```
+
+##### Completion Response:
+
+The Node sends this packet when the Poll process has completed.
+
+```cpp
+uint8_t startByte              = 0xAA;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x07;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint8_t payloadLen;                                       //Payload Length
+uint16_t commandId             = 0xDA7A;                  //Command ID Echo
+uint16_t channelMask;									  //Channel Mask
+float chData[];     									  //Channel Data (1 calibrated point for each channel mask entry)
+int8_t nodeRssi;                                          //Node RSSI
+int8_t baseRssi;                                          //Base Station RSSI
+uint16_t checksum;                                        //Checksum of [stopFlag - chData]
+```
+
+##### Notes:
+
+**Time Until Completion (node received response):** The estimated amount of time (in seconds) until the Poll command will complete, and the Completion response packet will be sent by the Node.
+
+<br>
+
+
+## Poll (v1, ASPP3)
+``ASPP v3.1``
+
+The **Poll** command is used to sample a single data set from a Node. This command takes the sensor warm-up delay into account, and averages multiple samples into the resulting data.
+Note: the **channelMask** parameter represents the channels you would like to poll. If the channel mask includes channels that are not supported by the Node, they will be ignored. The response packet will contain the channel mask that was actually sampled.
+Note: this command will take, at minimum, 1 second to complete, to account for sensor warm-up. If the warm-up delay configuration on the Node is longer than 1 second, it will take at least that duration to complete.
+
+##### Command:
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x04;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x00;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen;                                      //Payload Length
+uint16_t commandId             = 0xDA7A;                  //Command ID
+uint16_t channelMask;									                            //Channel Mask
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint8_t RESERVED               = 0x7F;                    //Reserved Byte
+uint32_t checksum;                                        //CRC Checksum of all bytes
+```
+
+##### Base Station Received Response
+See [Base Station Received Response documentation](#base-station-received-response)
+
+##### Node Received Response:
+
+The Node sends this packet when it initially received the Poll command, before any sampling is performed.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x20;                    //App Data Type
+uint32_t nodeAddress;                                     //Node Address
+uint16_t payloadLen            = 0x0007;                  //Payload Length
+uint16_t commandId             = 0xDA7A;                  //Command ID Echo
+uint8_t status                 = 0x00;                    //Status Code
+float timeUntilComplete;                                  //Time Until Completion
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC checksum of all bytes
+```
+
+##### Completion Response:
+
+The Node sends this packet when the Poll process has completed.
+
+```cpp
+uint8_t startByte              = 0xAC;                    //Start of Packet Byte
+uint8_t stopFlag               = 0x08;                    //Delivery Stop Flag
+uint8_t appDataType            = 0x22;                    //App Data Type
+uint16_t nodeAddress;                                     //Node Address
+uint16_t payloadLen;                                      //Payload Length
+uint16_t commandId             = 0xDA7A;                  //Command ID Echo
+uint16_t channelMask;									                            //Channel Mask
+float chData[];     									                             //Channel Data (1 calibrated point for each channel mask entry)
+uint8_t nodeRssi;                                         //Node RSSI
+uint8_t baseRssi;                                         //Base Station RSSI
+uint32_t checksum;                                        //CRC checksum of all bytes
+```
+
+##### Notes:
+
+**Time Until Completion (node received response):** The estimated amount of time (in seconds) until the Poll command will complete, and the Completion response packet will be sent by the Node.
