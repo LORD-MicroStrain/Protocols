@@ -1100,10 +1100,13 @@ Value    |  Data Format    |  # Bytes  |  Details
 0x06     | uint16 (even avg) | 2 | Average (mean) where the number of samples used is an even power of 2
 0x07     | uint16          | 2 |
 0x08     | float (no cals) | 4 | 4-byte float, with no calibration coefficients applied
-0x09     | uint24          | 3 |
+0x09     | uint24 (18-bit) | 3 | 3-byte unsigned integer from an 18-bit device
 0x0A     | uint16 (18-bit) | 2 | 16-bit value from an 18-bit device, truncated, (val « 2) to get correct value
 0x0B     | int24 (20-bit)  | 3 | 24-bit signed value from a 20-bit device, if bit 19 is a 1 change all upper bits in new value to 1s
 0x0C     | int16 (20-bit)  | 2 | 16-bit signed value from a 20-bit device, (val « 4) to get correct value
+0x0D     | uint24          | 3 | 3-byte unsigned integer
+0x0E     | uint16 (24-bit) | 2 | 16-bit unsigned integer from a 24-bit device, (val « 8) to get correct value
+0x0F     | int16 (x 10)    | 2 | 16-bit signed value that represents a calibrated value that was multiplied by 10
 
 ### Sample Rate
 The Sample Rate byte is transmitted in some data packets and is as follows:
