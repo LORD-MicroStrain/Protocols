@@ -1,6 +1,8 @@
 # Protocols
 The following documents describe how MicroStrain devices can be communicated with and configured.
 
+If you have any questions or run into any issues, please let us know! [MicroStrain Support Portal](https://support.microstrain.com)
+
 ## Wireless
 
 **Note**: It is highly recommended that you use [MSCL](https://github.com/LORD-MicroStrain/MSCL) to interact with our Wireless devices. MSCL handles all the complexities of our Wireless Protocols and abstracts it for you in a much cleaner interface. If you have determined MSCL will not work for you, the following links describe our protocol in detail.
@@ -15,8 +17,7 @@ The following documents describe how MicroStrain devices can be communicated wit
 
 ## Inertial
 
-#### 3DM-GX5
-[3DM-GX5-45 Data Communications Protocol](http://www.microstrain.com/sites/default/files/3dm-gx5-45_dcp_manual_8500-0064_0.pdf)
+Protocol documentation for inertial devices can be found on the corresponding product page in the Documentation section: [MicroStrain Inertial Sensors](https://microstrain.com/inertial-sensors/all-sensors)
 
 #### 3DM-GQ4
 [3DM-GQ4-45 Data Communications Protocol](http://files.microstrain.com/3DM-GQ4-45+Data+Communications+Protocol.pdf)
